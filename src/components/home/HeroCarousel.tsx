@@ -6,12 +6,9 @@ import { heroSlides } from "@/data/gallery-media";
 
 export default function HeroCarousel() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isHoverPaused, setIsHoverPaused] = useState(false);
   const [isUserPaused, setIsUserPaused] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const touchStartX = useRef<number | null>(null);
-
-  const isPaused = isHoverPaused || isUserPaused;
 
   const nextSlide = useCallback(() => {
     setActiveIndex((prev) => (prev + 1) % heroSlides.length);
@@ -23,7 +20,7 @@ export default function HeroCarousel() {
     );
   }, []);
 
-  // Touch Swipe Handlers for Mobile
+  // Touch Swipe Handlers for Mobile background
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
   };
@@ -44,9 +41,9 @@ export default function HeroCarousel() {
     touchStartX.current = null;
   };
 
-  // Continuous autoplay carousel (every 5.5s)
+  // Continuous autoplay carousel (every 5.5s unless explicitly paused by user)
   useEffect(() => {
-    if (isPaused) {
+    if (isUserPaused) {
       if (timerRef.current) clearInterval(timerRef.current);
       return;
     }
@@ -58,23 +55,32 @@ export default function HeroCarousel() {
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [isPaused, nextSlide]);
+  }, [isUserPaused, activeIndex, nextSlide]);
 
   const handleManualSelect = (index: number) => {
     setActiveIndex(index);
   };
 
-  const toggleUserPause = () => {
+  const toggleUserPause = (e?: React.SyntheticEvent) => {
+    if (e) {
+      e.stopPropagation();
+    }
     setIsUserPaused((prev) => !prev);
+  };
+
+  const handlePrev = (e: React.SyntheticEvent) => {
+    e.stopPropagation();
+    prevSlide();
+  };
+
+  const handleNext = (e: React.SyntheticEvent) => {
+    e.stopPropagation();
+    nextSlide();
   };
 
   return (
     <div
       className="absolute inset-0 w-full h-full overflow-hidden select-none"
-      onMouseEnter={() => setIsHoverPaused(true)}
-      onMouseLeave={() => setIsHoverPaused(false)}
-      onFocus={() => setIsHoverPaused(true)}
-      onBlur={() => setIsHoverPaused(false)}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
       aria-roledescription="carousel"
@@ -123,7 +129,8 @@ export default function HeroCarousel() {
       {/* Desktop Navigation Side Overlay Arrows (Hidden on Mobile) */}
       <div className="hidden sm:flex absolute inset-x-4 sm:inset-x-8 top-1/2 -translate-y-1/2 z-30 items-center justify-between pointer-events-none">
         <button
-          onClick={prevSlide}
+          type="button"
+          onClick={handlePrev}
           aria-label="Previous slide"
           className="pointer-events-auto p-2.5 sm:p-3 rounded-full bg-[#0f302a]/60 hover:bg-[#0f302a]/90 text-white border border-white/30 backdrop-blur-xs transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#52c92d] hover:scale-105 active:scale-95"
         >
@@ -144,7 +151,8 @@ export default function HeroCarousel() {
         </button>
 
         <button
-          onClick={nextSlide}
+          type="button"
+          onClick={handleNext}
           aria-label="Next slide"
           className="pointer-events-auto p-2.5 sm:p-3 rounded-full bg-[#0f302a]/60 hover:bg-[#0f302a]/90 text-white border border-white/30 backdrop-blur-xs transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#52c92d] hover:scale-105 active:scale-95"
         >
@@ -166,12 +174,18 @@ export default function HeroCarousel() {
       </div>
 
       {/* Unified Floating Controls Pill (Includes Compact Arrows on Mobile) */}
-      <div className="absolute bottom-3 sm:bottom-6 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2.5 sm:gap-3 pointer-events-auto bg-[#0f302a]/80 sm:bg-[#0f302a]/40 px-3.5 py-1.5 rounded-full border border-white/20 sm:border-white/10 backdrop-blur-md shadow-lg">
+      <div
+        className="absolute bottom-3 sm:bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 sm:gap-3 pointer-events-auto bg-[#0f302a]/90 sm:bg-[#0f302a]/60 px-3.5 py-1.5 rounded-full border border-white/30 sm:border-white/20 backdrop-blur-md shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+        onTouchEnd={(e) => e.stopPropagation()}
+      >
         {/* Mobile Prev Arrow */}
         <button
-          onClick={prevSlide}
+          type="button"
+          onClick={handlePrev}
+          onTouchEnd={handlePrev}
           aria-label="Previous slide"
-          className="sm:hidden text-white/80 hover:text-white transition-colors p-1"
+          className="sm:hidden text-white hover:text-[#52c92d] transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center rounded-full active:bg-white/20 active:scale-95 touch-manipulation cursor-pointer"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
@@ -180,9 +194,15 @@ export default function HeroCarousel() {
 
         {/* Play/Pause Button */}
         <button
+          type="button"
           onClick={toggleUserPause}
+          onTouchEnd={toggleUserPause}
           aria-label={isUserPaused ? "Play slideshow" : "Pause slideshow"}
-          className="text-white/80 hover:text-white transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#52c92d] rounded"
+          className={`min-w-[36px] min-h-[36px] flex items-center justify-center rounded-full transition-all touch-manipulation cursor-pointer ${
+            isUserPaused
+              ? "bg-[#52c92d] text-[#0f302a] font-bold shadow-[0_0_12px_#52c92d]"
+              : "text-white/90 hover:text-white active:bg-white/20"
+          }`}
         >
           {isUserPaused ? (
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -195,7 +215,7 @@ export default function HeroCarousel() {
           )}
         </button>
 
-        <div className="w-[1px] h-3 bg-white/25" />
+        <div className="w-[1px] h-3.5 bg-white/30" />
 
         {/* Slide Dots Indicators */}
         <div className="flex items-center gap-1.5 sm:gap-2">
@@ -204,13 +224,21 @@ export default function HeroCarousel() {
             return (
               <button
                 key={slide.id}
-                onClick={() => handleManualSelect(index)}
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleManualSelect(index);
+                }}
+                onTouchEnd={(e) => {
+                  e.stopPropagation();
+                  handleManualSelect(index);
+                }}
                 aria-label={`Go to slide ${index + 1}`}
                 aria-current={isActive ? "true" : "false"}
-                className={`h-2 sm:h-2.5 rounded-full transition-all duration-500 ${
+                className={`h-2.5 rounded-full transition-all duration-500 touch-manipulation cursor-pointer ${
                   isActive
                     ? "w-7 sm:w-9 bg-gradient-to-r from-[#e8c5af] to-[#80563e] shadow-[0_0_10px_rgba(232,197,175,0.7)] scale-105"
-                    : "w-2 sm:w-2.5 bg-white/40 hover:bg-white/80"
+                    : "w-2.5 bg-white/40 hover:bg-white/80"
                 }`}
               />
             );
@@ -219,9 +247,11 @@ export default function HeroCarousel() {
 
         {/* Mobile Next Arrow */}
         <button
-          onClick={nextSlide}
+          type="button"
+          onClick={handleNext}
+          onTouchEnd={handleNext}
           aria-label="Next slide"
-          className="sm:hidden text-white/80 hover:text-white transition-colors p-1"
+          className="sm:hidden text-white hover:text-[#52c92d] transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center rounded-full active:bg-white/20 active:scale-95 touch-manipulation cursor-pointer"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
@@ -231,4 +261,5 @@ export default function HeroCarousel() {
     </div>
   );
 }
+
 

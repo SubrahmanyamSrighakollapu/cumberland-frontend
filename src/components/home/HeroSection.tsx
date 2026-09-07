@@ -24,12 +24,12 @@ export default function HeroSection() {
         <HeroCarousel />
 
         {/* Hero Content Container */}
-        <div className="relative z-30 w-full max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-20 md:py-24 flex items-center justify-between gap-8">
+        <div className="relative z-30 w-full max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-20 md:py-24 flex items-center justify-between gap-8 pointer-events-none">
           {/* Left Column: Hero Text Content */}
-          <div className="max-w-[620px] text-white">
+          <div className="max-w-[620px] text-white pointer-events-none">
             {/* Glassmorphic Eyebrow Badge Entrance */}
             <Reveal direction="down" delay={50} duration={650}>
-              <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/15 backdrop-blur-md border border-white/30 text-white text-xs font-semibold tracking-wider uppercase mb-6 shadow-sm animate-pulse-border">
+              <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/15 backdrop-blur-md border border-white/30 text-white text-xs font-semibold tracking-wider uppercase mb-6 shadow-sm animate-pulse-border pointer-events-auto">
                 <span className="w-2.5 h-2.5 rounded-full bg-[#52c92d] animate-ping" />
                 <span className="text-[#f7f4ee]">Boutique Waterfront Retreat</span>
               </div>
@@ -55,7 +55,7 @@ export default function HeroSection() {
 
             {/* CTA Buttons Entrance */}
             <Reveal direction="up" delay={360} duration={750} distance={32}>
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pointer-events-auto">
                 <Link
                   href="#availability"
                   className="group relative inline-flex items-center justify-center gap-2.5 h-[54px] px-8 bg-gradient-to-r from-[#80563e] to-[#69452f] hover:from-[#69452f] hover:to-[#583824] active:scale-[0.98] text-white text-sm font-semibold tracking-wider rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#80563e]"
@@ -77,7 +77,7 @@ export default function HeroSection() {
           </div>
 
           {/* Right Column: High-Contrast Luxury Floating Glass Card (Desktop Only) */}
-          <div className="hidden lg:block z-30 max-w-[340px] shrink-0 animate-float-slow">
+          <div className="hidden lg:block z-30 max-w-[340px] shrink-0 animate-float-slow pointer-events-auto">
             <Reveal direction="left" delay={300} duration={800}>
               <div className="p-6 rounded-2xl bg-[#0b241f]/90 backdrop-blur-2xl border border-[#e8c5af]/40 shadow-[0_20px_60px_rgba(0,0,0,0.5)] text-white space-y-4">
                 <div className="flex items-center gap-3.5">
