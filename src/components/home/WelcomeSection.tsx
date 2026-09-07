@@ -6,7 +6,7 @@ import ImageReveal from "@/components/ui/ImageReveal";
 
 export default function WelcomeSection() {
   return (
-    <section className="w-full bg-[#f7f4ee] py-16 sm:py-20 lg:py-24 border-b border-[#d9d0c4]/40 overflow-hidden">
+    <section className="w-full bg-[#f7f4ee] pt-52 pb-16 sm:pt-32 sm:pb-20 lg:py-24 border-b border-[#d9d0c4]/40 overflow-hidden">
       <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
           {/* Left Column: Property Exterior Photograph with Horizontal Uncover Effect */}

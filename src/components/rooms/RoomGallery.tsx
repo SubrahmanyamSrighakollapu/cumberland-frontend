@@ -5,7 +5,6 @@ import Image from "next/image";
 import { RoomDetail, RoomGalleryImage } from "@/data/rooms";
 
 import ImageReveal from "@/components/ui/ImageReveal";
-import Reveal from "@/components/ui/Reveal";
 
 interface RoomGalleryProps {
   room?: RoomDetail;

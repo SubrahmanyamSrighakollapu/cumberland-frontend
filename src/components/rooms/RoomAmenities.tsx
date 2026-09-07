@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { RoomDetail, RoomAmenityItem } from "@/data/rooms";
+import { RoomDetail } from "@/data/rooms";
 import Reveal from "@/components/ui/Reveal";
 
 interface RoomAmenitiesProps {

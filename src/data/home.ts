@@ -40,14 +40,14 @@ export interface TravelTime {
 }
 
 export const homeHeroContent = {
-  headingLines: ["Make room for", "the good days."],
+  headingLines: ["Make room for ", "the good days."],
   description:
     "Boutique coastal stays, warmer days and unforgettable moments by the water.",
 };
 
 export const welcomeData = {
   eyebrow: "WELCOME",
-  headingLines: ["A relaxed stay", "by the water."],
+  headingLines: ["A relaxed stay ", "by the water."],
   paragraph1:
     "Cumberland Motor Inn is a boutique coastal escape where laid-back comfort meets the simple joys of waterfront living.",
   paragraph2:

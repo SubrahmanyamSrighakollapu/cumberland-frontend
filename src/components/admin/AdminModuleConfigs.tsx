@@ -6,28 +6,36 @@ import AdminModulePage, { ModuleConfig } from "./AdminModulePage";
 import { getAllRooms } from "@/data/rooms";
 import { galleryItems } from "@/data/gallery-media";
 import { amenitiesList } from "@/data/amenities";
-import { guestReviews, testimonialsDataset } from "@/data/testimonials";
+import { testimonialsDataset } from "@/data/testimonials";
 import { wineryList } from "@/data/wine-country";
 import { diningVenues } from "@/data/eat-and-drink";
 import { activityList } from "@/data/things-to-do";
 import { faqSectionData } from "@/data/contact";
 
+export interface AdminRow {
+  id: string | number;
+  [key: string]: unknown;
+}
+
 // ============== ROOMS ==============
 export function AdminRoomsPage() {
   const rooms = getAllRooms();
-  const rows = rooms.map((r: any) => ({
-    id: r.id,
-    name: r.name,
-    slug: r.slug,
-    guests: r.guestsLabel,
-    price: `${r.currency}${r.price}${r.priceUnit}`,
-    view: r.viewLabel || "—",
-    status: r.is_published === false ? "Draft" : "Published",
-    featured: r.is_featured || (r.name.includes("Cove") || r.name.includes("Ocean") || r.name.includes("Family")),
-    image: r.gallery[0]?.src,
-  }));
+  const rows: AdminRow[] = rooms.map((r) => {
+    const raw = r as unknown as { is_published?: boolean; is_featured?: boolean };
+    return {
+      id: r.id,
+      name: r.name,
+      slug: r.slug,
+      guests: r.guestsLabel,
+      price: `${r.currency}${r.price}${r.priceUnit}`,
+      view: r.viewLabel || "—",
+      status: raw.is_published === false ? "Draft" : "Published",
+      featured: raw.is_featured || (r.name.includes("Cove") || r.name.includes("Ocean") || r.name.includes("Family")),
+      image: r.gallery[0]?.src,
+    };
+  });
 
-  const config: ModuleConfig<any> = {
+  const config: ModuleConfig<AdminRow> = {
     title: "Rooms",
     description:
       "Create, edit and manage every accommodation room — pricing, description, gallery images, amenities, features and related rooms.",
@@ -44,27 +52,27 @@ export function AdminRoomsPage() {
         key: "name",
         label: "Room",
         width: "35%",
-        render: (row: any) => (
+        render: (row: AdminRow) => (
           <div className="flex items-center gap-3">
             <div className="relative w-14 h-14 rounded-lg overflow-hidden bg-stone-100 shrink-0 border border-[#D9D0C4]/50">
               {row.image ? (
-                <Image src={row.image} alt={row.name} fill className="object-cover" sizes="56px" />
+                <Image src={String(row.image)} alt={String(row.name)} fill className="object-cover" sizes="56px" />
               ) : null}
             </div>
             <div className="min-w-0">
-              <div className="font-semibold text-[#0F302A] font-manrope">{row.name}</div>
-              <div className="text-xs text-[#50544E]/60 font-manrope">/{row.slug}</div>
+              <div className="font-semibold text-[#0F302A] font-manrope">{String(row.name)}</div>
+              <div className="text-xs text-[#50544E]/60 font-manrope">/{String(row.slug)}</div>
             </div>
           </div>
         ),
       },
       { key: "guests", label: "Guests" },
-      { key: "price", label: "Price", render: (row: any) => <span className="font-semibold text-[#80563E]">{row.price}</span> },
+      { key: "price", label: "Price", render: (row: AdminRow) => <span className="font-semibold text-[#80563E]">{String(row.price)}</span> },
       { key: "view", label: "View" },
       {
         key: "featured",
         label: "Featured",
-        render: (row: any) =>
+        render: (row: AdminRow) =>
           row.featured ? (
             <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#80563E]/10 text-[#80563E] text-[11px] font-bold">
               <span className="w-1.5 h-1.5 rounded-full bg-[#80563E]" /> YES
@@ -82,7 +90,7 @@ export function AdminRoomsPage() {
 
 // ============== GALLERY ==============
 export function AdminGalleryPage() {
-  const rows = galleryItems.map((g: any) => ({
+  const rows: AdminRow[] = galleryItems.map((g) => ({
     id: g.id,
     title: g.title,
     category: g.category,
@@ -92,7 +100,7 @@ export function AdminGalleryPage() {
     route: g.route || "—",
   }));
 
-  const config: ModuleConfig<any> = {
+  const config: ModuleConfig<AdminRow> = {
     title: "Gallery",
     description:
       "Upload and organise all gallery imagery and videos. Assign categories, layouts and link to rooms, pages or experiences.",
@@ -109,9 +117,9 @@ export function AdminGalleryPage() {
         key: "image",
         label: "Preview",
         width: "15%",
-        render: (row: any) => (
+        render: (row: AdminRow) => (
           <div className="relative w-16 h-12 rounded-md overflow-hidden bg-stone-100 shrink-0 border border-[#D9D0C4]/50">
-            <Image src={row.image} alt={row.title} fill className="object-cover" sizes="64px" />
+            <Image src={String(row.image)} alt={String(row.title)} fill className="object-cover" sizes="64px" />
           </div>
         ),
       },
@@ -119,35 +127,35 @@ export function AdminGalleryPage() {
         key: "title",
         label: "Title",
         width: "30%",
-        render: (row: any) => (
+        render: (row: AdminRow) => (
           <div>
-            <div className="font-semibold text-[#0F302A] font-manrope">{row.title}</div>
-            <div className="text-xs text-[#50544E]/60 font-manrope">{row.route}</div>
+            <div className="font-semibold text-[#0F302A] font-manrope">{String(row.title)}</div>
+            <div className="text-xs text-[#50544E]/60 font-manrope">{String(row.route)}</div>
           </div>
         ),
       },
       {
         key: "category",
         label: "Category",
-        render: (row: any) => (
+        render: (row: AdminRow) => (
           <span className="inline-flex px-2.5 py-1 rounded-full bg-[#17352D]/8 text-[#17352D] text-[11px] font-bold font-manrope">
-            {row.category}
+            {String(row.category)}
           </span>
         ),
       },
       {
         key: "layout",
         label: "Layout",
-        render: (row: any) => (
-          <span className="text-xs font-semibold text-[#50544E] uppercase tracking-wider">{row.layout}</span>
+        render: (row: AdminRow) => (
+          <span className="text-xs font-semibold text-[#50544E] uppercase tracking-wider">{String(row.layout)}</span>
         ),
       },
       {
         key: "media",
         label: "Type",
-        render: (row: any) => (
+        render: (row: AdminRow) => (
           <span className={`px-2 py-0.5 rounded text-[11px] font-bold ${row.media === "video" ? "bg-rose-100 text-rose-700" : "bg-emerald-100 text-emerald-700"}`}>
-            {row.media.toUpperCase()}
+            {String(row.media).toUpperCase()}
           </span>
         ),
       },
@@ -160,14 +168,14 @@ export function AdminGalleryPage() {
 
 // ============== AMENITIES ==============
 export function AdminAmenitiesPage() {
-  const rows = amenitiesList.map((a: any) => ({
+  const rows: AdminRow[] = amenitiesList.map((a) => ({
     id: a.id,
     title: a.title,
     icon: a.iconName,
     description: a.description,
   }));
 
-  const config: ModuleConfig<any> = {
+  const config: ModuleConfig<AdminRow> = {
     title: "Amenities",
     description:
       "Manage property amenities such as pool, parking, Wi-Fi, EV charging, kitchenettes and BBQ area. These appear across home, about and room pages.",
@@ -184,14 +192,14 @@ export function AdminAmenitiesPage() {
         key: "icon",
         label: "Icon",
         width: "15%",
-        render: (row: any) => (
+        render: (row: AdminRow) => (
           <div className="w-10 h-10 rounded-lg bg-sky-500/10 text-sky-700 flex items-center justify-center capitalize font-bold text-sm">
-            {row.icon.slice(0, 2)}
+            {String(row.icon).slice(0, 2)}
           </div>
         ),
       },
-      { key: "title", label: "Title", render: (row: any) => <span className="font-semibold text-[#0F302A]">{row.title}</span> },
-      { key: "description", label: "Description", render: (row: any) => <span className="text-[#50544E]/80 text-sm">{row.description}</span> },
+      { key: "title", label: "Title", render: (row: AdminRow) => <span className="font-semibold text-[#0F302A]">{String(row.title)}</span> },
+      { key: "description", label: "Description", render: (row: AdminRow) => <span className="text-[#50544E]/80 text-sm">{String(row.description)}</span> },
     ],
     rows,
   };
@@ -201,7 +209,7 @@ export function AdminAmenitiesPage() {
 
 // ============== TESTIMONIALS ==============
 export function AdminTestimonialsPage() {
-  const rows = Object.values(testimonialsDataset).map((t: any) => ({
+  const rows: AdminRow[] = Object.values(testimonialsDataset).map((t) => ({
     id: t.id,
     name: t.name,
     date: t.date,
@@ -210,7 +218,7 @@ export function AdminTestimonialsPage() {
     avatar: t.avatar,
   }));
 
-  const config: ModuleConfig<any> = {
+  const config: ModuleConfig<AdminRow> = {
     title: "Testimonials",
     description:
       "Collect and manage guest reviews. Choose which testimonials feature on the home page and about page.",
@@ -227,14 +235,14 @@ export function AdminTestimonialsPage() {
         key: "avatar",
         label: "Guest",
         width: "35%",
-        render: (row: any) => (
+        render: (row: AdminRow) => (
           <div className="flex items-center gap-3">
             <div className="relative w-11 h-11 rounded-full overflow-hidden bg-stone-100 shrink-0 border-2 border-white shadow">
-              <Image src={row.avatar} alt={row.name} fill className="object-cover" sizes="44px" />
+              <Image src={String(row.avatar)} alt={String(row.name)} fill className="object-cover" sizes="44px" />
             </div>
             <div>
-              <div className="font-semibold text-[#0F302A] font-manrope">{row.name}</div>
-              <div className="text-xs text-[#50544E]/60 font-manrope">{row.date}</div>
+              <div className="font-semibold text-[#0F302A] font-manrope">{String(row.name)}</div>
+              <div className="text-xs text-[#50544E]/60 font-manrope">{String(row.date)}</div>
             </div>
           </div>
         ),
@@ -242,10 +250,10 @@ export function AdminTestimonialsPage() {
       {
         key: "rating",
         label: "Rating",
-        render: (row: any) => (
+        render: (row: AdminRow) => (
           <div className="flex items-center text-amber-500 gap-0.5">
             {Array.from({ length: 5 }).map((_, i) => (
-              <svg key={i} className={`w-4 h-4 ${i < row.rating ? "fill-current" : "fill-stone-200 stroke-stone-300"}`} viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
+              <svg key={i} className={`w-4 h-4 ${i < Number(row.rating) ? "fill-current" : "fill-stone-200 stroke-stone-300"}`} viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499L13.605 8.61L19.123 9.052L14.919 12.654L16.204 18.04L11.48 15.154L6.757 18.04L8.041 12.654L3.837 9.052L9.354 8.61L11.48 3.499z" />
               </svg>
             ))}
@@ -255,7 +263,7 @@ export function AdminTestimonialsPage() {
       {
         key: "quote",
         label: "Quote",
-        render: (row: any) => <span className="text-[#50544E]/80 italic line-clamp-2">{row.quote}</span>,
+        render: (row: AdminRow) => <span className="text-[#50544E]/80 italic line-clamp-2">{String(row.quote)}</span>,
       },
     ],
     rows,
@@ -266,7 +274,7 @@ export function AdminTestimonialsPage() {
 
 // ============== WINERIES ==============
 export function AdminWineriesPage() {
-  const rows = wineryList.map((w: any) => ({
+  const rows: AdminRow[] = wineryList.map((w) => ({
     id: w.id,
     name: w.name,
     location: w.location,
@@ -277,7 +285,7 @@ export function AdminWineriesPage() {
     featured: w.featured,
   }));
 
-  const config: ModuleConfig<any> = {
+  const config: ModuleConfig<AdminRow> = {
     title: "Wine Country",
     description:
       "Manage cellar doors, vineyards and winery listings. Set featured wineries, categories, hours and driving times.",
@@ -294,26 +302,26 @@ export function AdminWineriesPage() {
         key: "name",
         label: "Winery",
         width: "30%",
-        render: (row: any) => (
+        render: (row: AdminRow) => (
           <div className="flex items-center gap-3">
             <div className="relative w-12 h-12 rounded-lg overflow-hidden bg-stone-100 shrink-0 border border-[#D9D0C4]/50">
-              <Image src={row.image} alt={row.name} fill className="object-cover" sizes="48px" />
+              <Image src={String(row.image)} alt={String(row.name)} fill className="object-cover" sizes="48px" />
             </div>
             <div>
-              <div className="font-semibold text-[#0F302A] font-manrope">{row.name}</div>
-              <div className="text-xs text-[#50544E]/60 font-manrope">{row.location}</div>
+              <div className="font-semibold text-[#0F302A] font-manrope">{String(row.name)}</div>
+              <div className="text-xs text-[#50544E]/60 font-manrope">{String(row.location)}</div>
             </div>
           </div>
         ),
       },
       { key: "drive", label: "Drive" },
-      { key: "hours", label: "Hours", render: (row: any) => <span className="text-[#50544E]/80 text-sm">{row.hours}</span> },
+      { key: "hours", label: "Hours", render: (row: AdminRow) => <span className="text-[#50544E]/80 text-sm">{String(row.hours)}</span> },
       {
         key: "categories",
         label: "Categories",
-        render: (row: any) => (
+        render: (row: AdminRow) => (
           <div className="flex flex-wrap gap-1">
-            {(row.categories || "—").split(", ").map((c: string) => (
+            {String(row.categories || "—").split(", ").map((c: string) => (
               <span key={c} className="text-[10px] px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-800 font-bold">{c}</span>
             ))}
           </div>
@@ -322,7 +330,7 @@ export function AdminWineriesPage() {
       {
         key: "featured",
         label: "Featured",
-        render: (row: any) =>
+        render: (row: AdminRow) =>
           row.featured ? (
             <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-purple-500/15 text-purple-700 text-[11px] font-bold">
               ⭐ YES
@@ -340,7 +348,7 @@ export function AdminWineriesPage() {
 
 // ============== DINING ==============
 export function AdminDiningPage() {
-  const rows = diningVenues.map((d: any) => ({
+  const rows: AdminRow[] = diningVenues.map((d) => ({
     id: d.id,
     name: d.name,
     type: d.type,
@@ -352,7 +360,7 @@ export function AdminDiningPage() {
     onSite: d.isOnSite,
   }));
 
-  const config: ModuleConfig<any> = {
+  const config: ModuleConfig<AdminRow> = {
     title: "Eat & Drink",
     description:
       "Curate local cafés, restaurants and waterfront bars. Highlight featured venues, pricing tiers and proximity to the motel.",
@@ -369,14 +377,14 @@ export function AdminDiningPage() {
         key: "name",
         label: "Venue",
         width: "30%",
-        render: (row: any) => (
+        render: (row: AdminRow) => (
           <div className="flex items-center gap-3">
             <div className="relative w-12 h-12 rounded-lg overflow-hidden bg-stone-100 shrink-0 border border-[#D9D0C4]/50">
-              <Image src={row.image} alt={row.name} fill className="object-cover" sizes="48px" />
+              <Image src={String(row.image)} alt={String(row.name)} fill className="object-cover" sizes="48px" />
             </div>
             <div>
-              <div className="font-semibold text-[#0F302A] font-manrope">{row.name}</div>
-              <div className="text-xs text-[#50544E]/60 font-manrope">{row.cuisine}</div>
+              <div className="font-semibold text-[#0F302A] font-manrope">{String(row.name)}</div>
+              <div className="text-xs text-[#50544E]/60 font-manrope">{String(row.cuisine)}</div>
             </div>
           </div>
         ),
@@ -384,16 +392,16 @@ export function AdminDiningPage() {
       {
         key: "type",
         label: "Type",
-        render: (row: any) => (
-          <span className="px-2.5 py-1 rounded-full bg-rose-500/10 text-rose-800 text-[11px] font-bold">{row.type}</span>
+        render: (row: AdminRow) => (
+          <span className="px-2.5 py-1 rounded-full bg-rose-500/10 text-rose-800 text-[11px] font-bold">{String(row.type)}</span>
         ),
       },
-      { key: "price", label: "Price", render: (row: any) => <span className="font-bold text-[#0F302A]">{row.price}</span> },
+      { key: "price", label: "Price", render: (row: AdminRow) => <span className="font-bold text-[#0F302A]">{String(row.price)}</span> },
       { key: "travel", label: "Distance" },
       {
         key: "onSite",
         label: "On-site",
-        render: (row: any) =>
+        render: (row: AdminRow) =>
           row.onSite ? (
             <span className="px-2 py-0.5 rounded bg-[#52c92d]/15 text-[#17352D] text-[11px] font-bold">ON-SITE</span>
           ) : (
@@ -409,7 +417,7 @@ export function AdminDiningPage() {
 
 // ============== ACTIVITIES ==============
 export function AdminActivitiesPage() {
-  const rows = activityList.map((a: any) => ({
+  const rows: AdminRow[] = activityList.map((a) => ({
     id: a.id,
     name: a.name,
     location: a.location,
@@ -421,7 +429,7 @@ export function AdminActivitiesPage() {
     featured: a.featured,
   }));
 
-  const config: ModuleConfig<any> = {
+  const config: ModuleConfig<AdminRow> = {
     title: "Things to Do",
     description:
       "Create and manage activities, adventures and local attractions. Use categories to help guests easily filter by water, nature, family or culture.",
@@ -438,14 +446,14 @@ export function AdminActivitiesPage() {
         key: "name",
         label: "Activity",
         width: "30%",
-        render: (row: any) => (
+        render: (row: AdminRow) => (
           <div className="flex items-center gap-3">
             <div className="relative w-12 h-12 rounded-lg overflow-hidden bg-stone-100 shrink-0 border border-[#D9D0C4]/50">
-              <Image src={row.image} alt={row.name} fill className="object-cover" sizes="48px" />
+              <Image src={String(row.image)} alt={String(row.name)} fill className="object-cover" sizes="48px" />
             </div>
             <div>
-              <div className="font-semibold text-[#0F302A] font-manrope">{row.name}</div>
-              <div className="text-xs text-[#50544E]/60 font-manrope">{row.location}</div>
+              <div className="font-semibold text-[#0F302A] font-manrope">{String(row.name)}</div>
+              <div className="text-xs text-[#50544E]/60 font-manrope">{String(row.location)}</div>
             </div>
           </div>
         ),
@@ -453,7 +461,7 @@ export function AdminActivitiesPage() {
       { key: "drive", label: "Drive" },
       { key: "duration", label: "Duration" },
       { key: "audience", label: "Audience" },
-      { key: "price", label: "Price", render: (row: any) => <span className="font-bold text-[#0F302A]">{row.price}</span> },
+      { key: "price", label: "Price", render: (row: AdminRow) => <span className="font-bold text-[#0F302A]">{String(row.price)}</span> },
     ],
     rows,
   };
@@ -463,14 +471,14 @@ export function AdminActivitiesPage() {
 
 // ============== FAQ ==============
 export function AdminFaqPage() {
-  const rows = faqSectionData.items.map((f: any, i: number) => ({
+  const rows: AdminRow[] = faqSectionData.items.map((f, i: number) => ({
     id: f.id,
     question: f.question,
     answer: f.answer,
     order: i + 1,
   }));
 
-  const config: ModuleConfig<any> = {
+  const config: ModuleConfig<AdminRow> = {
     title: "FAQs",
     description:
       "Manage the frequently asked questions that appear on the contact page. Re-order and organise answers to match guest needs.",
@@ -483,12 +491,12 @@ export function AdminFaqPage() {
     accentColor: "#6366f1",
     accentBg: "bg-indigo-500/10 text-indigo-800",
     columns: [
-      { key: "order", label: "#", width: "8%", render: (row: any) => <span className="font-bold text-[#50544E]/60">#{row.order}</span> },
-      { key: "question", label: "Question", render: (row: any) => <span className="font-semibold text-[#0F302A]">{row.question}</span> },
+      { key: "order", label: "#", width: "8%", render: (row: AdminRow) => <span className="font-bold text-[#50544E]/60">#{String(row.order)}</span> },
+      { key: "question", label: "Question", render: (row: AdminRow) => <span className="font-semibold text-[#0F302A]">{String(row.question)}</span> },
       {
         key: "answer",
         label: "Answer",
-        render: (row: any) => <span className="text-[#50544E]/70 line-clamp-2">{row.answer}</span>,
+        render: (row: AdminRow) => <span className="text-[#50544E]/70 line-clamp-2">{String(row.answer)}</span>,
       },
     ],
     rows,
@@ -511,7 +519,7 @@ export function AdminContentPage({
   accentColor: string;
   blocks: { label: string; hint: string; fields?: string[]; value?: string; color?: string }[];
 }) {
-  const Icon: any = {
+  const Icon: Record<string, React.ReactNode> = {
     home: (
       <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.75}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12l8.954-8.955a1.5 1.5 0 012.121 0L22.5 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
@@ -543,7 +551,7 @@ export function AdminContentPage({
         <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
       </svg>
     ),
-  }[iconName];
+  };
 
   return (
     <div className="space-y-6">
@@ -557,7 +565,7 @@ export function AdminContentPage({
             className="w-14 h-14 rounded-xl flex items-center justify-center shrink-0"
             style={{ backgroundColor: `${accentColor}30`, color: "white" }}
           >
-            {Icon}
+            {Icon[iconName]}
           </div>
           <div>
             <h2 className="font-cormorant text-3xl sm:text-4xl font-semibold leading-tight">{title}</h2>

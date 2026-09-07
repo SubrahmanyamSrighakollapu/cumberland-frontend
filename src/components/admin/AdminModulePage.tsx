@@ -26,7 +26,7 @@ export interface ModuleConfig<T> {
   onDelete?: (row: T) => void;
 }
 
-function defaultRender<T>(row: any, key: string) {
+function defaultRender(row: Record<string, unknown>, key: string) {
   const v = row[key];
   if (typeof v === "boolean") return v ? "Yes" : "No";
   if (v === null || v === undefined) return "—";
@@ -85,9 +85,9 @@ export default function AdminModulePage<T extends { id: string | number }>({
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {[
           { label: "Total Items", value: config.rows.length, color: "text-[#0F302A]" },
-          { label: "Published", value: config.rows.filter((r: any) => r.is_published !== false).length, color: "text-[#52c92d]" },
-          { label: "Featured", value: config.rows.filter((r: any) => r.featured || r.is_featured).length, color: "text-[#80563E]" },
-          { label: "Draft", value: config.rows.filter((r: any) => r.is_published === false).length, color: "text-[#50544E]" },
+          { label: "Published", value: config.rows.filter((r: Record<string, unknown>) => r.is_published !== false).length, color: "text-[#52c92d]" },
+          { label: "Featured", value: config.rows.filter((r: Record<string, unknown>) => Boolean(r.featured || r.is_featured)).length, color: "text-[#80563E]" },
+          { label: "Draft", value: config.rows.filter((r: Record<string, unknown>) => r.is_published === false).length, color: "text-[#50544E]" },
         ].map((s) => (
           <div key={s.label} className="rounded-xl bg-white border border-[#D9D0C4]/60 p-4">
             <div className="text-xs text-[#50544E]/60 uppercase tracking-wider font-semibold font-manrope">

@@ -88,10 +88,11 @@ export const AdminLoginForm: React.FC = () => {
       }
 
       throw new Error(res?.message || "Login failed");
-    } catch (err: any) {
+    } catch (err) {
+      const error = err as { message?: string; data?: { message?: string } };
       const msg =
-        err?.data?.message ||
-        err?.message ||
+        error?.data?.message ||
+        error?.message ||
         "Could not sign in. Ensure the backend is running (npm run dev) and credentials are correct.";
       setStatusMessage({ type: "error", text: msg });
     } finally {

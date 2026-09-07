@@ -73,6 +73,5 @@ export async function apiFetch(endpoint: string, options: ApiClientOptions = {})
     throw err;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return data;
 }

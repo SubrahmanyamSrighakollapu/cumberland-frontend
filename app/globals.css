@@ -40,6 +40,8 @@
 
   --font-serif: var(--font-serif);
   --font-sans: var(--font-sans);
+  --font-cormorant: var(--font-serif);
+  --font-manrope: var(--font-sans);
 }
 
 body {

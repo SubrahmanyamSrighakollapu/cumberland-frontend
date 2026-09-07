@@ -47,19 +47,18 @@ function readInitial(): StoredInit {
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const initial = readInitial();
-  const [token, setToken] = useState<string | null>(initial.token);
-  const [user, setUser] = useState<AdminUser | null>(initial.user);
-  const [isLoading, setIsLoading] = useState(!initial.loaded);
+  const [token, setToken] = useState<string | null>(null);
+  const [user, setUser] = useState<AdminUser | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   React.useEffect(() => {
-    if (!initial.loaded) {
-      const data = readInitial();
-      if (data.token) setToken(data.token);
-      if (data.user) setUser(data.user);
+    const data = readInitial();
+    queueMicrotask(() => {
+      setToken(data.token);
+      setUser(data.user);
       setIsLoading(false);
-    }
-  }, [initial.loaded]);
+    });
+  }, []);
 
   const login = (newToken: string, newUser: AdminUser) => {
     if (typeof window !== "undefined") {

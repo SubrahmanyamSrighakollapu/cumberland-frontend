@@ -24,7 +24,7 @@ export default function HeroSection() {
         <HeroCarousel />
 
         {/* Hero Content Container */}
-        <div className="relative z-30 w-full max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-24 flex items-center justify-between gap-8">
+        <div className="relative z-30 w-full max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-20 md:py-24 flex items-center justify-between gap-8">
           {/* Left Column: Hero Text Content */}
           <div className="max-w-[620px] text-white">
             {/* Glassmorphic Eyebrow Badge Entrance */}
@@ -124,7 +124,7 @@ export default function HeroSection() {
       </div>
 
       {/* Floating Availability Bar (Sits on seam between Hero & Welcome section) */}
-      <div className="relative z-40 max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 -mt-14 sm:-mt-16">
+      <div className="relative z-40 max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 -mb-48 sm:-mb-24 md:-mb-16">
         <AvailabilityBar />
       </div>
     </section>

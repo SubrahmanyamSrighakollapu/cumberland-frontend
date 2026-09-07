@@ -24,7 +24,9 @@ export function useScrollReveal(
   const [isRevealed, setIsRevealed] = useState(false);
 
   useEffect(() => {
-    setIsHydrated(true);
+    queueMicrotask(() => {
+      setIsHydrated(true);
+    });
 
     const element = targetRef.current;
     if (!element || typeof IntersectionObserver === "undefined") {

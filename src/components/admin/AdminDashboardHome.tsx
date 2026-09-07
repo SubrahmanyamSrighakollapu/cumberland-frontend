@@ -164,7 +164,7 @@ export default function AdminDashboardHome() {
       try {
         const res = await apiFetch("/dashboard/stats", { auth: true });
         if (!cancelled && res?.data) setStats(res.data);
-      } catch (e) {
+      } catch {
         if (!cancelled) setStats(DEFAULT_STATS);
       } finally {
         if (!cancelled) setLoading(false);
@@ -244,7 +244,7 @@ export default function AdminDashboardHome() {
 
         <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
           {STAT_CARDS.map((card) => {
-            const value = (stats as any)[card.key] ?? 0;
+            const value = (stats as unknown as Record<string, number>)[card.key] ?? 0;
             return (
               <Link
                 key={card.key}
