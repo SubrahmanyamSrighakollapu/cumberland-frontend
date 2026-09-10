@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { RoomDetail } from "@/data/rooms";
+import { BOOK_DIRECT_URL } from "@/utils/siteLinks";
 
 interface RoomReservationCardProps {
   room: RoomDetail;
@@ -147,12 +148,14 @@ export default function RoomReservationCard({
 
         {/* Action Button */}
         <div className="pt-2">
-          <button
-            type="submit"
+          <a
+            href={BOOK_DIRECT_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="w-full flex items-center justify-center h-12 bg-[#80563e] hover:bg-[#69452f] text-white text-xs sm:text-sm font-semibold tracking-wider uppercase rounded-lg transition-colors shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#80563e]"
           >
             CHECK AVAILABILITY &rarr;
-          </button>
+          </a>
         </div>
       </form>
 
@@ -165,10 +168,6 @@ export default function RoomReservationCard({
           From {room.currency}
           {room.price} <span className="text-xs font-sans font-normal text-[#f7f4ee]/80">{room.priceUnit}</span>
         </div>
-
-        <p className="text-[11px] text-[#f7f4ee]/60 font-sans italic mt-3">
-          Availability preview — no booking is made
-        </p>
       </div>
 
       {/* Availability Preview Summary Modal */}
@@ -237,17 +236,19 @@ export default function RoomReservationCard({
             </div>
 
             <p className="text-xs text-[#50544e] font-sans leading-relaxed mb-6">
-              Availability is not connected yet. Please contact our team to confirm these dates and secure your reservation.
+              Review details, then proceed to book your stay on our secure reservations site.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3">
-              <Link
-                href="/contact"
+              <a
+                href={BOOK_DIRECT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => setIsSummaryModalOpen(false)}
                 className="flex-1 inline-flex items-center justify-center px-4 py-2.5 bg-[#80563e] hover:bg-[#69452f] text-white text-xs font-semibold uppercase tracking-wider rounded-lg transition-colors text-center"
               >
-                Contact Our Team &rarr;
-              </Link>
+                Book Your Stay &rarr;
+              </a>
               <button
                 onClick={() => setIsSummaryModalOpen(false)}
                 className="px-4 py-2.5 bg-[#f7f4ee] hover:bg-[#e9efe8] text-[#0f302a] text-xs font-semibold uppercase tracking-wider rounded-lg transition-colors"

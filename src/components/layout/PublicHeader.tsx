@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { BOOK_DIRECT_URL } from "@/utils/siteLinks";
 
 export default function PublicHeader() {
   const pathname = usePathname();
@@ -235,15 +236,17 @@ export default function PublicHeader() {
 
         {/* CTA Book Button (Desktop) */}
         <div className="hidden lg:flex items-center">
-          <Link
-            href="#availability"
+          <a
+            href={BOOK_DIRECT_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="group inline-flex items-center justify-center gap-1.5 h-[46px] px-6 bg-[#80563e] hover:bg-[#69452f] active:bg-[#583824] text-white text-sm font-semibold tracking-wider rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#80563e]"
           >
             <span>BOOK YOUR STAY</span>
             <span className="inline-block transition-transform duration-200 group-hover:translate-x-1">
               &rarr;
             </span>
-          </Link>
+          </a>
         </div>
 
         {/* Hamburger Toggle (Mobile / Tablet) */}
@@ -385,13 +388,15 @@ export default function PublicHeader() {
           </div>
 
           <div className="mt-8 pt-4 border-t border-[#17352d]">
-            <Link
-              href="#availability"
+            <a
+              href={BOOK_DIRECT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               onClick={closeMenus}
               className="w-full flex items-center justify-center h-[50px] bg-[#80563e] hover:bg-[#69452f] text-white text-base font-semibold tracking-wider rounded-lg transition-colors"
             >
               BOOK YOUR STAY &rarr;
-            </Link>
+            </a>
           </div>
         </div>
       )}

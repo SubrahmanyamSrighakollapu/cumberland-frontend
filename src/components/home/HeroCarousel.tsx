@@ -2,46 +2,55 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
-import { heroSlides } from "@/data/gallery-media";
 
-export default function HeroCarousel() {
+export interface HeroCarouselSlide {
+  id: string | number;
+  image: string;
+  alt: string;
+}
+
+export interface HeroCarouselProps {
+  slides: HeroCarouselSlide[];
+  onIndexChange?: (index: number) => void;
+  autoplayMs?: number;
+}
+
+export default function HeroCarousel({
+  slides,
+  onIndexChange,
+  autoplayMs = 5500,
+}: HeroCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isUserPaused, setIsUserPaused] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
-  const touchStartX = useRef<number | null>(null);
+  const len = Math.max(slides?.length ?? 0, 0);
+  const safeIndex = len > 0 ? ((activeIndex % len) + len) % len : 0;
+
+  const isPaused = isHoverPaused || isUserPaused || len <= 1;
+
+  const commitIndex = useCallback(
+    (next: number) => {
+      if (!len) return;
+      const clamped = ((next % len) + len) % len;
+      setActiveIndex(clamped);
+      try {
+        onIndexChange?.(clamped);
+      } catch (_) {
+        /* ignore */
+      }
+    },
+    [len, onIndexChange]
+  );
 
   const nextSlide = useCallback(() => {
-    setActiveIndex((prev) => (prev + 1) % heroSlides.length);
-  }, []);
+    commitIndex(safeIndex + 1);
+  }, [commitIndex, safeIndex]);
 
   const prevSlide = useCallback(() => {
-    setActiveIndex(
-      (prev) => (prev - 1 + heroSlides.length) % heroSlides.length
-    );
-  }, []);
+    commitIndex(safeIndex - 1);
+  }, [commitIndex, safeIndex]);
 
-  // Touch Swipe Handlers for Mobile background
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
-  };
-
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX.current === null) return;
-    const touchEndX = e.changedTouches[0].clientX;
-    const diffX = touchStartX.current - touchEndX;
-
-    // Minimum swipe threshold of 40px
-    if (Math.abs(diffX) > 40) {
-      if (diffX > 0) {
-        nextSlide();
-      } else {
-        prevSlide();
-      }
-    }
-    touchStartX.current = null;
-  };
-
-  // Continuous autoplay carousel (every 5.5s unless explicitly paused by user)
+  // Continuous autoplay carousel (every autoplayMs)
   useEffect(() => {
     if (isUserPaused) {
       if (timerRef.current) clearInterval(timerRef.current);
@@ -50,15 +59,15 @@ export default function HeroCarousel() {
 
     timerRef.current = setInterval(() => {
       nextSlide();
-    }, 5500);
+    }, autoplayMs);
 
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [isUserPaused, activeIndex, nextSlide]);
+  }, [isPaused, nextSlide, autoplayMs]);
 
   const handleManualSelect = (index: number) => {
-    setActiveIndex(index);
+    commitIndex(index);
   };
 
   const toggleUserPause = (e?: React.SyntheticEvent) => {
@@ -87,11 +96,11 @@ export default function HeroCarousel() {
       aria-label="Cumberland Motor Inn Showcase"
     >
       {/* Slides Container */}
-      {heroSlides.map((slide, index) => {
-        const isActive = index === activeIndex;
+      {slides.map((slide, index) => {
+        const isActive = index === safeIndex;
         return (
           <div
-            key={slide.id}
+            key={String(slide.id) + `-${index}`}
             className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${
               isActive ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
             }`}
@@ -217,22 +226,14 @@ export default function HeroCarousel() {
 
         <div className="w-[1px] h-3.5 bg-white/30" />
 
-        {/* Slide Dots Indicators */}
-        <div className="flex items-center gap-1.5 sm:gap-2">
-          {heroSlides.map((slide, index) => {
-            const isActive = index === activeIndex;
+        {/* Indicators */}
+        <div className="flex items-center gap-2">
+          {slides.map((slide, index) => {
+            const isActive = index === safeIndex;
             return (
               <button
-                key={slide.id}
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleManualSelect(index);
-                }}
-                onTouchEnd={(e) => {
-                  e.stopPropagation();
-                  handleManualSelect(index);
-                }}
+                key={String(slide.id) + `-${index}`}
+                onClick={() => handleManualSelect(index)}
                 aria-label={`Go to slide ${index + 1}`}
                 aria-current={isActive ? "true" : "false"}
                 className={`h-2.5 rounded-full transition-all duration-500 touch-manipulation cursor-pointer ${

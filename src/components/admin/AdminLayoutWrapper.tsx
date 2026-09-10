@@ -16,14 +16,19 @@ export default function AdminLayoutWrapper({
   const { user, logout, isAuthenticated, isLoading } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (isMounted && !isLoading && !isAuthenticated) {
       router.replace("/admin/login");
     }
-  }, [isAuthenticated, isLoading, router]);
+  }, [isMounted, isAuthenticated, isLoading, router]);
 
-  if (isLoading || !isAuthenticated) {
+  if (!isMounted || isLoading || !isAuthenticated) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#f7f4ee]">
         <div className="flex flex-col items-center gap-3">

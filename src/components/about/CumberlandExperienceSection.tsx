@@ -74,7 +74,7 @@ export default function CumberlandExperienceSection() {
 
         {/* Two-Column Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
-          {/* Left Column: Waterfront Pool Image (~58% width) */}
+          {/* Left Column: Motel Grounds Image (~58% width) */}
           <div className="lg:col-span-7">
             <ImageReveal overlayColor="#f7f4ee" duration={900}>
               <div className="relative aspect-[4/3] w-full rounded-xl overflow-hidden shadow-sm">

@@ -1,7 +1,7 @@
 "use client";
 
-import { AdminGalleryPage } from "@/components/admin/AdminModuleConfigs";
+import AdminGalleryModule from "@/components/admin/AdminGalleryModule";
 
 export default function GalleryDashboardPage() {
-  return <AdminGalleryPage />;
+  return <AdminGalleryModule />;
 }

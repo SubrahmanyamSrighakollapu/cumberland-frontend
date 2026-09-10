@@ -1,7 +1,7 @@
 "use client";
 
-import { AdminAmenitiesPage } from "@/components/admin/AdminModuleConfigs";
+import AdminAmenitiesModule from "@/components/admin/AdminAmenitiesModule";
 
 export default function AmenitiesDashboardPage() {
-  return <AdminAmenitiesPage />;
+  return <AdminAmenitiesModule />;
 }

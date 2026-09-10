@@ -26,50 +26,50 @@ export const aboutHeroData = {
   breadcrumbHome: "Home",
   breadcrumbCurrent: "About Us",
   eyebrow: "ABOUT CUMBERLAND",
-  headingLines: ["A welcoming stay,", "made memorable."],
+  headingLines: ["Your comfortable base", "in Cessnock."],
   description:
-    "Relaxed coastal comfort, genuine hospitality and a great base for your next adventure.",
+    "Welcome to Cumberland Motor Inn, where a warm welcome and comfortable accommodation come together in the heart of Cessnock.",
   image: "/images/content-image-two.png",
-  alt: "Cumberland Motor Inn exterior at sunset with warm evening lighting",
+  alt: "Cumberland Motor Inn exterior in Cessnock with warm lighting",
 };
 
 export const ourStoryData = {
   eyebrow: "OUR STORY",
-  headingLines: ["Comfort, character and", "genuine hospitality."],
+  headingLines: ["Welcome to", "Cumberland Motor Inn."],
   paragraph1:
-    "Cumberland Motor Inn began with a simple idea — to create a relaxed and welcoming place where travellers can feel at home while exploring our beautiful coastal region.",
+    "Welcome to Cumberland Motor Inn, where a warm welcome and comfortable accommodation come together in the heart of Cessnock.",
   paragraph2:
-    "Family-owned and operated, we take pride in offering comfortable accommodation, friendly service and local knowledge to help you make the most of your stay.",
+    "Whether you're visiting the Hunter Valley for a relaxing weekend away, exploring the region's renowned wineries and local attractions, travelling with family, or here for work or an event, our motel provides a convenient place to stay and unwind.",
   paragraph3:
-    "Whether you’re here for a weekend escape, a family holiday or a longer adventure, we look forward to welcoming you.",
-  accentLine: "Welcoming guests since 1998",
+    "With comfortable rooms, practical amenities and an outdoor swimming pool, we make it easy to relax after a day of discovering everything the Hunter Valley has to offer. Located close to Cessnock's shops, restaurants and local attractions, Cumberland Motor Inn puts you within easy reach of the vineyards, dining experiences and events that make the Hunter Valley such a popular destination.",
+  accentLine: "Come for the Hunter Valley. Stay for the comfort.",
   image: "/images/content-image-one.png",
-  alt: "Landscaped Cumberland Motor Inn courtyard with parasol tables",
+  alt: "Landscaped Cumberland Motor Inn grounds in Cessnock",
 };
 
 export const aboutStatsData: AboutStat[] = [
   {
-    id: "years",
-    value: "27+",
-    label: "Years of Hospitality",
+    id: "rating",
+    value: "4.5/5",
+    label: "Guest Rating",
     iconName: "calendar",
   },
   {
+    id: "location",
+    value: "Cessnock",
+    label: "Heart of Hunter Valley",
+    iconName: "pin",
+  },
+  {
     id: "rooms",
-    value: "24",
+    value: "28",
     label: "Comfortable Rooms",
     iconName: "bed",
   },
   {
-    id: "location",
-    value: "Prime",
-    label: "Central Location",
-    iconName: "pin",
-  },
-  {
-    id: "service",
-    value: "Guest-Focused",
-    label: "Service",
+    id: "pool",
+    value: "Salt-Water",
+    label: "Outdoor Pool",
     iconName: "guests",
   },
 ];
@@ -78,25 +78,25 @@ export const whyChooseUsData: WhyChooseUsFeature[] = [
   {
     id: "welcome",
     title: "Warm Welcome",
-    description: "Friendly, local hosts who care about your stay.",
+    description: "Friendly hosts who care about your stay.",
     iconName: "guests",
   },
   {
     id: "rooms",
     title: "Comfortable Rooms",
-    description: "Stylish, well-appointed rooms for a great night’s rest.",
+    description: "Spacious, air-conditioned rooms for a great night’s rest.",
     iconName: "bed",
   },
   {
     id: "location",
     title: "Convenient Location",
-    description: "Close to beaches, wineries and local attractions.",
+    description: "Close to wineries, dining, parks, state forests and local attractions.",
     iconName: "pin",
   },
   {
     id: "facilities",
-    title: "Thoughtful Facilities",
-    description: "Everything you need for a relaxing and easy stay.",
+    title: "Practical Amenities",
+    description: "Outdoor swimming pool, free parking, free Wi-Fi, and guest laundry.",
     iconName: "coffee",
   },
 ];
@@ -105,9 +105,9 @@ export const cumberlandExperienceData = {
   eyebrow: "THE CUMBERLAND EXPERIENCE",
   headingLines: ["Easy stays,", "thoughtfully delivered."],
   description:
-    "At Cumberland Motor Inn, we make it easy to relax, explore and enjoy everything our beautiful region has to offer. From comfortable rooms to helpful local tips, we’re here to ensure your stay is seamless and memorable.",
+    "At Cumberland Motor Inn, we make it easy to relax, explore and enjoy everything the Hunter Valley has to offer. From comfortable rooms to helpful local tips, we’re here to ensure your stay is seamless and memorable.",
   image: "/images/content-image-three.png",
-  alt: "Coastal pool at Cumberland Motor Inn overlooking the ocean during golden hour",
+  alt: "Outdoor salt-water swimming pool at Cumberland Motor Inn",
   benefits: [
     {
       id: "rest",
@@ -118,7 +118,7 @@ export const cumberlandExperienceData = {
     {
       id: "explore",
       title: "Explore the Region",
-      description: "Beaches, wineries and hidden gems all close by.",
+      description: "Wineries, dining, golf, state forests and local events all close by.",
       iconName: "compass",
     },
     {
@@ -132,12 +132,12 @@ export const cumberlandExperienceData = {
 };
 
 export const aboutAmenitiesData = [
-  { id: "wifi", label: amenitiesDataset.wifi?.title || "Free Wi-Fi", icon: "wifi" },
-  { id: "parking", label: amenitiesDataset.parking?.title || "Parking", icon: "parking" },
-  { id: "ev", label: amenitiesDataset.ev?.title || "EV Charging", icon: "ev" },
-  { id: "pool", label: amenitiesDataset.pool?.title || "Pool", icon: "pool" },
-  { id: "kitchen", label: amenitiesDataset.kitchen?.title || "Kitchenette Rooms", icon: "kitchen" },
-  { id: "bbq", label: amenitiesDataset.bbq?.title || "BBQ Area", icon: "bbq" },
+  { id: "wifi", label: amenitiesDataset.wifi?.title || "Free WiFi", icon: "wifi" },
+  { id: "parking", label: amenitiesDataset.parking?.title || "Free Parking", icon: "parking" },
+  { id: "pool", label: amenitiesDataset.pool?.title || "Outdoor Swimming Pool", icon: "pool" },
+  { id: "ev", label: amenitiesDataset.ev?.title || "Non-Smoking Rooms", icon: "ev" },
+  { id: "kitchen", label: amenitiesDataset.kitchen?.title || "Accessible Facilities", icon: "kitchen" },
+  { id: "bbq", label: amenitiesDataset.bbq?.title || "Family Rooms", icon: "bbq" },
 ];
 
 export const featuredTestimonialId = "review-sarah-l";
@@ -148,7 +148,7 @@ const sarahTestimonial: Review = testimonialsDataset[featuredTestimonialId] || {
   date: "March 2025",
   rating: 5,
   quote:
-    "“The perfect base for exploring the coast. Clean, comfortable and the friendliest staff. We’ll definitely be back!”",
+    "“The perfect base for exploring the Hunter Valley. Clean, comfortable and the friendliest staff. We’ll definitely be back!”",
   avatar: "/images/room-one.png",
 };
 
@@ -160,13 +160,13 @@ export const aboutTestimonialData = {
   date: sarahTestimonial.date,
   rating: sarahTestimonial.rating,
   image: sarahTestimonial.avatar,
-  alt: sarahTestimonial.avatarAlt || "King guest room with private balcony overlooking coastal scenery",
+  alt: sarahTestimonial.avatarAlt || "Guest room at Cumberland Motor Inn Cessnock",
 };
 
 export const aboutCtaData = {
-  heading: "Come and experience Cumberland for yourself.",
+  heading: "Come for the Hunter Valley. Stay for the comfort.",
   description:
-    "Relaxing stays, beautiful surroundings and memories waiting to be made.",
+    "Book your Cessnock stay and enjoy convenient access to Hunter Valley wineries, dining and attractions.",
   viewRoomsRoute: "/rooms",
   bookStayRoute: "/#availability",
 };

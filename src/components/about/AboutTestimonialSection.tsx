@@ -1,9 +1,55 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { aboutTestimonialData } from "@/data/about";
 import Reveal from "@/components/ui/Reveal";
 import ImageReveal from "@/components/ui/ImageReveal";
+import { apiFetch } from "@/utils/apiClient";
+
+interface TestimonialOverride {
+  rating: number;
+  quote: string;
+  author: string;
+  date: string;
+}
 
 export default function AboutTestimonialSection() {
+  const [featured, setFeatured] = useState<TestimonialOverride | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const load = async () => {
+      try {
+        const res: any = await apiFetch("/testimonials?published_only=true&featured_only=true&limit=5");
+        if (cancelled) return;
+        const items: any[] = res?.data?.items ?? res?.items ?? [];
+        if (items.length > 0) {
+          const item = items.length === 1 ? items[0] : items[Math.floor(Math.random() * items.length)];
+          setFeatured({
+            rating: item.rating ?? 5,
+            quote: item.quote,
+            author: item.name,
+            date: item.dateText || item.date_text || item.date || "",
+          });
+        }
+      } catch {
+        // swallow, keep fallback
+      }
+    };
+
+    load();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const rating = featured?.rating ?? aboutTestimonialData.rating;
+  const quote = featured?.quote ?? aboutTestimonialData.quote;
+  const author = featured?.author ?? aboutTestimonialData.author;
+  const date = featured?.date ?? aboutTestimonialData.date;
+
   return (
     <section className="w-full bg-[#f7f4ee] py-16 sm:py-20 lg:py-24 border-b border-[#d9d0c4]/40 overflow-hidden">
       <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8">
@@ -28,9 +74,9 @@ export default function AboutTestimonialSection() {
                 {/* 5 Copper Stars */}
                 <div
                   className="flex items-center gap-1 text-[#80563e] mb-4"
-                  aria-label={`Rating: ${aboutTestimonialData.rating} out of 5 stars`}
+                  aria-label={`Rating: ${rating} out of 5 stars`}
                 >
-                  {[...Array(aboutTestimonialData.rating)].map((_, i) => (
+                  {[...Array(rating)].map((_, i) => (
                     <svg
                       key={i}
                       className="w-4 h-4 fill-current"
@@ -44,17 +90,17 @@ export default function AboutTestimonialSection() {
 
                 {/* Quote */}
                 <p className="text-base sm:text-[17px] text-[#20382f] leading-relaxed italic mb-6 font-sans">
-                  {aboutTestimonialData.quote}
+                  {quote}
                 </p>
 
                 {/* Author Info */}
                 <div className="flex items-center gap-3 pt-4 border-t border-[#f7f4ee]">
                   <span className="w-6 h-[2px] bg-[#80563e]" />
                   <span className="text-sm font-semibold text-[#20382f]">
-                    {aboutTestimonialData.author}
+                    {author}
                   </span>
                   <span className="text-xs text-[#50544e]">
-                    {aboutTestimonialData.date}
+                    {date}
                   </span>
                 </div>
               </div>

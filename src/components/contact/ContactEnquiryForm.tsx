@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import Link from "next/link";
 import Reveal from "@/components/ui/Reveal";
+import { apiFetch } from "@/utils/apiClient";
 
 interface FormErrors {
   fullName?: string;
@@ -11,6 +12,8 @@ interface FormErrors {
   privacy?: string;
   dates?: string;
 }
+
+type FeedbackType = "success" | "error" | null;
 
 export default function ContactEnquiryForm() {
   const [formData, setFormData] = useState({
@@ -26,6 +29,8 @@ export default function ContactEnquiryForm() {
 
   const [errors, setErrors] = useState<FormErrors>({});
   const [feedback, setFeedback] = useState<string | null>(null);
+  const [feedbackType, setFeedbackType] = useState<FeedbackType>(null);
+  const [submitting, setSubmitting] = useState(false);
 
   // Field Refs for focusing first invalid field on error
   const fullNameRef = useRef<HTMLInputElement>(null);
@@ -79,13 +84,58 @@ export default function ContactEnquiryForm() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setFeedback(null);
+    setFeedbackType(null);
 
-    if (validate()) {
-      // Display neutral static prototype feedback
-      setFeedback("Preview only — your enquiry has not been sent.");
+    if (!validate()) return;
+
+    setSubmitting(true);
+    try {
+      const body = {
+        full_name: formData.fullName,
+        email: formData.email,
+        phone: formData.phone || null,
+        subject: formData.enquiryType,
+        message: formData.message,
+        enquiry_type: formData.enquiryType,
+        arrival_date: formData.arrivalDate || null,
+        departure_date: formData.departureDate || null,
+      };
+
+      const res = await apiFetch("/contact", {
+        method: "POST",
+        body: JSON.stringify(body),
+      });
+
+      const successMsg =
+        (res as any)?.message ||
+        (res as any)?.data?.message ||
+        "Thank you! Your enquiry has been sent. We'll be in touch soon.";
+
+      setFeedbackType("success");
+      setFeedback(successMsg);
+
+      setFormData({
+        fullName: "",
+        email: "",
+        phone: "",
+        enquiryType: "General Enquiry",
+        arrivalDate: "",
+        departureDate: "",
+        message: "",
+        privacyAgreed: false,
+      });
+    } catch (err: any) {
+      const errorMsg =
+        err?.message ||
+        err?.data?.message ||
+        "Sorry, something went wrong. Please try again or call us directly.";
+      setFeedbackType("error");
+      setFeedback(errorMsg);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -104,13 +154,24 @@ export default function ContactEnquiryForm() {
           <div
             role="status"
             aria-live="polite"
-            className="mb-6 p-4 rounded-md bg-[#e9efe8] border border-[#52c92d]/40 text-[#20382f] text-sm font-medium flex items-center justify-between"
+            className={`mb-6 p-4 rounded-md text-sm font-medium flex items-center justify-between ${
+              feedbackType === "error"
+                ? "bg-red-50 border border-red-400/40 text-red-700"
+                : "bg-[#e9efe8] border border-[#52c92d]/40 text-[#20382f]"
+            }`}
           >
             <span>{feedback}</span>
             <button
               type="button"
-              onClick={() => setFeedback(null)}
-              className="text-xs text-[#50544e] hover:text-[#20382f] underline ml-2"
+              onClick={() => {
+                setFeedback(null);
+                setFeedbackType(null);
+              }}
+              className={`text-xs underline ml-2 ${
+                feedbackType === "error"
+                  ? "text-red-500 hover:text-red-700"
+                  : "text-[#50544e] hover:text-[#20382f]"
+              }`}
             >
               Dismiss
             </button>
@@ -337,9 +398,17 @@ export default function ContactEnquiryForm() {
           <div className="pt-2">
             <button
               type="submit"
-              className="w-full h-[50px] bg-[#80563e] hover:bg-[#69452f] text-white text-xs font-semibold tracking-wider uppercase rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#80563e]"
+              disabled={submitting}
+              className="w-full h-[50px] bg-[#80563e] hover:bg-[#69452f] text-white text-xs font-semibold tracking-wider uppercase rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#80563e] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:bg-[#80563e] inline-flex items-center justify-center gap-2"
             >
-              SEND ENQUIRY &rarr;
+              {submitting ? (
+                <>
+                  <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" aria-hidden="true" />
+                  SENDING...
+                </>
+              ) : (
+                <>SEND ENQUIRY &rarr;</>
+              )}
             </button>
           </div>
         </form>

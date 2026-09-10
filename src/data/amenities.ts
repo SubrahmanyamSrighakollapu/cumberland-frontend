@@ -8,38 +8,38 @@ export interface Amenity {
 export const amenitiesDataset: Record<string, Amenity> = {
   pool: {
     id: "pool",
-    title: "Heated Pool",
-    description: "Swim year-round with ocean views.",
+    title: "Outdoor Swimming Pool",
+    description: "Relax, refresh and unwind.",
     iconName: "pool",
   },
   parking: {
     id: "parking",
     title: "Free Parking",
-    description: "On-site and hassle-free.",
+    description: "Convenient on-site parking.",
     iconName: "parking",
   },
   wifi: {
     id: "wifi",
-    title: "Complimentary Wi-Fi",
+    title: "Free WiFi",
     description: "Stay connected throughout your stay.",
     iconName: "wifi",
   },
   ev: {
     id: "ev",
-    title: "EV Charging",
-    description: "Charge up and explore further.",
+    title: "Non-Smoking Rooms",
+    description: "Fresh and comfortable spaces.",
     iconName: "ev",
   },
   kitchen: {
     id: "kitchen",
-    title: "Kitchenette Rooms",
-    description: "Make it your own with in-room kitchenettes.",
+    title: "Accessible Facilities",
+    description: "Designed with accessibility in mind.",
     iconName: "kitchen",
   },
   bbq: {
     id: "bbq",
-    title: "BBQ & Outdoor Area",
-    description: "Good food tastes better by the water.",
+    title: "Family Rooms",
+    description: "Comfortable stays for the whole family.",
     iconName: "bbq",
   },
 };

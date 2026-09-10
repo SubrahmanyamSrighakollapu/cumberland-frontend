@@ -1,7 +1,7 @@
 "use client";
 
-import { AdminRoomsPage } from "@/components/admin/AdminModuleConfigs";
+import AdminRoomsModule from "@/components/admin/AdminRoomsModule";
 
 export default function RoomsDashboardPage() {
-  return <AdminRoomsPage />;
+  return <AdminRoomsModule />;
 }

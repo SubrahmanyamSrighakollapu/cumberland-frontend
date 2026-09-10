@@ -14,7 +14,7 @@ export default function HomeDashboardPage() {
           label: "Hero Banner",
           hint: "Landing hero text, eyebrow, carousel images.",
           fields: ["Eyebrow", "Heading", "Subheading", "Primary CTA", "Secondary CTA"],
-          value: "Coastal stays. Brighter days.",
+          value: "Hunter Valley stays. Comfortable days.",
         },
         {
           label: "Welcome Section",
@@ -25,7 +25,7 @@ export default function HomeDashboardPage() {
           label: "Featured Rooms",
           hint: "Which 3 rooms show on the homepage. Also controls cards display.",
           fields: ["Featured Room 1", "Featured Room 2", "Featured Room 3", "CTA Text"],
-          value: "Lakeview Queen Balcony, Garden King, Family Suite",
+          value: "Deluxe Queen Room, Deluxe Twin Room, Family Room",
         },
         {
           label: "Amenities Block",

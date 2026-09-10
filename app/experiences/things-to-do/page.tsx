@@ -10,7 +10,7 @@ import PublicFooter from "@/components/layout/PublicFooter";
 export const metadata: Metadata = {
   title: "Things to Do | Cumberland Motor Inn",
   description:
-    "Discover water activities, scenic walks, family attractions and cultural experiences near Cumberland Motor Inn, with ideas to help you plan your stay.",
+    "Discover scenic walks, golf, family attractions, hot air ballooning and cultural experiences near Cumberland Motor Inn, with ideas to help you plan your stay.",
 };
 
 export default function ThingsToDoPage() {

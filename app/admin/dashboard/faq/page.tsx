@@ -1,7 +1,7 @@
 "use client";
 
-import { AdminFaqPage } from "@/components/admin/AdminModuleConfigs";
+import AdminFaqsModule from "@/components/admin/AdminFaqsModule";
 
 export default function FaqDashboardPage() {
-  return <AdminFaqPage />;
+  return <AdminFaqsModule />;
 }

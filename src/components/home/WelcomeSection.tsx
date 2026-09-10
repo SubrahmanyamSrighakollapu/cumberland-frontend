@@ -86,7 +86,7 @@ export default function WelcomeSection() {
                   </div>
                 </div>
 
-                {/* Waterfront Location */}
+                {/* Cessnock Location */}
                 <div className="flex items-start gap-3 sm:border-r border-[#d9d0c4] sm:pr-4">
                   <div className="p-2 rounded-full bg-[#e9efe8] text-[#20382f] shrink-0 mt-0.5">
                     <svg

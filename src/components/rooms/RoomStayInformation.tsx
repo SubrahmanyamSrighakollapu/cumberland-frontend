@@ -152,14 +152,14 @@ export default function RoomStayInformation({
             <ImageReveal className="aspect-[16/10] w-full rounded-2xl overflow-hidden shadow-md border border-[#d9d0c4] bg-[#0f302a]" delay={250}>
               <Image
                 src="/images/room-eight.png"
-                alt="Sunset water view from Cumberland Motor Inn"
+                alt="Cumberland Motor Inn grounds in Cessnock"
                 fill
                 sizes="(max-width: 1024px) 100vw, 40vw"
                 className="object-cover opacity-90"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-6">
                 <p className="font-serif italic text-white text-lg sm:text-xl font-medium">
-                  &ldquo;More than a stay. A brighter day.&rdquo;
+                  &ldquo;Come for the Hunter Valley. Stay for the comfort.&rdquo;
                 </p>
               </div>
             </ImageReveal>

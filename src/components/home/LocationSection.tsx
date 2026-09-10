@@ -14,7 +14,7 @@ export default function LocationSection() {
               <div className="relative aspect-[4/3] w-full rounded-xl overflow-hidden border border-[#d9d0c4] shadow-xs bg-[#e9efe8]">
                 <Image
                   src="/images/content-image-four.png"
-                  alt="Map illustration showing Cumberland Motor Inn location in Bayside NSW"
+                  alt="Map showing Cumberland Motor Inn location at 57-61 Cumberland Street, Cessnock NSW"
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover object-center"
@@ -37,9 +37,7 @@ export default function LocationSection() {
 
             <Reveal direction="up" delay={200} duration={600}>
               <p className="text-base sm:text-[17px] text-[#50544e] leading-relaxed mb-6 font-sans">
-                Beaches, dining, vineyards and regional gems are all within easy
-                reach. Cumberland Motor Inn is the perfect base for your next
-                adventure.
+                Hunter Valley wineries, dining, parks, state forests and local attractions are all within easy reach. Cumberland Motor Inn is the perfect Cessnock base for your stay.
               </p>
             </Reveal>
 
@@ -65,7 +63,7 @@ export default function LocationSection() {
                     d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                   />
                 </svg>
-                <span>128 Oceanview Drive, Bayside, NSW 2556</span>
+                <span>57–61 Cumberland Street, Cessnock, NSW 2325</span>
               </div>
             </Reveal>
 
@@ -73,7 +71,7 @@ export default function LocationSection() {
             <Reveal direction="up" delay={340} duration={600}>
               <div className="flex flex-wrap items-center gap-4 mb-10">
                 <a
-                  href="https://maps.google.com"
+                  href="https://www.google.com/maps/search/?api=1&query=57-61+Cumberland+Street+Cessnock+NSW+2325"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group inline-flex items-center justify-center gap-1.5 h-[46px] px-6 bg-[#80563e] hover:bg-[#69452f] active:bg-[#583824] text-white text-sm font-semibold tracking-wider rounded-lg transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#80563e]"

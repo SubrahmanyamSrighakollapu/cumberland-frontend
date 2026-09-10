@@ -1,14 +1,48 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { faqSectionData } from "@/data/contact";
+import { faqSectionData, FaqItem } from "@/data/contact";
 import Reveal from "@/components/ui/Reveal";
 import ImageReveal from "@/components/ui/ImageReveal";
+import { apiFetch } from "@/utils/apiClient";
+
+interface FaqItemWithCategory extends FaqItem {
+  category?: string;
+}
 
 export default function ContactFaqSection() {
   const [openId, setOpenId] = useState<string | null>(null);
+  const [items, setItems] = useState<FaqItemWithCategory[]>(faqSectionData.items);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const load = async () => {
+      try {
+        const res: any = await apiFetch("/faqs?published_only=true&limit=100");
+        if (cancelled) return;
+        const list: any[] = res?.data?.items ?? res?.items ?? [];
+        if (list.length > 0) {
+          const transformed: FaqItemWithCategory[] = list.map((it: any) => ({
+            id: String(it.id),
+            question: it.question,
+            answer: it.answer,
+            category: it.category,
+          }));
+          setItems(transformed);
+        }
+      } catch {
+        // swallow, keep fallback
+      }
+    };
+
+    load();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const toggleFaq = (id: string) => {
     setOpenId((prev) => (prev === id ? null : id));
@@ -35,9 +69,9 @@ export default function ContactFaqSection() {
                 </p>
               </Reveal>
 
-              {/* 5 Accordions */}
+              {/* Accordions */}
               <div className="space-y-3">
-                {faqSectionData.items.map((item, idx) => {
+                {items.map((item, idx) => {
                   const isOpen = openId === item.id;
                   return (
                     <Reveal key={item.id} direction="up" delay={100 + idx * 80}>

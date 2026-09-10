@@ -2,16 +2,9 @@
 
 import React from "react";
 import Reveal from "@/components/ui/Reveal";
+import { BOOK_DIRECT_URL } from "@/utils/siteLinks";
 
 export const RoomCta: React.FC = () => {
-  const handleScrollToReservation = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    const el = document.getElementById("room-reservation");
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
-
   return (
     <section className="bg-[#80563E] text-white py-12 md:py-16">
       <Reveal direction="up" delay={50}>
@@ -26,8 +19,9 @@ export const RoomCta: React.FC = () => {
           </div>
 
           <a
-            href="#room-reservation"
-            onClick={handleScrollToReservation}
+            href={BOOK_DIRECT_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center justify-center gap-2 bg-white text-[#80563E] hover:bg-[#F7F4EE] px-8 py-3.5 rounded font-manrope text-sm font-semibold tracking-wider uppercase transition-colors whitespace-nowrap shadow-sm"
           >
             BOOK YOUR STAY
