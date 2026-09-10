@@ -22,7 +22,9 @@ export default function HeroCarousel({
 }: HeroCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isUserPaused, setIsUserPaused] = useState(false);
+  const [isHoverPaused, setIsHoverPaused] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const touchStartX = useRef<number | null>(null);
   const len = Math.max(slides?.length ?? 0, 0);
   const safeIndex = len > 0 ? ((activeIndex % len) + len) % len : 0;
 
@@ -50,9 +52,30 @@ export default function HeroCarousel({
     commitIndex(safeIndex - 1);
   }, [commitIndex, safeIndex]);
 
+  // Touch Swipe Handlers for Mobile background
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const diffX = touchStartX.current - touchEndX;
+
+    // Minimum swipe threshold of 40px
+    if (Math.abs(diffX) > 40) {
+      if (diffX > 0) {
+        nextSlide();
+      } else {
+        prevSlide();
+      }
+    }
+    touchStartX.current = null;
+  };
+
   // Continuous autoplay carousel (every autoplayMs)
   useEffect(() => {
-    if (isUserPaused) {
+    if (isPaused) {
       if (timerRef.current) clearInterval(timerRef.current);
       return;
     }
@@ -90,6 +113,8 @@ export default function HeroCarousel({
   return (
     <div
       className="absolute inset-0 w-full h-full overflow-hidden select-none"
+      onMouseEnter={() => setIsHoverPaused(true)}
+      onMouseLeave={() => setIsHoverPaused(false)}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
       aria-roledescription="carousel"

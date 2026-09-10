@@ -104,6 +104,7 @@ body {
 }
 
 .image-reveal-content {
+  position: relative;
   transform: scale(1.035);
   transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
 }

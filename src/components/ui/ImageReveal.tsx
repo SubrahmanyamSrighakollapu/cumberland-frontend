@@ -72,7 +72,7 @@ export const ImageReveal: React.FC<ImageRevealProps> = ({
       className={`image-reveal-wrapper ${isRevealed ? "is-revealed" : ""} ${className}`}
     >
       {/* Content / Image */}
-      <div className="image-reveal-content w-full h-full">
+      <div className="image-reveal-content relative w-full h-full">
         {children}
       </div>
 
