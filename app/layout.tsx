@@ -19,6 +19,27 @@ const manrope = Manrope({
 export const metadata: Metadata = {
   title: "Cumberland Motor Inn | Boutique Coastal Motel",
   description: "Boutique coastal stays, warmer days and unforgettable moments by the water.",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", rel: "icon", type: "image/x-icon" },
+      { url: "/images/favicon.png", type: "image/png", sizes: "any" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", type: "image/png", sizes: "180x180" },
+      { url: "/images/favicon.png", type: "image/png" },
+    ],
+    shortcut: ["/favicon.ico"],
+    other: [
+      {
+        rel: "icon",
+        url: "/favicon.ico",
+      },
+      {
+        rel: "apple-touch-icon",
+        url: "/apple-touch-icon.png",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({

@@ -1,10 +1,76 @@
+"use client";
+
 import Link from "next/link";
-import HeroCarousel from "./HeroCarousel";
+import { useEffect, useMemo, useState } from "react";
+
+import HeroCarousel, { HeroCarouselSlide } from "./HeroCarousel";
 import AvailabilityBar from "./AvailabilityBar";
 import Reveal from "@/components/ui/Reveal";
-import { homeHeroContent } from "@/data/home";
+
+import {
+  HeroSlideRow,
+  fallbackHeroSlides,
+  fetchHeroSlides,
+} from "@/utils/heroClient";
+import { BOOK_DIRECT_URL } from "@/utils/siteLinks";
+
+function useHeroSlides() {
+  const [data, setData] = useState<HeroSlideRow[] | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    let mounted = true;
+    setLoading(true);
+    fetchHeroSlides({ publishedOnly: true })
+      .then((rows) => {
+        if (!mounted) return;
+        const list = Array.isArray(rows) && rows.length > 0 ? rows : null;
+        setData(list ?? null);
+      })
+      .catch(() => {
+        if (!mounted) setData(null);
+      })
+      .finally(() => {
+        if (mounted) setLoading(false);
+      });
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const slides = useMemo<HeroSlideRow[]>(() => {
+    if (data && Array.isArray(data) && data.length > 0) return data;
+    return fallbackHeroSlides();
+  }, [data]);
+
+  return { slides, loading };
+}
 
 export default function HeroSection() {
+  const { slides } = useHeroSlides();
+  const [activeIndex, setActiveIndex] = useState<number>(0);
+
+  const len = Math.max(slides?.length ?? 0, 0);
+  const clampedIndex = len > 0 ? ((activeIndex % len) + len) % len : 0;
+  const activeSlide = slides[clampedIndex] ?? slides[0] ?? null;
+
+  const carouselSlides: HeroCarouselSlide[] = useMemo(
+    () =>
+      slides.map((s) => ({
+        id: s.id,
+        image: s.image,
+        alt: s.alt,
+      })),
+    [slides]
+  );
+
+  const headingLine1 = activeSlide?.headingLine1 || "Make room for";
+  const headingLine2 = activeSlide?.headingLine2 || "the good days.";
+  const description =
+    activeSlide?.description ||
+    "Boutique coastal stays, warmer days and unforgettable moments by the water.";
+  const reactKey = activeSlide ? String(activeSlide.id) : `fb-${clampedIndex}`;
+
   return (
     <section className="relative w-full bg-[#0f302a]">
       {/* Main Hero Viewport Area (clips background elements) */}
@@ -21,50 +87,48 @@ export default function HeroSection() {
         />
 
         {/* Background Image Carousel & Overlay */}
-        <HeroCarousel />
+        <HeroCarousel
+          slides={carouselSlides}
+          onIndexChange={setActiveIndex}
+          autoplayMs={5500}
+        />
 
         {/* Hero Content Container */}
         <div className="relative z-30 w-full max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-24 flex items-center justify-between gap-8">
           {/* Left Column: Hero Text Content */}
-          <div className="max-w-[620px] text-white">
-            {/* Glassmorphic Eyebrow Badge Entrance */}
-            <Reveal direction="down" delay={50} duration={650}>
-              <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/15 backdrop-blur-md border border-white/30 text-white text-xs font-semibold tracking-wider uppercase mb-6 shadow-sm animate-pulse-border">
-                <span className="w-2.5 h-2.5 rounded-full bg-[#52c92d] animate-ping" />
-                <span className="text-[#f7f4ee]">Boutique Waterfront Retreat</span>
-              </div>
-            </Reveal>
-
+          <div key={reactKey} className="max-w-[620px] text-white">
             {/* Heading Entrance */}
-            <Reveal direction="up" delay={120} duration={750} distance={32}>
+            <Reveal direction="up" delay={100} duration={750} distance={32}>
               <h1 className="font-serif text-5xl sm:text-6xl lg:text-[76px] font-normal leading-[0.96] tracking-tight text-white drop-shadow-md">
-                {homeHeroContent.headingLines[0]}
+                {headingLine1}
                 <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f7f4ee] via-[#e8c5af] to-[#ffffff] italic font-serif">
-                  {homeHeroContent.headingLines[1]}
+                  {headingLine2}
                 </span>
               </h1>
             </Reveal>
 
             {/* Description Entrance */}
-            <Reveal direction="up" delay={240} duration={750} distance={32}>
-              <p className="mt-5 mb-8 max-w-[500px] text-base sm:text-lg lg:text-[19px] leading-relaxed text-[#f7f4ee]/90 font-sans font-light">
-                {homeHeroContent.description}
+            <Reveal direction="up" delay={220} duration={750} distance={32}>
+              <p className="mt-6 mb-8 max-w-[500px] text-base sm:text-lg lg:text-[19px] leading-relaxed text-[#f7f4ee]/90 font-sans font-light">
+                {description}
               </p>
             </Reveal>
 
             {/* CTA Buttons Entrance */}
             <Reveal direction="up" delay={360} duration={750} distance={32}>
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-                <Link
-                  href="#availability"
+                <a
+                  href={BOOK_DIRECT_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="group relative inline-flex items-center justify-center gap-2.5 h-[54px] px-8 bg-gradient-to-r from-[#80563e] to-[#69452f] hover:from-[#69452f] hover:to-[#583824] active:scale-[0.98] text-white text-sm font-semibold tracking-wider rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#80563e]"
                 >
                   <span>CHECK AVAILABILITY</span>
                   <span className="inline-block transition-transform duration-300 group-hover:translate-x-1.5 text-base">
                     &rarr;
                   </span>
-                </Link>
+                </a>
 
                 <Link
                   href="/rooms"

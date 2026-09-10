@@ -46,22 +46,22 @@ const NAV_GROUPS: NavGroup[] = [
         ),
       },
       {
+        key: "hero",
+        label: "Hero Slides",
+        href: "/admin/dashboard/hero",
+        icon: (active) => (
+          <svg className={`w-5 h-5 ${active ? "text-white" : "text-[#f7f4ee]/70"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.75}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zM12 8.25h.008v.008H12V8.25zm0 3h.008v.008H12v-.008zM8.25 11.25h.008v.008H8.25v-.008zM15.75 11.25h.008v.008h-.008v-.008z" />
+          </svg>
+        ),
+      },
+      {
         key: "about",
         label: "About Page",
         href: "/admin/dashboard/about",
         icon: (active) => (
           <svg className={`w-5 h-5 ${active ? "text-white" : "text-[#f7f4ee]/70"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.75}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-          </svg>
-        ),
-      },
-      {
-        key: "contact",
-        label: "Contact Page",
-        href: "/admin/dashboard/contact",
-        icon: (active) => (
-          <svg className={`w-5 h-5 ${active ? "text-white" : "text-[#f7f4ee]/70"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.75}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
           </svg>
         ),
       },
@@ -163,10 +163,8 @@ const NAV_GROUPS: NavGroup[] = [
     items: [
       {
         key: "inquiries",
-        label: "Contact Inquiries",
+        label: "Contact Queries",
         href: "/admin/dashboard/inquiries",
-        badge: "0",
-        badgeColor: "bg-[#52c92d]",
         icon: (active) => (
           <svg className={`w-5 h-5 ${active ? "text-white" : "text-[#f7f4ee]/70"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.75}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 8.25v7.5m-6.75-7.5v7.5m2.25-10.5h-6a2.25 2.25 0 00-2.25 2.25v7.5A2.25 2.25 0 0011.25 18h6a2.25 2.25 0 002.25-2.25v-7.5A2.25 2.25 0 0019.5 5.25h1.5a.75.75 0 000 1.5h-1.5a.75.75 0 01-.75-.75zM3 5.25h1.5A2.25 2.25 0 016.75 7.5v9A2.25 2.25 0 014.5 18.75H3v-13.5z" />

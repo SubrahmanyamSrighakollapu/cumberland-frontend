@@ -2,28 +2,56 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
-import { heroSlides } from "@/data/gallery-media";
 
+export interface HeroCarouselSlide {
+  id: string | number;
+  image: string;
+  alt: string;
+}
 
-export default function HeroCarousel() {
+export interface HeroCarouselProps {
+  slides: HeroCarouselSlide[];
+  onIndexChange?: (index: number) => void;
+  autoplayMs?: number;
+}
+
+export default function HeroCarousel({
+  slides,
+  onIndexChange,
+  autoplayMs = 5500,
+}: HeroCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isHoverPaused, setIsHoverPaused] = useState(false);
   const [isUserPaused, setIsUserPaused] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const len = Math.max(slides?.length ?? 0, 0);
+  const safeIndex = len > 0 ? ((activeIndex % len) + len) % len : 0;
 
-  const isPaused = isHoverPaused || isUserPaused;
+  const isPaused = isHoverPaused || isUserPaused || len <= 1;
+
+  const commitIndex = useCallback(
+    (next: number) => {
+      if (!len) return;
+      const clamped = ((next % len) + len) % len;
+      setActiveIndex(clamped);
+      try {
+        onIndexChange?.(clamped);
+      } catch (_) {
+        /* ignore */
+      }
+    },
+    [len, onIndexChange]
+  );
 
   const nextSlide = useCallback(() => {
-    setActiveIndex((prev) => (prev + 1) % heroSlides.length);
-  }, []);
+    commitIndex(safeIndex + 1);
+  }, [commitIndex, safeIndex]);
 
   const prevSlide = useCallback(() => {
-    setActiveIndex(
-      (prev) => (prev - 1 + heroSlides.length) % heroSlides.length
-    );
-  }, []);
+    commitIndex(safeIndex - 1);
+  }, [commitIndex, safeIndex]);
 
-  // Continuous autoplay carousel (every 5.5s)
+  // Continuous autoplay carousel (every autoplayMs)
   useEffect(() => {
     if (isPaused) {
       if (timerRef.current) clearInterval(timerRef.current);
@@ -32,15 +60,15 @@ export default function HeroCarousel() {
 
     timerRef.current = setInterval(() => {
       nextSlide();
-    }, 5500);
+    }, autoplayMs);
 
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [isPaused, nextSlide]);
+  }, [isPaused, nextSlide, autoplayMs]);
 
   const handleManualSelect = (index: number) => {
-    setActiveIndex(index);
+    commitIndex(index);
   };
 
   const toggleUserPause = () => {
@@ -58,11 +86,11 @@ export default function HeroCarousel() {
       aria-label="Cumberland Motor Inn Showcase"
     >
       {/* Slides Container */}
-      {heroSlides.map((slide, index) => {
-        const isActive = index === activeIndex;
+      {slides.map((slide, index) => {
+        const isActive = index === safeIndex;
         return (
           <div
-            key={slide.id}
+            key={String(slide.id) + `-${index}`}
             className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${
               isActive ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
             }`}
@@ -165,11 +193,11 @@ export default function HeroCarousel() {
 
         {/* Indicators */}
         <div className="flex items-center gap-2">
-          {heroSlides.map((slide, index) => {
-            const isActive = index === activeIndex;
+          {slides.map((slide, index) => {
+            const isActive = index === safeIndex;
             return (
               <button
-                key={slide.id}
+                key={String(slide.id) + `-${index}`}
                 onClick={() => handleManualSelect(index)}
                 aria-label={`Go to slide ${index + 1}`}
                 aria-current={isActive ? "true" : "false"}

@@ -1,5 +1,5 @@
-import Link from "next/link";
 import Reveal from "@/components/ui/Reveal";
+import { BOOK_DIRECT_URL } from "@/utils/siteLinks";
 
 export default function FinalCtaSection() {
   return (
@@ -18,15 +18,17 @@ export default function FinalCtaSection() {
             </div>
 
             <div className="shrink-0">
-              <Link
-                href="#availability"
+              <a
+                href={BOOK_DIRECT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group inline-flex items-center justify-center gap-1.5 h-[50px] px-8 bg-white hover:bg-[#f7f4ee] text-[#80563e] font-semibold text-sm tracking-wider uppercase rounded-lg shadow-sm transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
               >
                 <span>BOOK YOUR STAY</span>
                 <span className="inline-block transition-transform duration-200 group-hover:translate-x-1">
                   &rarr;
                 </span>
-              </Link>
+              </a>
             </div>
           </div>
         </Reveal>

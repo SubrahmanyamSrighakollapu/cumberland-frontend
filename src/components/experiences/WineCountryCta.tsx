@@ -3,10 +3,10 @@
 import Link from "next/link";
 import { wineCountryCtaData } from "@/data/wine-country";
 import Reveal from "@/components/ui/Reveal";
+import { BOOK_DIRECT_URL } from "@/utils/siteLinks";
 
 export default function WineCountryCta() {
-  const { heading, supportingText, primaryCta, secondaryCta } =
-    wineCountryCtaData;
+  const { heading, supportingText, primaryCta } = wineCountryCtaData;
 
   return (
     <section className="w-full bg-[#80563e] text-white py-12 sm:py-14 lg:py-16 relative overflow-hidden">
@@ -33,12 +33,14 @@ export default function WineCountryCta() {
                 {primaryCta.label}
               </Link>
 
-              <Link
-                href={secondaryCta.href}
+              <a
+                href={BOOK_DIRECT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center justify-center h-12 px-6 bg-white hover:bg-white/90 text-[#80563e] text-xs sm:text-sm font-semibold tracking-wider uppercase rounded-lg transition-colors shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
               >
-                {secondaryCta.label}
-              </Link>
+                BOOK YOUR STAY &rarr;
+              </a>
             </div>
           </div>
         </div>

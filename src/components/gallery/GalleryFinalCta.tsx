@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { galleryCtaData } from "@/data/gallery";
 import Reveal from "@/components/ui/Reveal";
+import { BOOK_DIRECT_URL } from "@/utils/siteLinks";
 
 export default function GalleryFinalCta() {
   return (
@@ -26,12 +27,14 @@ export default function GalleryFinalCta() {
               EXPLORE ROOMS &rarr;
             </Link>
 
-            <Link
-              href={galleryCtaData.bookStayRoute}
+            <a
+              href={BOOK_DIRECT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center justify-center h-[50px] px-7 bg-white hover:bg-white/95 text-[#80563e] font-semibold text-sm tracking-wider uppercase rounded-lg shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
             >
               BOOK YOUR STAY &rarr;
-            </Link>
+            </a>
           </div>
         </div>
       </Reveal>

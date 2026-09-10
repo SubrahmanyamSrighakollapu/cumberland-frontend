@@ -1,9 +1,43 @@
-import { aboutAmenitiesData } from "@/data/about";
+"use client";
+
+import { useEffect, useState } from "react";
+import { Amenity } from "@/data/amenities";
 import Reveal from "@/components/ui/Reveal";
+import {
+  fallbackHomeAmenities,
+  fetchHomeAmenities,
+} from "@/utils/amenityClient";
+
+const ICON_KEYS: Record<string, string> = {
+  pool: "pool",
+  parking: "parking",
+  wifi: "wifi",
+  ev: "ev",
+  kitchen: "kitchen",
+  bbq: "bbq",
+};
 
 export default function AboutAmenitiesStrip() {
+  const [items, setItems] = useState<Amenity[] | null>(null);
+
+  useEffect(() => {
+    let mounted = true;
+    void (async () => {
+      const res = await fetchHomeAmenities();
+      if (!mounted) return;
+      if (res.length > 0) setItems(res);
+      else setItems(fallbackHomeAmenities());
+    })();
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const list = items ?? fallbackHomeAmenities();
+
   const renderIcon = (icon: string) => {
-    switch (icon) {
+    const key = ICON_KEYS[icon] || icon;
+    switch (key) {
       case "wifi":
         return (
           <svg
@@ -106,12 +140,29 @@ export default function AboutAmenitiesStrip() {
             />
           </svg>
         );
+      default:
+        return (
+          <svg
+            className="w-5 h-5 text-[#20382f]"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={1.8}
+            aria-hidden="true"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M5 13l4 4L19 7"
+            />
+          </svg>
+        );
     }
   };
 
   return (
     <div className="pt-10 border-t border-[#d9d0c4] mt-16 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-      {aboutAmenitiesData.map((item, index) => (
+      {list.map((item, index) => (
         <Reveal
           key={item.id}
           direction="up"
@@ -120,14 +171,14 @@ export default function AboutAmenitiesStrip() {
         >
           <div
             className={`flex items-center gap-2.5 px-3 py-2 ${
-              index < aboutAmenitiesData.length - 1 ? "lg:border-r border-[#d9d0c4]/60" : ""
+              index < list.length - 1 ? "lg:border-r border-[#d9d0c4]/60" : ""
             }`}
           >
             <div className="p-2 rounded-md bg-[#e9efe8] text-[#20382f] shrink-0">
-              {renderIcon(item.icon)}
+              {renderIcon(item.iconName)}
             </div>
             <span className="text-xs font-semibold text-[#20382f] whitespace-nowrap">
-              {item.label}
+              {item.title}
             </span>
           </div>
         </Reveal>

@@ -1,7 +1,7 @@
 "use client";
 
-import { AdminTestimonialsPage } from "@/components/admin/AdminModuleConfigs";
+import AdminTestimonialsModule from "@/components/admin/AdminTestimonialsModule";
 
 export default function TestimonialsDashboardPage() {
-  return <AdminTestimonialsPage />;
+  return <AdminTestimonialsModule />;
 }

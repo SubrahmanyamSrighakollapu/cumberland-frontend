@@ -1,8 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RoomDetail, RoomAmenityItem } from "@/data/rooms";
 import Reveal from "@/components/ui/Reveal";
+import {
+  fallbackRoomAmenities,
+  fetchRoomAmenities,
+} from "@/utils/amenityClient";
 
 interface RoomAmenitiesProps {
   room: RoomDetail;
@@ -10,6 +14,22 @@ interface RoomAmenitiesProps {
 
 export default function RoomAmenities({ room }: RoomAmenitiesProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [items, setItems] = useState<RoomAmenityItem[] | null>(null);
+
+  useEffect(() => {
+    let mounted = true;
+    void (async () => {
+      const res = await fetchRoomAmenities();
+      if (!mounted) return;
+      if (res.length > 0) setItems(res);
+      else setItems(fallbackRoomAmenities());
+    })();
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const list = items ?? fallbackRoomAmenities();
 
   const renderAmenityIcon = (iconName: string) => {
     switch (iconName) {
@@ -225,7 +245,7 @@ export default function RoomAmenities({ room }: RoomAmenitiesProps) {
 
         {/* 10 Amenity Cards Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-10">
-          {room.amenities.slice(0, 10).map((item, idx) => (
+          {list.slice(0, 10).map((item, idx) => (
             <Reveal
               key={item.id}
               direction="up"
@@ -321,7 +341,7 @@ export default function RoomAmenities({ room }: RoomAmenitiesProps) {
 
             {/* List */}
             <div className="overflow-y-auto space-y-4 pr-1">
-              {room.amenities.map((item) => (
+              {list.map((item) => (
                 <div
                   key={item.id}
                   className="flex items-start gap-3 bg-[#f7f4ee] p-3.5 rounded-xl border border-[#d9d0c4]/60"

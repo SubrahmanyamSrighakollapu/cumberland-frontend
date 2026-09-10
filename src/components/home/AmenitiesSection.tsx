@@ -1,9 +1,33 @@
+"use client";
+
 import Link from "next/link";
-import { amenitiesList } from "@/data/home";
+import { useEffect, useState } from "react";
+import { Amenity } from "@/data/amenities";
 import AmenityCard from "./AmenityCard";
 import Reveal from "@/components/ui/Reveal";
+import {
+  fallbackHomeAmenities,
+  fetchHomeAmenities,
+} from "@/utils/amenityClient";
 
 export default function AmenitiesSection() {
+  const [items, setItems] = useState<Amenity[] | null>(null);
+
+  useEffect(() => {
+    let mounted = true;
+    void (async () => {
+      const res = await fetchHomeAmenities();
+      if (!mounted) return;
+      if (res.length > 0) setItems(res);
+      else setItems(fallbackHomeAmenities());
+    })();
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const list = items ?? fallbackHomeAmenities();
+
   return (
     <section className="w-full bg-[#f7f4ee] py-16 sm:py-20 lg:py-24 border-b border-[#d9d0c4]/40 overflow-hidden">
       <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8">
@@ -21,7 +45,7 @@ export default function AmenitiesSection() {
 
         {/* Amenity Cards Grid with Stagger */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {amenitiesList.map((amenity, index) => (
+          {list.map((amenity, index) => (
             <Reveal
               key={amenity.id}
               direction="up"
