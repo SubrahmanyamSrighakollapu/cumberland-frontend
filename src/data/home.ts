@@ -40,42 +40,47 @@ export interface TravelTime {
 }
 
 export const homeHeroContent = {
-  headingLines: ["Make room for", "the good days."],
+  headingLines: ["Your comfortable base for", "exploring the Hunter Valley."],
   description:
-    "Boutique coastal stays, warmer days and unforgettable moments by the water.",
+    "Comfortable accommodation in Cessnock, offering easy access to Hunter Valley wineries, dining, attractions and surrounding experiences.",
 };
 
 export const welcomeData = {
   eyebrow: "WELCOME",
-  headingLines: ["A relaxed stay", "by the water."],
+  headingLines: ["A comfortable stay in the", "heart of the Hunter Valley."],
   paragraph1:
-    "Cumberland Motor Inn is a boutique coastal escape where laid-back comfort meets the simple joys of waterfront living.",
+    "Cumberland Motor Inn is a relaxed Cessnock stay where comfort, convenience and country charm come together.",
   paragraph2:
-    "Wake to ocean views, spend your days exploring nearby bays and vineyards, and return to modern comforts designed for real getaways.",
+    "Set in the heart of Cessnock, we're perfectly placed for exploring Hunter Valley wineries, local dining, events and attractions, while giving you a comfortable place to unwind at the end of the day.",
   learnMoreRoute: "/about",
   trustIndicators: [
     {
       id: "rating",
-      primary: "4.8/5",
+      primary: "4.5/5",
       secondary: "Guest rating",
       icon: "star",
     },
     {
       id: "location",
-      primary: "Waterfront",
-      secondary: "Prime location",
+      primary: "Cessnock",
+      secondary: "Heart of Hunter Valley",
       icon: "pin",
     },
     {
-      id: "renovated",
-      primary: "Recently renovated",
-      secondary: "Modern comforts",
+      id: "rooms",
+      primary: "28 Rooms",
+      secondary: "Comfortable accommodation",
       icon: "home",
     },
   ],
 };
 
-export const featuredRoomIds = ["cove-king", "ocean-twin", "family-suite"];
+export const featuredRoomIds = [
+  "deluxe-queen-room",
+  "deluxe-twin-room",
+  "family-room",
+  "business-single-room",
+];
 
 export const featuredRooms: Room[] = featuredRoomIds
   .map((id) => {
@@ -113,7 +118,7 @@ export const experiencesList: Experience[] = [
     id: "wine-country",
     slug: "wine-country",
     title: "Wine Country",
-    description: "Cellar doors, scenic drives and unhurried afternoons.",
+    description: "Cellar doors, vineyards and wine country experiences nearby.",
     image: "/images/wine-country.png",
     route: "/experiences/wine-country",
   },
@@ -121,7 +126,7 @@ export const experiencesList: Experience[] = [
     id: "eat-and-drink",
     slug: "eat-and-drink",
     title: "Eat & Drink",
-    description: "Local flavours and waterfront dining.",
+    description: "Cessnock cafes, local bistros and Hunter Valley dining.",
     image: "/images/eat-drink.png",
     route: "/experiences/eat-and-drink",
   },
@@ -129,7 +134,7 @@ export const experiencesList: Experience[] = [
     id: "things-to-do",
     slug: "things-to-do",
     title: "Things to Do",
-    description: "From bike adventures to coastal walks.",
+    description: "From Cessnock Golf Course to state forests and CPAC.",
     image: "/images/thinks-to-do.png",
     route: "/experiences/things-to-do",
   },
@@ -163,21 +168,21 @@ export const galleryImages: GalleryImage[] = galleryPreviewIds
 
 export const travelTimes: TravelTime[] = [
   {
-    id: "beach",
-    destination: "Coastal Beach",
-    duration: "2 mins",
-    iconName: "beach",
+    id: "golf",
+    destination: "Cessnock Golf Course",
+    duration: "5 mins",
+    iconName: "town",
   },
   {
-    id: "town",
-    destination: "Town Centre",
-    duration: "6 mins",
+    id: "cpac",
+    destination: "Performing Arts Centre",
+    duration: "Short walk",
     iconName: "town",
   },
   {
     id: "vineyard",
-    destination: "Vineyard Region",
-    duration: "25 mins",
+    destination: "Hunter Valley Wineries",
+    duration: "10 mins",
     iconName: "vineyard",
   },
 ];

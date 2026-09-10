@@ -77,21 +77,21 @@ export function apiToHeroSlide(item: Record<string, unknown>): HeroSlideRow {
 
 export function fallbackHeroSlides(): HeroSlideRow[] {
   const eyebrowByIndex = [
-    "Boutique Waterfront Retreat",
-    "Coastal Poolside Escape",
-    "Golden Hour Waterfront Views",
+    "Cessnock Accommodation",
+    "Outdoor Swimming Pool",
+    "Hunter Valley Base",
   ];
   return (heroSlides?.length ? heroSlides : []).map((s, i) => ({
     id: String(s.id),
     slug: `hero-slide-${s.id}`,
     image: s.image,
     alt: s.alt,
-    eyebrow: eyebrowByIndex[i] ?? "Boutique Waterfront Retreat",
-    headingLine1: homeHeroContent.headingLines[0] ?? "Make room for",
-    headingLine2: homeHeroContent.headingLines[1] ?? "the good days.",
+    eyebrow: eyebrowByIndex[i] ?? "Cessnock Accommodation",
+    headingLine1: homeHeroContent.headingLines[0] ?? "Your comfortable base for",
+    headingLine2: homeHeroContent.headingLines[1] ?? "exploring the Hunter Valley.",
     description:
       homeHeroContent.description ??
-      "Boutique coastal stays, warmer days and unforgettable moments by the water.",
+      "Comfortable accommodation in Cessnock, offering easy access to Hunter Valley wineries, dining, attractions and surrounding experiences.",
     sortOrder: i + 1,
     isPublished: true,
     createdAt: null,

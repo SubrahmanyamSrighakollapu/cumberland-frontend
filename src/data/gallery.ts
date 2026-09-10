@@ -24,16 +24,16 @@ export const galleryHeroData = {
   eyebrow: "OUR GALLERY",
   headingLines: ["A closer look", "at your stay."],
   description:
-    "Real spaces, beautiful surrounds and memorable moments await at Cumberland Motor Inn.",
+    "Real spaces, comfortable rooms, outdoor salt-water pool and beautiful surrounds await at Cumberland Motor Inn.",
   image: "/images/room-one.png",
-  alt: "Ocean view guest room with balcony doors overlooking the coastline",
+  alt: "Guest room at Cumberland Motor Inn Cessnock",
 };
 
 export const galleryIntroData = {
-  eyebrow: "PHOTO & VIDEO GALLERY",
+  eyebrow: "PHOTO GALLERY",
   heading: "Explore Cumberland Motor Inn.",
   description:
-    "Browse our gallery and get a feel for the relaxed coastal experience that awaits.",
+    "Browse our gallery and explore our comfortable Cessnock accommodation, outdoor salt-water pool, and Hunter Valley surroundings.",
 };
 
 export const galleryCategories: GalleryCategory[] = [
@@ -49,28 +49,28 @@ export const galleryCategories: GalleryCategory[] = [
 export const moreToExploreCards: MoreExploreCard[] = [
   {
     id: "explore-1",
-    title: "Restful Rooms",
-    description: "Stylish, comfortable rooms for every stay.",
+    title: "Comfortable Rooms",
+    description: "Spacious air-conditioned rooms for every stay.",
     image: "/images/room-two.png",
-    alt: "Ocean Twin room with two queen beds",
+    alt: "Deluxe Twin Room at Cumberland Motor Inn",
     actionText: "VIEW ROOMS →",
     route: "/rooms",
   },
   {
     id: "explore-2",
-    title: "Thoughtful Facilities",
-    description: "Everything you need for a relaxing stay.",
+    title: "Motel Facilities",
+    description: "Outdoor salt-water pool, free parking and guest laundry.",
     image: "/images/gallery-five.png",
-    alt: "Poolside lounger chairs under evening umbrella light",
+    alt: "Outdoor swimming pool area at Cumberland Motor Inn",
     actionText: "VIEW AMENITIES →",
     route: "/about#amenities",
   },
   {
     id: "explore-3",
-    title: "Explore the Region",
-    description: "Beaches, vineyards and local attractions.",
+    title: "Explore the Hunter Valley",
+    description: "Wineries, dining, golf courses and local attractions.",
     image: "/images/gallery-seven.png",
-    alt: "Scenic coastal viewpoint overlooking the bay",
+    alt: "Hunter Valley vineyards and countryside",
     actionText: "VIEW EXPERIENCES →",
     route: "/experiences/wine-country",
   },
@@ -78,7 +78,7 @@ export const moreToExploreCards: MoreExploreCard[] = [
 
 export const galleryCtaData = {
   heading: "Ready to make your own memories?",
-  description: "Book your coastal escape and look forward to brighter days.",
+  description: "Book your stay in Cessnock and enjoy convenient access to the Hunter Valley.",
   exploreRoomsRoute: "/rooms",
   bookStayRoute: "/#availability",
 };

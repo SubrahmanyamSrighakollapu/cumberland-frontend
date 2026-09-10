@@ -150,7 +150,10 @@ export function fallbackFeaturedRooms(ids?: string[]): RoomDetail[] {
     return staticList.filter((r) => {
       const slug = r.slug;
       return (
-        slug === "cove-king" || slug === "ocean-twin" || slug === "family-suite"
+        slug === "deluxe-queen-room" ||
+        slug === "deluxe-twin-room" ||
+        slug === "family-room" ||
+        slug === "business-single-room"
       );
     });
   }

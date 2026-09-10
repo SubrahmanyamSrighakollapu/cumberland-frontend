@@ -64,7 +64,7 @@ export default function RoomsPage() {
                 Our Room Collection
               </h1>
               <p className="max-w-2xl mx-auto text-stone-300 text-base md:text-lg font-manrope font-light leading-relaxed">
-                Thoughtfully appointed spaces crafted for quiet comfort, coastal style, and unforgettable lakeside relaxation.
+                Thoughtfully appointed spaces crafted for quiet comfort, relaxed style, and an enjoyable Hunter Valley stay.
               </p>
             </Reveal>
           </div>

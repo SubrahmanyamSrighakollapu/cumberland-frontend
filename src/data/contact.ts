@@ -43,8 +43,10 @@ export const contactInfoData = {
   eyebrow: "CONTACT DETAILS",
   heading: "Let’s start a conversation.",
   subtitle:
-    "Whether you’re planning a coastal escape, need more information or have a special request, we’d love to hear from you.",
+    "Whether you’re planning a Hunter Valley getaway, need more information or have a special request, we’d love to hear from you.",
   phone: siteData.contact.phone,
+  fax: siteData.contact.fax,
+  abn: siteData.contact.abn,
   email: siteData.contact.email,
   address: siteData.contact.address,
   receptionHours: siteData.contact.receptionHours,
@@ -83,37 +85,36 @@ export const locationSectionData = {
   eyebrow: "LOCATION & GETTING HERE",
   heading: "Easy to find. Close to everything.",
   description:
-    "Cumberland Motor Inn is perfectly positioned to help you explore the best of our coastal region, from pristine beaches to local wineries and charming towns.",
+    "Cumberland Motor Inn is conveniently set in Cessnock, providing easy access to Hunter Valley wineries, dining, parks, state forests and local attractions.",
   mapImage: "/images/content-image-four.png",
-  mapAlt: "Map illustration showing Cumberland Motor Inn location in Bayside",
+  mapAlt: "Map showing Cumberland Motor Inn location at 57-61 Cumberland Street, Cessnock NSW",
   gettingHereCards: [
     {
       id: "driving",
-      title: "Driving & Parking",
+      title: "Driving from Sydney",
       description:
-        "Easy access via the coastal highway with complimentary on-site parking for all guests.",
+        "Head north from Sydney and follow the signs to Newcastle. Exit the Freeway at the Cessnock / Hunter Valley Vineyards sign (approx. 1 hour or 100kms on freeway), then follow the signs to Cessnock. The old route to Cessnock through Freemans Waterhole is 30km shorter than using the new Hunter Expressway.",
       iconName: "car",
     },
     {
       id: "transit",
-      title: "Public Transport",
-      description:
-        "Bayside Station is a 6 minute drive, with regular bus services to the motel.",
+      title: "Car Parking",
+      description: "Off street parking, no charge for motel guests.",
       iconName: "transit",
     },
     {
       id: "arrival",
-      title: "Check-in & Arrival",
+      title: "Check-in & Reception",
       description:
-        "Check-in from 2:00 PM. Our friendly reception team is here daily from 7:00 AM – 9:00 PM.",
+        "Check-in from 2:00 PM till 9:00 PM. Check-out by 10:00 AM. Reception hours: 7am–9pm Mon–Fri, 8am–9pm Sat–Sun. ($20/hr fee applies for early/late check-in/out).",
       iconName: "arrival",
     },
   ] as GettingHereCard[],
   nearbyDestinations: [
-    { id: "beach", label: "Beach", duration: "2 mins", iconName: "beach" },
-    { id: "town", label: "Town Centre", duration: "6 mins", iconName: "town" },
-    { id: "dining", label: "Dining", duration: "5 mins", iconName: "dining" },
-    { id: "wine", label: "Wine Region", duration: "25 mins", iconName: "wine" },
+    { id: "golf", label: "Cessnock Golf Course", duration: "5 mins", iconName: "town" },
+    { id: "cpac", label: "Performing Arts Centre", duration: "Short walk", iconName: "town" },
+    { id: "dining", label: "Cessnock Dining", duration: "2 mins", iconName: "dining" },
+    { id: "wine", label: "Wine Country", duration: "10 mins", iconName: "wine" },
   ] as NearbyDestination[],
 };
 
@@ -121,13 +122,13 @@ export const faqSectionData = {
   eyebrow: "FREQUENTLY ASKED QUESTIONS",
   heading: "Before you arrive.",
   description:
-    "Find quick answers to our most common questions. Can’t find what you’re looking for? Get in touch and we’ll be happy to help.",
+    "Find quick answers to our most common questions regarding check-in, parking, payment and directions.",
   balconyImage: "/images/gallery-two.png",
-  balconyAlt: "Private guest room balcony overlooking sunset ocean views",
+  balconyAlt: "Cumberland Motor Inn guest room view",
   assistanceCard: {
-    title: "Still deciding?",
+    title: "Have a question?",
     description:
-      "Call our friendly team for personalised advice and local recommendations.",
+      "Call our friendly team for assistance and local recommendations.",
     phone: siteData.contact.phone,
   },
   items: [
@@ -135,39 +136,39 @@ export const faqSectionData = {
       id: "faq-1",
       question: "What time is check-in and check-out?",
       answer:
-        "Check-in starts from 2:00 PM. Please contact reception to confirm check-out times or discuss an early arrival or late departure.",
+        "Check-in is from 2:00 PM till 9:00 PM. Check-out is by 10:00 AM. Management reserves the right to apply a $20 per hour fee for early check-ins before 2pm, late check-ins after 9pm and late check-outs.",
     },
     {
       id: "faq-2",
-      question: "Is parking available?",
+      question: "Is parking available on-site?",
       answer:
-        "Complimentary on-site parking is available for guests. Contact our team if you have specific vehicle or access requirements.",
+        "Yes, off street parking is provided free of charge for all guests.",
     },
     {
       id: "faq-3",
-      question: "Do you offer EV charging?",
+      question: "What are your reception hours?",
       answer:
-        "EV charging is available on site. Please contact reception before arrival to confirm access and availability.",
+        "Reception is open 7:00 AM – 9:00 PM Monday to Friday, and 8:00 AM – 9:00 PM Saturday and Sunday.",
     },
     {
       id: "faq-4",
-      question: "Can I request an accessible room?",
+      question: "What is your cancellation policy?",
       answer:
-        "Please contact our team before booking so we can discuss your access requirements and suitable room options.",
+        "NO REFUNDS AFTER BOOKINGS. All cancellations will incur a $20 administration fee. 24 hour cancellation period by 2pm. After that time no deposits will be refunded.",
     },
     {
       id: "faq-5",
-      question: "How do I change or cancel a booking?",
+      question: "Are there credit card surcharges?",
       answer:
-        "Please contact the provider you booked through or speak with our team. Changes and cancellations depend on the terms of your reservation.",
+        "There is a surcharge added for Amex and Diners Card payments.",
     },
   ] as FaqItem[],
 };
 
 export const contactCtaData = {
-  heading: "Ready to book your stay?",
+  heading: "Plan your stay in Cessnock.",
   description:
-    "Your coastal escape is just a few clicks away. Relaxing days, beautiful surroundings and unforgettable memories are waiting.",
+    "Enjoy comfortable accommodation with Hunter Valley Wine Country right on your doorstep.",
   exploreRoomsRoute: "/rooms",
   bookStayRoute: "/#availability",
 };

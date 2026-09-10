@@ -9,7 +9,7 @@ import PublicFooter from "@/components/layout/PublicFooter";
 export const metadata: Metadata = {
   title: "Gallery | Cumberland Motor Inn",
   description:
-    "Explore rooms, facilities, dining, experiences and the beautiful coastal surroundings of Cumberland Motor Inn.",
+    "Explore rooms, facilities, dining, experiences and the beautiful Cessnock & Hunter Valley surroundings of Cumberland Motor Inn.",
 };
 
 export default function GalleryPage() {

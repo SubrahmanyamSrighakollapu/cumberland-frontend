@@ -11,7 +11,7 @@ import PublicFooter from "@/components/layout/PublicFooter";
 export const metadata: Metadata = {
   title: "Eat & Drink | Cumberland Motor Inn",
   description:
-    "Explore local cafés, waterfront restaurants and relaxed bars near Cumberland Motor Inn, with dining inspiration for every part of your stay.",
+    "Explore local cafés, vineyard bistros and relaxed pubs near Cumberland Motor Inn, with dining inspiration for every part of your stay.",
 };
 
 export default function EatAndDrinkPage() {

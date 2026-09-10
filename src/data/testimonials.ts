@@ -15,7 +15,7 @@ export const testimonialsDataset: Record<string, Review> = {
     date: "April 2025",
     rating: 5,
     quote:
-      "The perfect weekend escape. Beautiful location, stylish rooms and such a relaxed vibe.",
+      "The perfect base for exploring the Hunter Valley. Clean, comfortable rooms, great outdoor pool and such a relaxed vibe.",
     avatar: "/images/client-image-one.png",
     avatarAlt: "Emma R. guest portrait",
   },
@@ -25,7 +25,7 @@ export const testimonialsDataset: Record<string, Review> = {
     date: "March 2025",
     rating: 5,
     quote:
-      "Amazing views, super clean rooms and the friendliest team. We’ll definitely be back!",
+      "Great location right in Cessnock, super clean rooms and the friendliest team. We'll definitely be back!",
     avatar: "/images/client-image-two.png",
     avatarAlt: "Liam T. guest portrait",
   },
@@ -35,7 +35,7 @@ export const testimonialsDataset: Record<string, Review> = {
     date: "February 2025",
     rating: 5,
     quote:
-      "A little slice of paradise. Close to everything but feels like a world away.",
+      "Ideal location for wine tasting weekends. Close to Pokolbin cellar doors, Cessnock dining and local attractions.",
     avatar: "/images/client-image-three.png",
     avatarAlt: "Sophie M. guest portrait",
   },
@@ -45,9 +45,9 @@ export const testimonialsDataset: Record<string, Review> = {
     date: "March 2025",
     rating: 5,
     quote:
-      "“The perfect base for exploring the coast. Clean, comfortable and the friendliest staff. We’ll definitely be back!”",
+      "“The perfect base for exploring the Hunter Valley. Clean, comfortable and the friendliest staff. We’ll definitely be back!”",
     avatar: "/images/room-one.png",
-    avatarAlt: "King guest room with private balcony overlooking coastal scenery",
+    avatarAlt: "Guest room at Cumberland Motor Inn Cessnock",
   },
 };
 

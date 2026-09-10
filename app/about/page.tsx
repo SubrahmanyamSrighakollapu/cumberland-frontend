@@ -9,9 +9,9 @@ import AboutFinalCta from "@/components/about/AboutFinalCta";
 import PublicFooter from "@/components/layout/PublicFooter";
 
 export const metadata: Metadata = {
-  title: "About Us | Cumberland Motor Inn",
+  title: "About Us | Cumberland Motor Inn Cessnock",
   description:
-    "Discover Cumberland Motor Inn, a welcoming coastal stay offering comfortable rooms, thoughtful facilities and friendly local hospitality.",
+    "Welcome to Cumberland Motor Inn, your comfortable base in Cessnock for exploring Hunter Valley wineries, dining, attractions and local events.",
 };
 
 export default function AboutPage() {

@@ -9,11 +9,10 @@ export default function FinalCtaSection() {
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div>
               <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-white mb-2 leading-tight">
-                Ready for your coastal escape?
+                Ready for your Hunter Valley getaway?
               </h2>
               <p className="text-base sm:text-lg text-white/90 font-sans max-w-2xl">
-                Introduce your next chapter with ocean views, fresh air and brighter
-                days.
+                Enjoy clean, comfortable accommodation in Cessnock with easy access to legendary cellar doors, dining, and natural attractions.
               </p>
             </div>
 

@@ -664,7 +664,7 @@ export default function AdminRoomsModule() {
                           onChange={(e) =>
                             setEditing({ ...editing, name: e.target.value })
                           }
-                          placeholder="e.g. Lakeview Queen Balcony"
+                          placeholder="e.g. Deluxe Queen Room"
                           className="w-full h-11 px-3.5 rounded-lg border border-stone-300 focus:border-[#17352D] focus:ring-1 focus:ring-[#17352D] outline-none text-sm"
                         />
                       </label>
@@ -687,7 +687,7 @@ export default function AdminRoomsModule() {
                                 : stringToSlug(editing.name),
                             });
                           }}
-                          placeholder="lakeview-queen-balcony"
+                          placeholder="deluxe-queen-room"
                           className="w-full h-11 px-3.5 rounded-lg border border-stone-300 focus:border-[#17352D] focus:ring-1 focus:ring-[#17352D] outline-none text-sm font-mono"
                         />
                       </label>
@@ -832,7 +832,7 @@ export default function AdminRoomsModule() {
                           onChange={(e) =>
                             setEditing({ ...editing, viewLabel: e.target.value })
                           }
-                          placeholder="Lake View"
+                          placeholder="Garden View"
                           className="w-full h-11 px-3.5 rounded-lg border border-stone-300 focus:border-[#17352D] focus:ring-1 focus:ring-[#17352D] outline-none text-sm"
                         />
                       </label>
@@ -864,7 +864,7 @@ export default function AdminRoomsModule() {
                           onChange={(e) =>
                             setEditing({ ...editing, introEyebrow: e.target.value })
                           }
-                          placeholder="THE LAKEVIEW EXPERIENCE"
+                          placeholder="THE DELUXE EXPERIENCE"
                           className="w-full h-11 px-3.5 rounded-lg border border-stone-300 focus:border-[#17352D] focus:ring-1 focus:ring-[#17352D] outline-none text-xs uppercase font-semibold tracking-wider"
                         />
                       </label>
@@ -1052,7 +1052,7 @@ export default function AdminRoomsModule() {
                         onChange={(e) =>
                           setEditing({ ...editing, relatedSlugsText: e.target.value })
                         }
-                        placeholder="lakeview-queen-balcony, garden-king"
+                        placeholder="deluxe-twin-room, family-room"
                         className="w-full px-3.5 py-2.5 rounded-lg border border-stone-300 focus:border-[#17352D] focus:ring-1 focus:ring-[#17352D] outline-none text-sm resize-none font-mono text-[13px]"
                       />
                     </label>

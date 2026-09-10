@@ -1,7 +1,7 @@
 /**
  * Cumberland Motor Inn - Shared Motion System Tokens & Utilities
  * 
- * Calm, fluid, deliberate motion system tailored for a premium coastal motel.
+ * Calm, fluid, deliberate motion system tailored for a premium Cessnock motel.
  */
 
 export const MOTION_TOKENS = {

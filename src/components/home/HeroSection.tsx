@@ -68,7 +68,7 @@ export default function HeroSection() {
   const headingLine2 = activeSlide?.headingLine2 || "the good days.";
   const description =
     activeSlide?.description ||
-    "Boutique coastal stays, warmer days and unforgettable moments by the water.";
+    "A comfortable and convenient base in Cessnock for exploring the Hunter Valley.";
   const reactKey = activeSlide ? String(activeSlide.id) : `fb-${clampedIndex}`;
 
   return (
@@ -157,10 +157,10 @@ export default function HeroSection() {
                   </div>
                   <div>
                     <div className="text-xl font-serif font-bold text-white leading-none mb-1">
-                      4.8 <span className="text-xs font-sans text-[#e8c5af]">/ 5.0 Rating</span>
+                      4.5 <span className="text-xs font-sans text-[#e8c5af]">/ 5.0 Rating</span>
                     </div>
                     <div className="text-xs text-[#f7f4ee]/80 font-sans">
-                      Based on 250+ Verified Reviews
+                      Verified Guest Rating
                     </div>
                   </div>
                 </div>
@@ -170,15 +170,15 @@ export default function HeroSection() {
                 <div className="space-y-3 text-xs text-[#f7f4ee] font-sans font-medium">
                   <div className="flex items-center gap-2.5">
                     <span className="w-2.5 h-2.5 rounded-full bg-[#52c92d] shadow-[0_0_8px_#52c92d] shrink-0" />
-                    <span>Waterfront Ocean & Lake Views</span>
+                    <span>Convenient Cessnock Location</span>
                   </div>
                   <div className="flex items-center gap-2.5">
                     <span className="w-2.5 h-2.5 rounded-full bg-[#52c92d] shadow-[0_0_8px_#52c92d] shrink-0" />
-                    <span>Heated Outdoor Pool & Spa</span>
+                    <span>Outdoor Salt-Water Swimming Pool</span>
                   </div>
                   <div className="flex items-center gap-2.5">
                     <span className="w-2.5 h-2.5 rounded-full bg-[#52c92d] shadow-[0_0_8px_#52c92d] shrink-0" />
-                    <span>Free Parking & EV Charging</span>
+                    <span>Free On-Site Off-Street Parking</span>
                   </div>
                 </div>
               </div>
