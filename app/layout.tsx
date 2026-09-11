@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
+import PoweredByBadge from "@/components/layout/PoweredByBadge";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -54,7 +55,10 @@ export default function RootLayout({
       className={`${cormorant.variable} ${manrope.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans bg-[var(--color-ivory)] text-[var(--color-body)]">
-        <AuthProvider>{children}</AuthProvider>
+        <AuthProvider>
+          {children}
+          <PoweredByBadge />
+        </AuthProvider>
       </body>
     </html>
   );

@@ -25,74 +25,125 @@ export default function LocalFlavoursItinerary() {
         </Reveal>
 
         {/* 4-Step Horizontal Food Itinerary Row */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative">
-          {foodItinerarySteps.map((step, idx) => (
-            <Reveal
-              key={step.id}
-              direction="up"
-              delay={100 + idx * 90}
-              className="relative flex flex-col h-full"
-            >
-              {/* Card Container */}
-              <div className="bg-white border border-[#d9d0c4] rounded-xl overflow-hidden shadow-sm flex flex-col h-full hover:shadow-md transition-shadow">
-                {/* Thumbnail Image */}
-                <div className="relative w-full aspect-[16/10] bg-[#e9efe8] overflow-hidden">
-                  <Image
-                    src={step.image}
-                    alt={step.imageAlt}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                    className="object-cover"
-                  />
-                </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10 lg:gap-12 relative">
+          {foodItinerarySteps.map((step, idx) => {
+            const isLast = idx === foodItinerarySteps.length - 1;
+            const isRowEndMd = idx % 2 === 1;
 
-                {/* Card Body */}
-                <div className="p-5 flex-1 flex flex-col">
-                  {/* Time Row */}
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-[11px] font-semibold tracking-wider text-[#80563e] uppercase">
-                      STEP 0{idx + 1}
-                    </span>
-                    <span className="font-serif text-sm font-semibold text-[#0f302a]">
-                      {step.time}
-                    </span>
+            return (
+              <Reveal
+                key={step.id}
+                direction="up"
+                delay={100 + idx * 90}
+                className="relative flex flex-col h-full"
+              >
+                {/* Card Container */}
+                <div className="bg-white border border-[#d9d0c4] rounded-xl overflow-hidden shadow-sm flex flex-col h-full hover:shadow-md transition-shadow">
+                  {/* Thumbnail Image */}
+                  <div className="relative w-full aspect-[16/10] bg-[#e9efe8] overflow-hidden shrink-0">
+                    <Image
+                      src={step.image}
+                      alt={step.imageAlt}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      className="object-cover"
+                    />
                   </div>
 
-                  {/* Title */}
-                  <h3 className="font-serif text-lg font-semibold text-[#0f302a] mb-2 leading-snug">
-                    {step.title}
-                  </h3>
+                  {/* Card Body */}
+                  <div className="p-5 flex-1 flex flex-col">
+                    {/* Time Row */}
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-[11px] font-semibold tracking-wider text-[#80563e] uppercase">
+                        STEP 0{idx + 1}
+                      </span>
+                      <span className="font-serif text-sm font-semibold text-[#0f302a]">
+                        {step.time}
+                      </span>
+                    </div>
 
-                  {/* Supporting Text */}
-                  <p className="text-xs sm:text-sm text-[#50544e] font-sans leading-relaxed">
-                    {step.description}
-                  </p>
+                    {/* Title */}
+                    <h3 className="font-serif text-lg font-semibold text-[#0f302a] mb-2 leading-snug">
+                      {step.title}
+                    </h3>
+
+                    {/* Supporting Text */}
+                    <p className="text-xs sm:text-sm text-[#50544e] font-sans leading-relaxed">
+                      {step.description}
+                    </p>
+                  </div>
                 </div>
-              </div>
 
-              {/* Sequential Connector Arrow (Desktop only) */}
-              {idx < foodItinerarySteps.length - 1 && (
-                <div
-                  className="hidden lg:flex absolute -right-3.5 top-[26%] -translate-y-1/2 z-20 w-7 h-7 rounded-full bg-white border border-[#d9d0c4] items-center justify-center text-[#80563e] shadow-md pointer-events-none"
-                  aria-hidden="true"
-                >
-                  <svg
-                    className="w-3.5 h-3.5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
+                {/* Horizontal Connector Arrow (Desktop lg: centered in 48px gap) */}
+                {!isLast && (
+                  <div
+                    className="hidden lg:flex absolute left-[calc(100%+24px)] top-1/2 -translate-x-1/2 -translate-y-1/2 z-30 w-7 h-7 rounded-full bg-white border border-[#d9d0c4] items-center justify-center text-[#80563e] shadow-md pointer-events-none"
+                    aria-hidden="true"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                </div>
-              )}
-            </Reveal>
-          ))}
+                    <svg
+                      className="w-3.5 h-3.5 text-[#80563e]"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2.5}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </div>
+                )}
+
+                {/* Horizontal Connector Arrow (Tablet md: centered in 40px gap) */}
+                {!isLast && !isRowEndMd && (
+                  <div
+                    className="hidden md:flex lg:hidden absolute left-[calc(100%+20px)] top-1/2 -translate-x-1/2 -translate-y-1/2 z-30 w-7 h-7 rounded-full bg-white border border-[#d9d0c4] items-center justify-center text-[#80563e] shadow-md pointer-events-none"
+                    aria-hidden="true"
+                  >
+                    <svg
+                      className="w-3.5 h-3.5 text-[#80563e]"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2.5}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </div>
+                )}
+
+                {/* Vertical Down Connector Arrow (Mobile sm stacked & Tablet md between rows) */}
+                {!isLast && (
+                  <div
+                    className={`z-30 w-7 h-7 rounded-full bg-white border border-[#d9d0c4] items-center justify-center text-[#80563e] shadow-md pointer-events-none mx-auto my-[-14px] ${
+                      isRowEndMd ? "flex md:flex lg:hidden" : "flex md:hidden"
+                    }`}
+                    aria-hidden="true"
+                  >
+                    <svg
+                      className="w-3.5 h-3.5 text-[#80563e]"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2.5}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </div>
+                )}
+              </Reveal>
+            );
+          })}
         </div>
       </div>
     </section>
