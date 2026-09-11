@@ -187,8 +187,8 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* Floating Availability Bar (Sits on seam between Hero & Welcome section) */}
-      <div className="relative z-40 max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 -mb-48 sm:-mb-24 md:-mb-16">
+      {/* Floating Availability Bar (Positions exactly 50% in Hero and 50% in Welcome section) */}
+      <div className="relative z-40 w-full translate-y-1/2">
         <AvailabilityBar />
       </div>
     </section>

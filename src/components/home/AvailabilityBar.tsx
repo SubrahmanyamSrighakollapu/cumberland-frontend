@@ -37,7 +37,7 @@ export default function AvailabilityBar() {
       <Reveal direction="up" distance={12} duration={550}>
         <form
           onSubmit={handleSubmit}
-          className="bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-[#e8e0d6] p-3 sm:p-4 md:p-3 grid grid-cols-1 md:grid-cols-4 gap-3 md:gap-0 items-center divide-y md:divide-y-0 md:divide-x divide-[#e8e0d6] transition-all duration-300"
+          className="bg-white rounded-2xl shadow-2xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-[#e8e0d6] p-3 sm:p-4 md:p-3 grid grid-cols-1 md:grid-cols-4 gap-3 md:gap-0 items-center divide-y md:divide-y-0 md:divide-x divide-[#e8e0d6] transition-all duration-300"
         >
           {/* Check-In Field */}
           <div className="relative p-3 md:px-5 flex flex-col justify-center gap-1 group cursor-pointer rounded-lg md:rounded-r-none transition-colors duration-200 hover:bg-[#f2e9e2]/40 focus-within:bg-[#f2e9e2]/50 focus-within:ring-2 focus-within:ring-[#80563e]">

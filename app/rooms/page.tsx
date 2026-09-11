@@ -57,7 +57,7 @@ export default function RoomsPage() {
         <section className="bg-[#17352D] text-white py-16 md:py-24">
           <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <Reveal direction="up" delay={50}>
-              <p className="text-[#80563E] text-xs font-semibold uppercase tracking-widest mb-3 font-manrope">
+              <p className="text-[#e8c5af] text-md font-bold uppercase tracking-[0.2em] mb-3 font-manrope">
                 ACCOMMODATION
               </p>
               <h1 className="text-4xl md:text-6xl font-cormorant font-normal mb-4">
