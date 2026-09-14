@@ -179,7 +179,7 @@ export default function AdminAmenitiesModule() {
     try {
       setLoading(true);
       setError(null);
-      const res = await apiFetch("/amenities?limit=200&offset=0&sort=sort_order_asc");
+      const res = await apiFetch("/amenities?limit=200&offset=0&sort=sort_order_asc", { auth: true });
       const items = Array.isArray(res?.data?.items) ? res.data.items : [];
       setRows(items.map(rowFromApi));
     } catch (err: any) {
@@ -198,6 +198,7 @@ export default function AdminAmenitiesModule() {
     async (row: AmenityRow) => {
       try {
         const res = await apiFetch(`/amenities/${row.id}/toggle-publish`, {
+          auth: true,
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({}),
@@ -272,11 +273,13 @@ export default function AdminAmenitiesModule() {
       const isEdit = Boolean(editing);
       const res = isEdit
         ? await apiFetch(`/amenities/${editing!.id}`, {
+            auth: true,
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(body),
           })
         : await apiFetch("/amenities", {
+            auth: true,
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(body),
@@ -298,6 +301,7 @@ export default function AdminAmenitiesModule() {
     if (!confirmDelete) return;
     try {
       const res = await apiFetch(`/amenities/${confirmDelete.id}`, {
+        auth: true,
         method: "DELETE",
       });
       pushToast(res?.message || "Amenity deleted.");

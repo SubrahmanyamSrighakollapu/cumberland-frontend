@@ -148,7 +148,7 @@ export default function AdminTestimonialsModule() {
     setError(null);
     try {
       const res: any = await apiFetch("/testimonials?limit=200", {
-        auth: false,
+        auth: true,
       });
       const items: any[] = res?.data?.items ?? res?.items ?? [];
       setRows(items.map(rowFromApi));

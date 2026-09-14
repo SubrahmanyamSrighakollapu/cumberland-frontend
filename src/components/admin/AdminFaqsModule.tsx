@@ -89,7 +89,7 @@ export default function AdminFaqsModule() {
     setError(null);
     try {
       const res: any = await apiFetch("/faqs?limit=500", {
-        auth: false,
+        auth: true,
       });
       const items: any[] = res?.data?.items ?? res?.items ?? [];
       setRows(items.map(rowFromApi));
