@@ -25,8 +25,8 @@ export const adminLoginBrandData: AdminLoginBrandData = {
     "Manage rooms, experiences, galleries and website content from one secure workspace.",
   footerTag: "Cumberland Motor Inn · CMS Portal",
   heroImage: {
-    src: "/images/hero-one.png",
-    alt: "Cumberland Motor Inn exterior at sunset",
+    src: "/images/cumberland-main-exterior-day.jpg",
+    alt: "Cumberland Motor Inn exterior at daytime",
   },
   logoImage: {
     src: "/images/cumberland-logo.png",

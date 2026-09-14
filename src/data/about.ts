@@ -29,8 +29,8 @@ export const aboutHeroData = {
   headingLines: ["Your comfortable base", "in Cessnock."],
   description:
     "Welcome to Cumberland Motor Inn, where a warm welcome and comfortable accommodation come together in the heart of Cessnock.",
-  image: "/images/content-image-two.png",
-  alt: "Cumberland Motor Inn exterior in Cessnock with warm lighting",
+  image: "/images/cumberland-grounds-skyline-view.jpg",
+  alt: "Cumberland Motor Inn grounds and outdoor pool beneath blue sky with clouds",
 };
 
 export const ourStoryData = {
@@ -43,16 +43,16 @@ export const ourStoryData = {
   paragraph3:
     "With comfortable rooms, practical amenities and an outdoor swimming pool, we make it easy to relax after a day of discovering everything the Hunter Valley has to offer. Located close to Cessnock's shops, restaurants and local attractions, Cumberland Motor Inn puts you within easy reach of the vineyards, dining experiences and events that make the Hunter Valley such a popular destination.",
   accentLine: "Come for the Hunter Valley. Stay for the comfort.",
-  image: "/images/content-image-one.png",
-  alt: "Landscaped Cumberland Motor Inn grounds in Cessnock",
+  image: "/images/cumberland-building-facade-lawn.jpg",
+  alt: "Exterior view of The Cumberland building facade and landscaped lawn",
 };
 
 export const aboutStatsData: AboutStat[] = [
   {
-    id: "rating",
-    value: "4.5/5",
-    label: "Guest Rating",
-    iconName: "calendar",
+    id: "parking",
+    value: "Free",
+    label: "On-Site Parking",
+    iconName: "pin",
   },
   {
     id: "location",
@@ -106,8 +106,8 @@ export const cumberlandExperienceData = {
   headingLines: ["Easy stays,", "thoughtfully delivered."],
   description:
     "At Cumberland Motor Inn, we make it easy to relax, explore and enjoy everything the Hunter Valley has to offer. From comfortable rooms to helpful local tips, we’re here to ensure your stay is seamless and memorable.",
-  image: "/images/content-image-three.png",
-  alt: "Outdoor salt-water swimming pool at Cumberland Motor Inn",
+  image: "/images/cumberland-reception-pool-view.jpg",
+  alt: "Outdoor salt-water swimming pool and reception grounds at Cumberland Motor Inn",
   benefits: [
     {
       id: "rest",

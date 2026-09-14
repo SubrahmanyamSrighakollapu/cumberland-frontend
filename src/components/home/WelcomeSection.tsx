@@ -14,8 +14,8 @@ export default function WelcomeSection() {
             <ImageReveal overlayColor="#f7f4ee" duration={900}>
               <div className="relative aspect-[4/3] w-full rounded-xl overflow-hidden shadow-sm">
                 <Image
-                  src="/images/content-image-one.png"
-                  alt="Cumberland Motor Inn exterior architecture and landscaped driveway"
+                  src="/images/cumberland-main-exterior-day.jpg"
+                  alt="Cumberland Motor Inn main exterior architecture and landscaped grounds"
                   fill
                   sizes="(max-width: 1024px) 100vw, 55vw"
                   className="object-cover object-center"
@@ -63,32 +63,38 @@ export default function WelcomeSection() {
 
             {/* Trust Indicators Row */}
             <Reveal direction="up" delay={420} duration={650}>
-              <div className="pt-6 border-t border-[#d9d0c4] grid grid-cols-1 sm:grid-cols-3 gap-4 text-left">
-                {/* Star Rating */}
-                <div className="flex items-start gap-3 sm:border-r border-[#d9d0c4] sm:pr-4">
-                  <div className="p-2 rounded-full bg-[#e9efe8] text-[#20382f] shrink-0 mt-0.5">
+              <div className="pt-6 border-t border-[#d9d0c4] grid grid-cols-1 sm:grid-cols-3 gap-3 text-left items-center">
+                {/* Free Parking */}
+                <div className="flex items-center gap-3 sm:border-r border-[#d9d0c4] sm:pr-3">
+                  <div className="w-9 h-9 rounded-full bg-[#e9efe8] text-[#20382f] flex items-center justify-center shrink-0">
                     <svg
-                      className="w-4 h-4 text-[#80563e]"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
+                      className="w-4 h-4 text-[#20382f]"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
                       aria-hidden="true"
                     >
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M8 7h8m-8 4h8m-8 4h4m6 4H6a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2z"
+                      />
                     </svg>
                   </div>
-                  <div>
-                    <div className="text-base font-bold text-[#20382f]">
+                  <div className="min-w-0">
+                    <div className="text-sm sm:text-base font-bold text-[#20382f] leading-snug whitespace-nowrap">
                       {welcomeData.trustIndicators[0].primary}
                     </div>
-                    <div className="text-xs text-[#50544e]">
+                    <div className="text-xs text-[#50544e] leading-snug whitespace-nowrap">
                       {welcomeData.trustIndicators[0].secondary}
                     </div>
                   </div>
                 </div>
 
                 {/* Cessnock Location */}
-                <div className="flex items-start gap-3 sm:border-r border-[#d9d0c4] sm:pr-4">
-                  <div className="p-2 rounded-full bg-[#e9efe8] text-[#20382f] shrink-0 mt-0.5">
+                <div className="flex items-center gap-3 sm:border-r border-[#d9d0c4] sm:pr-3">
+                  <div className="w-9 h-9 rounded-full bg-[#e9efe8] text-[#20382f] flex items-center justify-center shrink-0">
                     <svg
                       className="w-4 h-4 text-[#20382f]"
                       fill="none"
@@ -109,19 +115,19 @@ export default function WelcomeSection() {
                       />
                     </svg>
                   </div>
-                  <div>
-                    <div className="text-base font-bold text-[#20382f]">
+                  <div className="min-w-0">
+                    <div className="text-sm sm:text-base font-bold text-[#20382f] leading-snug whitespace-nowrap">
                       {welcomeData.trustIndicators[1].primary}
                     </div>
-                    <div className="text-xs text-[#50544e]">
+                    <div className="text-xs text-[#50544e] leading-snug whitespace-nowrap">
                       {welcomeData.trustIndicators[1].secondary}
                     </div>
                   </div>
                 </div>
 
-                {/* Recently Renovated */}
-                <div className="flex items-start gap-3">
-                  <div className="p-2 rounded-full bg-[#e9efe8] text-[#20382f] shrink-0 mt-0.5">
+                {/* 28 Rooms */}
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-full bg-[#e9efe8] text-[#20382f] flex items-center justify-center shrink-0">
                     <svg
                       className="w-4 h-4 text-[#20382f]"
                       fill="none"
@@ -137,11 +143,11 @@ export default function WelcomeSection() {
                       />
                     </svg>
                   </div>
-                  <div>
-                    <div className="text-base font-bold text-[#20382f]">
+                  <div className="min-w-0">
+                    <div className="text-sm sm:text-base font-bold text-[#20382f] leading-snug whitespace-nowrap">
                       {welcomeData.trustIndicators[2].primary}
                     </div>
-                    <div className="text-xs text-[#50544e]">
+                    <div className="text-xs text-[#50544e] leading-snug whitespace-nowrap">
                       {welcomeData.trustIndicators[2].secondary}
                     </div>
                   </div>

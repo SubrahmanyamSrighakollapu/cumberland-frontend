@@ -29,7 +29,7 @@ function itemsFromApi(items: ApiGalleryItem[]): PreviewItem[] {
 }
 
 export default function GalleryPreviewSection() {
-  const [images, setImages] = useState<PreviewItem[]>(fallbackImages);
+  const [images, setImages] = useState<PreviewItem[]>([]);
   const [loaded, setLoaded] = useState<boolean>(false);
 
   useEffect(() => {
@@ -38,11 +38,11 @@ export default function GalleryPreviewSection() {
       try {
         const res: any = await apiFetch("/gallery?published_only=true&limit=5");
         const list = res?.data?.items ?? res?.items ?? [];
-        if (!cancel && Array.isArray(list) && list.length > 0) {
-          setImages(itemsFromApi(list));
+        if (!cancel) {
+          setImages(Array.isArray(list) ? itemsFromApi(list) : []);
         }
       } catch (_err) {
-        // keep fallback
+        if (!cancel) setImages([]);
       } finally {
         if (!cancel) setLoaded(true);
       }
@@ -52,8 +52,6 @@ export default function GalleryPreviewSection() {
       cancel = true;
     };
   }, []);
-
-  const display = images.length > 0 ? images : fallbackImages;
 
   return (
     <section className="w-full bg-[#f7f4ee] pb-16 sm:pb-20 lg:pb-24 pt-4 border-b border-[#d9d0c4]/40 overflow-hidden">
@@ -76,13 +74,25 @@ export default function GalleryPreviewSection() {
           </div>
         </Reveal>
 
-        {!loaded && display.length === 0 ? (
+        {!loaded ? (
           <div className="text-center py-20">
             <div className="inline-flex w-10 h-10 rounded-xl border-2 border-[#80563e]/30 border-t-[#80563e] animate-spin" />
           </div>
+        ) : images.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-10 text-center">
+            <div className="relative w-48 h-48 sm:w-56 sm:h-56">
+              <Image
+                src="/images/no-data-found.png"
+                alt="No data found"
+                fill
+                className="object-contain"
+                sizes="224px"
+              />
+            </div>
+          </div>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
-            {display.map((img, index) => (
+            {images.map((img, index) => (
               <Reveal
                 key={img.id}
                 direction="up"

@@ -393,63 +393,36 @@ export default function AdminContactInquiriesModule() {
         key: "actions",
         label: "Actions",
         width: "14%",
-        render: (row) => {
-          const done = row.status === "replied" || row.status === "archived";
-          return (
-            <div className="inline-flex items-center gap-1">
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  openDetail(row);
-                }}
-                className="p-2 rounded-md border border-[#D9D0C4] bg-white text-[#17352D] hover:bg-stone-50 transition-colors"
-                title="View message"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.646C3.434 8.796 7.182 6 12 6s8.566 2.796 9.964 5.677c.098.211.098.435 0 .646C20.566 15.204 16.818 18 12 18s-8.566-2.796-9.964-5.678zM12 15a3 3 0 100-6 3 3 0 000 6z" />
-                </svg>
-              </button>
-              <button
-                type="button"
-                disabled={done}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  markComplete(row.id);
-                }}
-                className={`p-2 rounded-md transition-colors ${
-                  done
-                    ? "bg-stone-100 text-stone-400 border border-stone-200 cursor-default"
-                    : "bg-[#52C92D] hover:bg-[#45b624] text-white border border-[#52C92D]"
-                }`}
-                title={done ? "Already completed" : "Mark Complete"}
-              >
-                {done ? (
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                  </svg>
-                ) : (
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                )}
-              </button>
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setConfirmDelete(row);
-                }}
-                className="p-2 rounded-md text-[#50544E] hover:bg-red-50 hover:text-red-600 transition-colors"
-                title="Delete"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.75}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                </svg>
-              </button>
-            </div>
-          );
-        },
+        render: (row) => (
+          <div className="inline-flex items-center gap-1">
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                openDetail(row);
+              }}
+              className="p-2 rounded-md border border-[#D9D0C4] bg-white text-[#17352D] hover:bg-stone-50 transition-colors"
+              title="View message"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.646C3.434 8.796 7.182 6 12 6s8.566 2.796 9.964 5.677c.098.211.098.435 0 .646C20.566 15.204 16.818 18 12 18s-8.566-2.796-9.964-5.678zM12 15a3 3 0 100-6 3 3 0 000 6z" />
+              </svg>
+            </button>
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                setConfirmDelete(row);
+              }}
+              className="p-2 rounded-md text-[#50544E] hover:bg-red-50 hover:text-red-600 transition-colors"
+              title="Delete"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.75}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+              </svg>
+            </button>
+          </div>
+        ),
       },
     ],
     rows: rows,
@@ -662,26 +635,6 @@ export default function AdminContactInquiriesModule() {
             <div className="border-t border-[#D9D0C4]/60 p-5 sm:p-6 flex flex-wrap gap-2 justify-end bg-[#FAF8F3]/60">
               {detail && (
                 <>
-                  {detail.status !== "replied" && detail.status !== "archived" ? (
-                    <button
-                      type="button"
-                      onClick={() => markComplete(detail.id)}
-                      className="h-[42px] px-5 rounded-lg bg-[#52C92D] hover:bg-[#45b624] text-white font-manrope text-xs font-bold uppercase tracking-wider transition-colors inline-flex items-center gap-2"
-                    >
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                      Mark Complete
-                    </button>
-                  ) : (
-                    <span className="h-[42px] px-5 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-100 font-manrope text-xs font-bold uppercase tracking-wider inline-flex items-center gap-2 select-none">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                      </svg>
-                      Completed
-                    </span>
-                  )}
-                  <div className="w-full sm:w-0 h-0 sm:flex-1" />
                   <button
                     type="button"
                     onClick={() => {

@@ -151,8 +151,8 @@ export default function RoomStayInformation({
             {/* Scenic Image Card */}
             <ImageReveal className="aspect-[16/10] w-full rounded-2xl overflow-hidden shadow-md border border-[#d9d0c4] bg-[#0f302a]" delay={250}>
               <Image
-                src="/images/room-eight.png"
-                alt="Cumberland Motor Inn grounds in Cessnock"
+                src="/images/cumberland-grounds-skyline-view.jpg"
+                alt="Cumberland Motor Inn grounds and blue sky in Cessnock"
                 fill
                 sizes="(max-width: 1024px) 100vw, 40vw"
                 className="object-cover opacity-90"

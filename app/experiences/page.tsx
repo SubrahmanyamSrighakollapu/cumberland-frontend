@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
 import PublicHeader from "@/components/layout/PublicHeader";
-import ExperiencesSection from "@/components/home/ExperiencesSection";
+import ExperiencesHero from "@/components/experiences/ExperiencesHero";
+import ExperiencePillars from "@/components/experiences/ExperiencePillars";
 import WineCountryIntro from "@/components/experiences/WineCountryIntro";
-import EatDrinkCta from "@/components/experiences/EatDrinkCta";
-import ThingsToDoCta from "@/components/experiences/ThingsToDoCta";
+import LocationAdvantages from "@/components/experiences/LocationAdvantages";
+import ExperiencesGrandCta from "@/components/experiences/ExperiencesGrandCta";
 import PublicFooter from "@/components/layout/PublicFooter";
 
 export const metadata: Metadata = {
-  title: "Experiences | Cumberland Motor Inn",
+  title: "Experiences & Attractions | Cumberland Motor Inn",
   description:
-    "Explore unforgettable coastal experiences near Cumberland Motor Inn, from wine country tours to local dining and seaside outdoor adventures.",
+    "Discover Hunter Valley experiences near Cumberland Motor Inn in Cessnock, including wine country tours, local dining, golf, and regional attractions.",
 };
 
 export default function ExperiencesIndexPage() {
@@ -17,30 +18,20 @@ export default function ExperiencesIndexPage() {
     <div className="min-h-screen flex flex-col bg-[#f7f4ee] text-[#50544e]">
       <PublicHeader />
       <main className="flex-1">
-        {/* Hero Banner */}
-        <section className="bg-[#17352d] text-white py-16 sm:py-20 lg:py-24">
-          <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <span className="text-xs font-semibold tracking-[0.2em] text-[#80563e] uppercase mb-3 block">
-              LOCAL DESTINATIONS
-            </span>
-            <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-white font-normal mb-4">
-              Explore Our Region
-            </h1>
-            <p className="max-w-2xl mx-auto text-[#f7f4ee]/85 text-base sm:text-lg font-light leading-relaxed">
-              From world-class vineyards and waterfront dining to scenic coastal tracks, Cumberland Motor Inn is your gateway to the best of the coast.
-            </p>
-          </div>
-        </section>
+        {/* Luxury Hero Banner */}
+        <ExperiencesHero />
 
-        {/* Featured Experiences Grid */}
-        <ExperiencesSection />
+        {/* 3 Pillar Experience Cards (Wine Country, Eat & Drink, Things to Do) */}
+        <ExperiencePillars />
 
+        {/* Wine Country Detailed Section */}
         <WineCountryIntro />
 
-        <section className="py-16 sm:py-20 max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-8">
-          <EatDrinkCta />
-          <ThingsToDoCta />
-        </section>
+        {/* Location Advantages / Why Base Here */}
+        <LocationAdvantages />
+
+        {/* Unified Grand Call-to-Action */}
+        <ExperiencesGrandCta />
       </main>
       <PublicFooter />
     </div>

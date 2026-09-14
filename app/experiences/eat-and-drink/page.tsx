@@ -21,7 +21,7 @@ export default function EatAndDrinkPage() {
       <main className="flex-1">
         <EatDrinkHero />
         <FeaturedDiningExperience />
-        <DiningExplorer />
+        {/* <DiningExplorer /> */}
         <LocalFlavoursItinerary />
         <DiningRecommendationPanel />
         <EatDrinkCta />

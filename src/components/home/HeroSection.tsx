@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 
 import HeroCarousel, { HeroCarouselSlide } from "./HeroCarousel";
@@ -24,11 +25,10 @@ function useHeroSlides() {
     fetchHeroSlides({ publishedOnly: true })
       .then((rows) => {
         if (!mounted) return;
-        const list = Array.isArray(rows) && rows.length > 0 ? rows : null;
-        setData(list ?? null);
+        setData(Array.isArray(rows) ? rows : []);
       })
       .catch(() => {
-        if (!mounted) setData(null);
+        if (!mounted) setData([]);
       })
       .finally(() => {
         if (mounted) setLoading(false);
@@ -39,8 +39,7 @@ function useHeroSlides() {
   }, []);
 
   const slides = useMemo<HeroSlideRow[]>(() => {
-    if (data && Array.isArray(data) && data.length > 0) return data;
-    return fallbackHeroSlides();
+    return data ?? [];
   }, [data]);
 
   return { slides, loading };
@@ -87,22 +86,38 @@ export default function HeroSection() {
         />
 
         {/* Background Image Carousel & Overlay */}
-        <HeroCarousel
-          slides={carouselSlides}
-          onIndexChange={setActiveIndex}
-          autoplayMs={5500}
-        />
+        {carouselSlides.length > 0 ? (
+          <HeroCarousel
+            slides={carouselSlides}
+            onIndexChange={setActiveIndex}
+            autoplayMs={5500}
+          />
+        ) : (
+          <div className="absolute inset-0 bg-[#0f302a] flex flex-col items-center justify-center p-6 z-20">
+            <div className="relative w-48 h-48 sm:w-56 sm:h-56">
+              <Image
+                src="/images/no-data-found.png"
+                alt="No data found"
+                fill
+                className="object-contain"
+                sizes="224px"
+              />
+            </div>
+          </div>
+        )}
 
         {/* Hero Content Container */}
         <div className="relative z-30 w-full max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-20 md:py-24 flex items-center justify-between gap-8 pointer-events-none">
           {/* Left Column: Hero Text Content */}
-          <div key={reactKey} className="max-w-[620px] text-white">
+          <div key={reactKey} className="max-w-[880px] lg:max-w-[960px] text-white pointer-events-auto">
             {/* Heading Entrance */}
             <Reveal direction="up" delay={100} duration={750} distance={32}>
-              <h1 className="font-serif text-5xl sm:text-6xl lg:text-[76px] font-normal leading-[0.96] tracking-tight text-white drop-shadow-md">
-                {headingLine1}
+              <h1 className="font-serif text-4xl sm:text-6xl lg:text-[72px] font-normal leading-[1.15] tracking-tight text-white drop-shadow-md overflow-visible">
+                <span className="inline-block pr-4 pb-1">
+                  {headingLine1}
+                </span>
                 <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f7f4ee] via-[#e8c5af] to-[#ffffff] italic font-serif">
+                <span className="inline-block pr-6 pb-2 text-transparent bg-clip-text bg-gradient-to-r from-[#f7f4ee] via-[#e8c5af] to-[#ffffff] italic font-serif">
                   {headingLine2}
                 </span>
               </h1>
@@ -110,7 +125,7 @@ export default function HeroSection() {
 
             {/* Description Entrance */}
             <Reveal direction="up" delay={220} duration={750} distance={32}>
-              <p className="mt-6 mb-8 max-w-[500px] text-base sm:text-lg lg:text-[19px] leading-relaxed text-[#f7f4ee]/90 font-sans font-light">
+              <p className="mt-6 mb-8 max-w-[640px] text-base sm:text-lg lg:text-[19px] leading-relaxed text-[#f7f4ee]/90 font-sans font-light">
                 {description}
               </p>
             </Reveal>
@@ -148,19 +163,30 @@ export default function HeroSection() {
                   <div className="p-3 rounded-xl bg-gradient-to-br from-[#b86f4b] to-[#80563e] text-white shrink-0 shadow-md border border-white/20">
                     <svg
                       className="w-5 h-5 text-amber-200"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
                       aria-hidden="true"
                     >
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
                     </svg>
                   </div>
                   <div>
-                    <div className="text-xl font-serif font-bold text-white leading-none mb-1">
-                      4.5 <span className="text-xs font-sans text-[#e8c5af]">/ 5.0 Rating</span>
+                    <div className="text-lg font-serif font-bold text-white leading-none mb-1">
+                      Prime Location
                     </div>
                     <div className="text-xs text-[#f7f4ee]/80 font-sans">
-                      Verified Guest Rating
+                      Heart of Hunter Valley
                     </div>
                   </div>
                 </div>
@@ -178,7 +204,7 @@ export default function HeroSection() {
                   </div>
                   <div className="flex items-center gap-2.5">
                     <span className="w-2.5 h-2.5 rounded-full bg-[#52c92d] shadow-[0_0_8px_#52c92d] shrink-0" />
-                    <span>Free On-Site Off-Street Parking</span>
+                    <span>Free Parking Within Motel</span>
                   </div>
                 </div>
               </div>

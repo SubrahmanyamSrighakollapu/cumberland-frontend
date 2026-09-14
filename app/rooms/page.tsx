@@ -43,11 +43,8 @@ export default function RoomsPage() {
   }, []);
 
   const display: RoomDetail[] = useMemo(() => {
-    if (apiRooms && apiRooms.length > 0) return apiRooms;
-    if (apiRooms && !apiRooms.length && !loading) return fallbackAllRooms();
-    if (!apiRooms) return fallbackAllRooms();
-    return fallbackAllRooms();
-  }, [apiRooms, loading]);
+    return apiRooms ?? [];
+  }, [apiRooms]);
 
   return (
     <div className="min-h-screen flex flex-col bg-[#F7F4EE] text-[#50544E]">
@@ -72,7 +69,7 @@ export default function RoomsPage() {
 
         <section className="py-16 md:py-24">
           <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8">
-            {loading && !apiRooms ? (
+            {loading ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {Array.from({ length: 6 }).map((_, i) => (
                   <div
@@ -80,6 +77,18 @@ export default function RoomsPage() {
                     className="bg-white rounded-xl border border-[#D9D0C4]/60 overflow-hidden h-[460px] animate-pulse"
                   />
                 ))}
+              </div>
+            ) : display.length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-16 text-center">
+                <div className="relative w-56 h-56 sm:w-64 sm:h-64">
+                  <Image
+                    src="/images/no-data-found.png"
+                    alt="No data found"
+                    fill
+                    className="object-contain"
+                    sizes="256px"
+                  />
+                </div>
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

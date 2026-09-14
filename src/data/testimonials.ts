@@ -46,8 +46,8 @@ export const testimonialsDataset: Record<string, Review> = {
     rating: 5,
     quote:
       "“The perfect base for exploring the Hunter Valley. Clean, comfortable and the friendliest staff. We’ll definitely be back!”",
-    avatar: "/images/room-one.png",
-    avatarAlt: "Guest room at Cumberland Motor Inn Cessnock",
+    avatar: "/images/cumberland-main-exterior-day.jpg",
+    avatarAlt: "Cumberland Motor Inn grounds in Cessnock",
   },
 };
 

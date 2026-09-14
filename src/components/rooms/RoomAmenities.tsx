@@ -1,12 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { RoomDetail, RoomAmenityItem } from "@/data/rooms";
 import Reveal from "@/components/ui/Reveal";
-import {
-  fallbackRoomAmenities,
-  fetchRoomAmenities,
-} from "@/utils/amenityClient";
+import { fetchRoomAmenities } from "@/utils/amenityClient";
 
 interface RoomAmenitiesProps {
   room: RoomDetail;
@@ -21,15 +19,14 @@ export default function RoomAmenities({ room }: RoomAmenitiesProps) {
     void (async () => {
       const res = await fetchRoomAmenities();
       if (!mounted) return;
-      if (res.length > 0) setItems(res);
-      else setItems(fallbackRoomAmenities());
+      setItems(res ?? []);
     })();
     return () => {
       mounted = false;
     };
   }, []);
 
-  const list = items ?? fallbackRoomAmenities();
+  const list = items ?? [];
 
   const renderAmenityIcon = (iconName: string) => {
     switch (iconName) {
@@ -243,23 +240,37 @@ export default function RoomAmenities({ room }: RoomAmenitiesProps) {
           </div>
         </Reveal>
 
-        {/* 10 Amenity Cards Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-10">
-          {list.slice(0, 10).map((item, idx) => (
-            <Reveal
-              key={item.id}
-              direction="up"
-              delay={100 + idx * 40}
-            >
-              <div className="bg-white border border-[#d9d0c4] rounded-xl p-4 text-center flex flex-col items-center justify-center min-h-[100px] shadow-2xs hover:border-[#17352d] transition-colors h-full">
-                <div className="mb-2.5">{renderAmenityIcon(item.icon)}</div>
-                <span className="text-xs sm:text-sm font-semibold text-[#0f302a] font-sans leading-tight">
-                  {item.title}
-                </span>
-              </div>
-            </Reveal>
-          ))}
-        </div>
+        {/* 10 Amenity Cards Grid or Empty State */}
+        {items !== null && list.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-10 text-center">
+            <div className="relative w-48 h-48 sm:w-56 sm:h-56">
+              <Image
+                src="/images/no-data-found.png"
+                alt="No data found"
+                fill
+                className="object-contain"
+                sizes="224px"
+              />
+            </div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-10">
+            {list.slice(0, 10).map((item, idx) => (
+              <Reveal
+                key={item.id}
+                direction="up"
+                delay={100 + idx * 40}
+              >
+                <div className="bg-white border border-[#d9d0c4] rounded-xl p-4 text-center flex flex-col items-center justify-center min-h-[100px] shadow-2xs hover:border-[#17352d] transition-colors h-full">
+                  <div className="mb-2.5">{renderAmenityIcon(item.icon)}</div>
+                  <span className="text-xs sm:text-sm font-semibold text-[#0f302a] font-sans leading-tight">
+                    {item.title}
+                  </span>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        )}
 
         {/* Bottom Section: Show All Button & Room Highlights */}
         <Reveal direction="up" delay={250}>

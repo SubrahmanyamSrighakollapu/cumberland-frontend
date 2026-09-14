@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { RoomDetail } from "@/data/rooms";
-import { BOOK_DIRECT_URL } from "@/utils/siteLinks";
+import { BOOK_DIRECT_URL, openBookDirect } from "@/utils/siteLinks";
 
 interface RoomReservationCardProps {
   room: RoomDetail;
@@ -44,7 +44,7 @@ export default function RoomReservationCard({
       return;
     }
 
-    setIsSummaryModalOpen(true);
+    openBookDirect("_blank");
   };
 
   return (
@@ -148,14 +148,12 @@ export default function RoomReservationCard({
 
         {/* Action Button */}
         <div className="pt-2">
-          <a
-            href={BOOK_DIRECT_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full flex items-center justify-center h-12 bg-[#80563e] hover:bg-[#69452f] text-white text-xs sm:text-sm font-semibold tracking-wider uppercase rounded-lg transition-colors shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#80563e]"
+          <button
+            type="submit"
+            className="w-full flex items-center justify-center h-12 bg-[#80563e] hover:bg-[#69452f] text-white text-xs sm:text-sm font-semibold tracking-wider uppercase rounded-lg transition-colors shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#80563e] cursor-pointer"
           >
             CHECK AVAILABILITY &rarr;
-          </a>
+          </button>
         </div>
       </form>
 

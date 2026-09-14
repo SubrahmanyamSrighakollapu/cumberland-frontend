@@ -12,10 +12,10 @@ export default function ThingsToDoView() {
       <ChooseYourPaceSection
         onSelectFilter={(filterKey) => setActiveFilter(filterKey)}
       />
-      <ActivitiesExplorer
+      {/* <ActivitiesExplorer
         activeFilter={activeFilter}
         onFilterChange={(filter) => setActiveFilter(filter)}
-      />
+      /> */}
     </>
   );
 }

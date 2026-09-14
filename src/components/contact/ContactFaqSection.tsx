@@ -14,27 +14,29 @@ interface FaqItemWithCategory extends FaqItem {
 
 export default function ContactFaqSection() {
   const [openId, setOpenId] = useState<string | null>(null);
-  const [items, setItems] = useState<FaqItemWithCategory[]>(faqSectionData.items);
+  const [items, setItems] = useState<FaqItemWithCategory[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     let cancelled = false;
 
     const load = async () => {
       try {
+        setLoading(true);
         const res: any = await apiFetch("/faqs?published_only=true&limit=100");
         if (cancelled) return;
         const list: any[] = res?.data?.items ?? res?.items ?? [];
-        if (list.length > 0) {
-          const transformed: FaqItemWithCategory[] = list.map((it: any) => ({
-            id: String(it.id),
-            question: it.question,
-            answer: it.answer,
-            category: it.category,
-          }));
-          setItems(transformed);
-        }
+        const transformed: FaqItemWithCategory[] = list.map((it: any) => ({
+          id: String(it.id),
+          question: it.question,
+          answer: it.answer,
+          category: it.category,
+        }));
+        setItems(transformed);
       } catch {
-        // swallow, keep fallback
+        if (!cancelled) setItems([]);
+      } finally {
+        if (!cancelled) setLoading(false);
       }
     };
 
@@ -69,54 +71,72 @@ export default function ContactFaqSection() {
                 </p>
               </Reveal>
 
-              {/* Accordions */}
-              <div className="space-y-3">
-                {items.map((item, idx) => {
-                  const isOpen = openId === item.id;
-                  return (
-                    <Reveal key={item.id} direction="up" delay={100 + idx * 80}>
-                      <div className="bg-white border border-[#d9d0c4] rounded-md overflow-hidden transition-colors">
-                        <button
-                          type="button"
-                          onClick={() => toggleFaq(item.id)}
-                          aria-expanded={isOpen}
-                          aria-controls={`faq-answer-${item.id}`}
-                          className="w-full p-4 sm:p-5 flex items-center justify-between text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#52c92d]"
-                        >
-                          <span className="font-serif text-lg sm:text-xl text-[#20382f] font-normal pr-4">
-                            {item.question}
-                          </span>
-                          <svg
-                            className={`w-5 h-5 text-[#20382f] shrink-0 transition-transform duration-200 ${
-                              isOpen ? "rotate-180 text-[#80563e]" : ""
-                            }`}
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            strokeWidth={2}
-                            aria-hidden="true"
+              {/* Accordions or Empty State */}
+              {loading ? (
+                <div className="flex justify-center py-10">
+                  <div className="w-6 h-6 border-2 border-[#80563e] border-t-transparent rounded-full animate-spin" />
+                </div>
+              ) : items.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-8 text-center bg-white border border-[#d9d0c4] rounded-md p-6">
+                  <div className="relative w-44 h-44 sm:w-48 sm:h-48">
+                    <Image
+                      src="/images/no-data-found.png"
+                      alt="No data found"
+                      fill
+                      className="object-contain"
+                      sizes="192px"
+                    />
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {items.map((item, idx) => {
+                    const isOpen = openId === item.id;
+                    return (
+                      <Reveal key={item.id} direction="up" delay={100 + idx * 80}>
+                        <div className="bg-white border border-[#d9d0c4] rounded-md overflow-hidden transition-colors">
+                          <button
+                            type="button"
+                            onClick={() => toggleFaq(item.id)}
+                            aria-expanded={isOpen}
+                            aria-controls={`faq-answer-${item.id}`}
+                            className="w-full p-4 sm:p-5 flex items-center justify-between text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#52c92d]"
                           >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M19 9l-7 7-7-7"
-                            />
-                          </svg>
-                        </button>
+                            <span className="font-serif text-lg sm:text-xl text-[#20382f] font-normal pr-4">
+                              {item.question}
+                            </span>
+                            <svg
+                              className={`w-5 h-5 text-[#20382f] shrink-0 transition-transform duration-200 ${
+                                isOpen ? "rotate-180 text-[#80563e]" : ""
+                              }`}
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              strokeWidth={2}
+                              aria-hidden="true"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M19 9l-7 7-7-7"
+                              />
+                            </svg>
+                          </button>
 
-                        {isOpen && (
-                          <div
-                            id={`faq-answer-${item.id}`}
-                            className="px-4 pb-5 pt-1 sm:px-5 text-sm text-[#50544e] leading-relaxed font-sans border-t border-[#f7f4ee]"
-                          >
-                            {item.answer}
-                          </div>
-                        )}
-                      </div>
-                    </Reveal>
-                  );
-                })}
-              </div>
+                          {isOpen && (
+                            <div
+                              id={`faq-answer-${item.id}`}
+                              className="px-4 pb-5 pt-1 sm:px-5 text-sm text-[#50544e] leading-relaxed font-sans border-t border-[#f7f4ee]"
+                            >
+                              {item.answer}
+                            </div>
+                          )}
+                        </div>
+                      </Reveal>
+                    );
+                  })}
+                </div>
+              )}
 
               {/* View All FAQs Link Button */}
               <Reveal direction="up" delay={450}>

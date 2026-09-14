@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import {
   GalleryCategory,
   GalleryItem,
-  galleryItems as fallbackItems,
   galleryIntroData,
 } from "@/data/gallery";
 import { apiFetch } from "@/utils/apiClient";
@@ -31,12 +31,12 @@ function transformApiItem(it: any): GalleryItem {
 }
 
 export default function GalleryExplorer() {
-  const [galleryItems, setGalleryItems] = useState<GalleryItem[]>(fallbackItems);
+  const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([]);
   const [loaded, setLoaded] = useState<boolean>(false);
   const [activeCategory, setActiveCategory] = useState<GalleryCategory>("All");
   const [visibleCount, setVisibleCount] = useState<number>(8);
-  const [selectedItemId, setSelectedItemId] = useState<string>(fallbackItems[0]?.id ?? "");
-  const [isPreviewOpen, setIsPreviewOpen] = useState<boolean>(true);
+  const [selectedItemId, setSelectedItemId] = useState<string>("");
+  const [isPreviewOpen, setIsPreviewOpen] = useState<boolean>(false);
 
   useEffect(() => {
     let cancel = false;
@@ -44,8 +44,8 @@ export default function GalleryExplorer() {
       try {
         const res: any = await apiFetch("/gallery?published_only=true");
         const list = res?.data?.items ?? res?.items ?? [];
-        if (!cancel && Array.isArray(list) && list.length > 0) {
-          const transformed = list.map(transformApiItem);
+        if (!cancel) {
+          const transformed = Array.isArray(list) ? list.map(transformApiItem) : [];
           setGalleryItems(transformed);
           if (transformed.length > 0) {
             setSelectedItemId((prev) => {
@@ -55,7 +55,7 @@ export default function GalleryExplorer() {
           }
         }
       } catch (_err) {
-        // keep fallbackItems as-is
+        if (!cancel) setGalleryItems([]);
       } finally {
         if (!cancel) setLoaded(true);
       }
@@ -141,9 +141,21 @@ export default function GalleryExplorer() {
           />
         </Reveal>
 
-        {!loaded && galleryItems.length === 0 ? (
+        {!loaded ? (
           <div className="text-center py-20">
             <div className="inline-flex w-12 h-12 rounded-xl border-2 border-[#80563e]/30 border-t-[#80563e] animate-spin" />
+          </div>
+        ) : filteredItems.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-12 text-center">
+            <div className="relative w-52 h-52 sm:w-60 sm:h-60">
+              <Image
+                src="/images/no-data-found.png"
+                alt="No data found"
+                fill
+                className="object-contain"
+                sizes="240px"
+              />
+            </div>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-4 sm:gap-5">

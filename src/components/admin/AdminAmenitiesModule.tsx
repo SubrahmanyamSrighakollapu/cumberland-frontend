@@ -484,23 +484,6 @@ export default function AdminAmenitiesModule() {
         ))}
       </div>
 
-      <div className="flex gap-2 mb-4">
-        <button
-          type="button"
-          onClick={() => openAdd("home")}
-          className="h-11 px-4 rounded-lg bg-[#17352d] text-white text-xs font-semibold uppercase tracking-[0.16em] hover:bg-[#0f302a] transition-colors"
-        >
-          + Add Home Amenity
-        </button>
-        <button
-          type="button"
-          onClick={() => openAdd("room")}
-          className="h-11 px-4 rounded-lg bg-[#80563e] text-white text-xs font-semibold uppercase tracking-[0.16em] hover:bg-[#69452f] transition-colors"
-        >
-          + Add Room Amenity
-        </button>
-      </div>
-
       <AdminModulePage<AmenityRow> config={moduleConfig} />
 
       {showForm && (
@@ -509,12 +492,18 @@ export default function AdminAmenitiesModule() {
             <div className="flex items-start justify-between gap-4 pb-4 mb-4 border-b border-stone-200">
               <div>
                 <h2 className="font-serif text-2xl text-stone-800">
-                  {editing ? "Edit Amenity" : `New ${formData.category === "home" ? "Home" : "Room"} Amenity`}
+                  {editing
+                    ? formData.category === "home"
+                      ? "Edit Home Amenity"
+                      : "Edit Room Amenity"
+                    : formData.category === "home"
+                    ? "Add Home Amenity"
+                    : "Add Room Amenity"}
                 </h2>
                 <p className="text-xs text-stone-500 mt-1 font-sans">
                   {formData.category === "home"
-                    ? "Shown on the home and about property amenities sections."
-                    : "Shown on every room detail page under Room Amenities."}
+                    ? "Appears in property-level amenity sections on Home & About pages."
+                    : "Appears in the Room Amenities section on every accommodation detail page."}
                 </p>
               </div>
               <button
@@ -554,42 +543,21 @@ export default function AdminAmenitiesModule() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-semibold uppercase tracking-wider text-stone-600 mb-2">
-                    Category
+                    Amenity Type
                   </label>
-                  <div className="flex gap-2">
-                    {(["home", "room"] as Category[]).map((c) => (
-                      <label
-                        key={c}
-                        className={`flex-1 cursor-pointer rounded-lg border text-center py-2 text-xs font-semibold uppercase tracking-wider transition-colors ${
-                          formData.category === c
-                            ? c === "home"
-                              ? "bg-[#17352d] text-white border-[#17352d]"
-                              : "bg-[#80563e] text-white border-[#80563e]"
-                            : "bg-white text-stone-600 border-stone-200 hover:border-stone-400"
-                        }`}
-                      >
-                        <input
-                          type="radio"
-                          className="hidden"
-                          name="category"
-                          value={c}
-                          checked={formData.category === c}
-                          onChange={(e) => {
-                            const cat = e.target.value as Category;
-                            setFormData((p) => ({
-                              ...p,
-                              category: cat,
-                              iconKey:
-                                (cat === "home"
-                                  ? HOME_ICON_OPTIONS
-                                  : ROOM_ICON_OPTIONS
-                                )[0].value,
-                            }));
-                          }}
-                        />
-                        {c === "home" ? "Home" : "Room"}
-                      </label>
-                    ))}
+                  <div className="h-11 px-3.5 rounded-lg bg-[#f7f4ee] border border-stone-200 flex items-center gap-2.5">
+                    <span
+                      className={`w-2.5 h-2.5 rounded-full ${
+                        formData.category === "home"
+                          ? "bg-[#17352d]"
+                          : "bg-[#80563e]"
+                      }`}
+                    />
+                    <span className="text-xs font-bold uppercase tracking-wider text-stone-800">
+                      {formData.category === "home"
+                        ? "Home Amenity (Property-Wide)"
+                        : "Room Amenity (Per Accommodation)"}
+                    </span>
                   </div>
                 </div>
                 <div>
@@ -603,7 +571,10 @@ export default function AdminAmenitiesModule() {
                       setFormData({ ...formData, iconKey: e.target.value })
                     }
                   >
-                    {iconOptions.map((o) => (
+                    {(formData.category === "home"
+                      ? HOME_ICON_OPTIONS
+                      : ROOM_ICON_OPTIONS
+                    ).map((o) => (
                       <option key={o.value} value={o.value}>
                         {o.label}
                       </option>

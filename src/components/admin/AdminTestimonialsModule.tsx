@@ -1,8 +1,10 @@
 "use client";
 
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import Image from "next/image";
 import AdminModulePage, { ModuleConfig } from "./AdminModulePage";
 import { apiFetch } from "@/utils/apiClient";
+import { normalizeAssetUrl } from "@/utils/mediaUrl";
 
 interface TestimonialRow {
   id: string;
@@ -117,6 +119,10 @@ export default function AdminTestimonialsModule() {
   } | null>(null);
   const [confirmDelete, setConfirmDelete] = useState<TestimonialRow | null>(null);
 
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [filePreview, setFilePreview] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
   const showToast = useCallback(
     (type: "success" | "error", message: string) => {
       setToast({ type, message });
@@ -124,6 +130,18 @@ export default function AdminTestimonialsModule() {
     },
     []
   );
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) {
+      showToast("error", "File too large. Maximum size is 5 MB.");
+      return;
+    }
+    setSelectedFile(file);
+    if (filePreview) URL.revokeObjectURL(filePreview);
+    setFilePreview(URL.createObjectURL(file));
+  };
 
   const loadData = useCallback(async () => {
     setLoading(true);
@@ -167,6 +185,9 @@ export default function AdminTestimonialsModule() {
 
   const openCreate = () => {
     setEditing({ ...EMPTY_FORM });
+    setSelectedFile(null);
+    if (filePreview) URL.revokeObjectURL(filePreview);
+    setFilePreview(null);
     setIsNew(true);
     setFormOpen(true);
   };
@@ -187,6 +208,9 @@ export default function AdminTestimonialsModule() {
         sort_order: Number(it.sortOrder ?? it.sort_order ?? 0),
         is_published: Boolean(it.isPublished ?? it.is_published ?? true),
       });
+      setSelectedFile(null);
+      if (filePreview) URL.revokeObjectURL(filePreview);
+      setFilePreview(null);
       setIsNew(false);
       setFormOpen(true);
     } catch (err: any) {
@@ -204,35 +228,45 @@ export default function AdminTestimonialsModule() {
 
     setSubmitting(true);
     try {
-      const body: any = {
-        name: editing.name.trim(),
-        date_text: editing.date_text && editing.date_text.trim() ? editing.date_text.trim() : null,
-        rating: Number(editing.rating),
-        quote: editing.quote.trim(),
-        avatar: editing.avatar.trim() || null,
-        avatar_alt: editing.avatar_alt.trim() || null,
-        is_featured: editing.is_featured,
-        sort_order: Number(editing.sort_order),
-        is_published: editing.is_published,
-      };
+      const fd = new FormData();
+      if (selectedFile) {
+        fd.append("avatar", selectedFile);
+      } else if (editing.avatar) {
+        fd.append("avatar", editing.avatar);
+      }
+      fd.append("name", editing.name.trim());
+      if (editing.date_text && editing.date_text.trim()) {
+        fd.append("date_text", editing.date_text.trim());
+      }
+      fd.append("rating", String(editing.rating));
+      fd.append("quote", editing.quote.trim());
+      if (editing.avatar_alt && editing.avatar_alt.trim()) {
+        fd.append("avatar_alt", editing.avatar_alt.trim());
+      }
+      fd.append("is_featured", editing.is_featured ? "1" : "0");
+      fd.append("sort_order", String(editing.sort_order));
+      fd.append("is_published", editing.is_published ? "1" : "0");
 
       if (isNew) {
         await apiFetch("/testimonials", {
           auth: true,
           method: "POST",
-          body: JSON.stringify(body),
+          body: fd,
         });
         showToast("success", "Testimonial created");
       } else {
         await apiFetch(`/testimonials/${editing.id}`, {
           auth: true,
           method: "PUT",
-          body: JSON.stringify(body),
+          body: fd,
         });
         showToast("success", "Testimonial updated");
       }
       setFormOpen(false);
       setEditing(EMPTY_FORM);
+      setSelectedFile(null);
+      if (filePreview) URL.revokeObjectURL(filePreview);
+      setFilePreview(null);
       loadData();
     } catch (err: any) {
       showToast("error", err?.data?.message || err.message || "Failed to save testimonial");
@@ -540,22 +574,44 @@ export default function AdminTestimonialsModule() {
                     />
                   </div>
 
-                  <div className="md:col-span-2">
+                  <div className="md:col-span-2 space-y-2">
                     <label className="block text-xs font-bold text-[#17352D] uppercase tracking-wider mb-1.5 font-manrope">
-                      Avatar URL
+                      Avatar Image
                     </label>
-                    <input
-                      type="text"
-                      value={editing.avatar}
-                      onChange={(e) =>
-                        setEditing({ ...editing, avatar: e.target.value })
-                      }
-                      className="w-full h-[46px] px-3.5 rounded-lg border border-[#D9D0C4] bg-white text-[#0F302A] font-manrope text-sm focus:outline-none focus:ring-2 focus:ring-[#80563E]/30 focus:border-[#80563E]"
-                      placeholder="https://.../avatar.jpg"
-                    />
-                    <p className="text-xs text-[#50544E]/60 font-manrope mt-1.5">
-                      Paste a public image URL. File uploader coming soon.
-                    </p>
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                      <label className="block flex-1 w-full h-[46px] px-3.5 rounded-lg border border-dashed border-[#80563E]/50 bg-white text-[#0F302A] font-manrope text-sm hover:border-[#80563E] hover:bg-[#80563E]/5 cursor-pointer transition-colors">
+                        <span className="h-full w-full inline-flex items-center gap-2 overflow-hidden">
+                          <svg className="w-5 h-5 text-[#80563E] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.75}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 16.5V9m0 0l-3 3m3-3l3 3M20.25 18.75V7.5A2.25 2.25 0 0018 5.25h-3.879a2.25 2.25 0 01-1.591-.659l-.954-.954A2.25 2.25 0 009.937 3H6A2.25 2.25 0 003.75 5.25v13.5A2.25 2.25 0 006 21h12a2.25 2.25 0 002.25-2.25z" />
+                          </svg>
+                          <span className="truncate">
+                            {selectedFile
+                              ? selectedFile.name
+                              : editing.avatar
+                                ? "Change avatar image (optional — keeps current)"
+                                : "Choose image (JPG/PNG/WebP/GIF, ≤ 5MB)"}
+                          </span>
+                        </span>
+                        <input
+                          ref={fileInputRef}
+                          type="file"
+                          accept="image/jpeg,image/png,image/webp,image/gif,.jpg,.jpeg,.png,.webp,.gif"
+                          onChange={handleFileChange}
+                          className="hidden"
+                        />
+                      </label>
+
+                      {(filePreview || editing.avatar) && (
+                        <div className="relative w-12 h-12 rounded-full overflow-hidden border border-[#D9D0C4] shrink-0 bg-stone-100">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={filePreview || normalizeAssetUrl(editing.avatar)}
+                            alt="Avatar preview"
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      )}
+                    </div>
                   </div>
 
                   <div className="md:col-span-2">

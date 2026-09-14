@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import AdminModulePage, { ModuleConfig } from "./AdminModulePage";
 import { apiFetch } from "@/utils/apiClient";
 import { normalizeAssetUrl } from "@/utils/mediaUrl";
@@ -169,6 +169,22 @@ export default function AdminRoomsModule() {
   } | null>(null);
   const [confirmDelete, setConfirmDelete] = useState<RoomRow | null>(null);
 
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [filePreview, setFilePreview] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) {
+      showToast("error", "File too large. Maximum size is 5 MB.");
+      return;
+    }
+    setSelectedFile(file);
+    if (filePreview) URL.revokeObjectURL(filePreview);
+    setFilePreview(URL.createObjectURL(file));
+  };
+
   const showToast = useCallback(
     (type: "success" | "error", message: string) => {
       setToast({ type, message });
@@ -260,9 +276,12 @@ export default function AdminRoomsModule() {
 
   const openAdd = useCallback(() => {
     setEditing(EMPTY_FORM);
+    setSelectedFile(null);
+    if (filePreview) URL.revokeObjectURL(filePreview);
+    setFilePreview(null);
     setIsNew(true);
     setFormOpen(true);
-  }, []);
+  }, [filePreview]);
 
   const openEdit = useCallback((row: RoomRow) => {
     void (async () => {
@@ -307,13 +326,16 @@ export default function AdminRoomsModule() {
           sort_order: Number(item.sortOrder ?? item.sort_order ?? 0),
           is_published: Boolean(item.isPublished ?? item.is_published ?? true),
         });
+        setSelectedFile(null);
+        if (filePreview) URL.revokeObjectURL(filePreview);
+        setFilePreview(null);
         setIsNew(false);
         setFormOpen(true);
       } catch (err: any) {
         showToast("error", err?.message || "Failed to open room for editing");
       }
     })();
-  }, [showToast]);
+  }, [filePreview, showToast]);
 
   const onDeleteConfirm = useCallback(async () => {
     if (!confirmDelete) return;
@@ -327,19 +349,16 @@ export default function AdminRoomsModule() {
       setConfirmDelete(null);
     } catch (err: any) {
       showToast("error", err?.message || "Failed to delete room");
-      setConfirmDelete(null);
     }
   }, [confirmDelete, showToast]);
 
   const formErrors = useMemo(() => {
     const errs: string[] = [];
-    if (!editing.name.trim()) errs.push("Room name is required");
+    if (!editing.name.trim()) errs.push("Name is required");
     if (!editing.shortDescription.trim()) errs.push("Short description is required");
     if (!editing.bedConfiguration.trim()) errs.push("Bed configuration is required");
-    const slug = slugFromForm(editing);
-    if (!slug) errs.push("Slug cannot be empty");
-    const price = Number(editing.price);
-    if (!Number.isFinite(price) || price < 0) errs.push("Price must be a positive number");
+    const p = Number(editing.price);
+    if (!Number.isFinite(p) || p < 0) errs.push("Price must be a non-negative number");
     const cap = Number(editing.capacityGuests);
     if (!Number.isFinite(cap) || cap < 0) errs.push("Capacity must be a positive number");
     return errs;
@@ -391,12 +410,48 @@ export default function AdminRoomsModule() {
           isPublished: editing.is_published,
         };
 
+        let bodyPayload: any;
+        if (selectedFile) {
+          const fd = new FormData();
+          fd.append("image", selectedFile);
+          fd.append("name", editing.name.trim());
+          fd.append("slug", slugFromForm(editing));
+          fd.append("eyebrow", editing.eyebrow.trim() || "ROOM COLLECTION");
+          fd.append("shortDescription", editing.shortDescription.trim());
+          fd.append("price", String(Number(editing.price) || 0));
+          fd.append("currency", editing.currency.trim() || "$");
+          fd.append("priceUnit", editing.priceUnit.trim() || "/ night");
+          fd.append("capacityGuests", String(Number(editing.capacityGuests) || 0));
+          fd.append("guestsLabel", editing.guestsLabel.trim() || `${editing.capacityGuests || 0} Guests`);
+          fd.append("bedConfiguration", editing.bedConfiguration.trim());
+          if (editing.areaM2 !== null && editing.areaM2 !== "") fd.append("areaM2", String(editing.areaM2));
+          if (editing.areaLabel.trim()) fd.append("areaLabel", editing.areaLabel.trim());
+          if (editing.viewLabel.trim()) fd.append("viewLabel", editing.viewLabel.trim());
+          if (editing.balconyLabel.trim()) fd.append("balconyLabel", editing.balconyLabel.trim());
+          if (editing.seoTitle.trim()) fd.append("seoTitle", editing.seoTitle.trim());
+          if (editing.seoDescription.trim()) fd.append("seoDescription", editing.seoDescription.trim());
+          if (editing.introEyebrow.trim()) fd.append("introEyebrow", editing.introEyebrow.trim());
+          if (editing.introHeading.trim()) fd.append("introHeading", editing.introHeading.trim());
+          if (editing.introParagraph1) fd.append("introParagraph1", editing.introParagraph1);
+          if (editing.introParagraph2) fd.append("introParagraph2", editing.introParagraph2);
+          fd.append("highlights", JSON.stringify(highlights));
+          if (editing.primaryImage.trim()) fd.append("primaryImage", editing.primaryImage.trim());
+          fd.append("gallery", JSON.stringify(gallery));
+          fd.append("relatedRoomIds", JSON.stringify(relatedSlugs));
+          fd.append("isFeatured", editing.is_featured ? "1" : "0");
+          fd.append("sortOrder", String(Number(editing.sort_order) || 0));
+          fd.append("isPublished", editing.is_published ? "1" : "0");
+          bodyPayload = fd;
+        } else {
+          bodyPayload = JSON.stringify(payload);
+        }
+
         const method = isNew ? "POST" : "PUT";
         const url = isNew ? "/rooms" : `/rooms/${editing.id}`;
         const res = await apiFetch(url, {
           method,
           auth: true,
-          body: JSON.stringify(payload),
+          body: bodyPayload,
         });
         if (res?.data?.id) {
           const updated = rowFromApi(res.data);
@@ -412,6 +467,9 @@ export default function AdminRoomsModule() {
               : `Room "${updated.name}" updated`
           );
           setFormOpen(false);
+          setSelectedFile(null);
+          if (filePreview) URL.revokeObjectURL(filePreview);
+          setFilePreview(null);
         }
       } catch (err: any) {
         showToast("error", err?.message || "Failed to save room");
@@ -419,7 +477,7 @@ export default function AdminRoomsModule() {
         setSubmitting(false);
       }
     },
-    [editing, formErrors, isNew, showToast]
+    [editing, filePreview, formErrors, isNew, selectedFile, showToast]
   );
 
   const moduleConfig: ModuleConfig<RoomRow> = {
@@ -936,25 +994,37 @@ export default function AdminRoomsModule() {
                     <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-stone-800 border-b border-stone-200 pb-2">
                       Cover image
                     </h3>
-                    <label className="block">
+                    <div>
                       <span className="text-sm font-medium text-stone-700 mb-1.5 block">
-                        Primary image URL
+                        Primary Cover Image *
                       </span>
-                      <input
-                        type="text"
-                        value={editing.primaryImage}
-                        onChange={(e) =>
-                          setEditing({ ...editing, primaryImage: e.target.value })
-                        }
-                        placeholder="/images/room-one.png or /uploads/xxx.jpg"
-                        className="w-full h-11 px-3.5 rounded-lg border border-stone-300 focus:border-[#17352D] focus:ring-1 focus:ring-[#17352D] outline-none text-sm"
-                      />
-                    </label>
+                      <label className="block w-full h-11 px-3.5 rounded-lg border border-dashed border-[#80563E]/50 bg-white text-[#0F302A] font-manrope text-sm hover:border-[#80563E] hover:bg-[#80563E]/5 cursor-pointer transition-colors flex items-center">
+                        <span className="h-full w-full inline-flex items-center gap-2 overflow-hidden">
+                          <svg className="w-5 h-5 text-[#80563E] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.75}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 16.5V9m0 0l-3 3m3-3l3 3M20.25 18.75V7.5A2.25 2.25 0 0018 5.25h-3.879a2.25 2.25 0 01-1.591-.659l-.954-.954A2.25 2.25 0 009.937 3H6A2.25 2.25 0 003.75 5.25v13.5A2.25 2.25 0 006 21h12a2.25 2.25 0 002.25-2.25z" />
+                          </svg>
+                          <span className="truncate">
+                            {selectedFile
+                              ? selectedFile.name
+                              : editing.primaryImage
+                                ? "Change cover image (optional — keeps current)"
+                                : "Choose image (JPG/PNG/WebP/GIF, ≤ 5MB)"}
+                          </span>
+                        </span>
+                        <input
+                          ref={fileInputRef}
+                          type="file"
+                          accept="image/jpeg,image/png,image/webp,image/gif,.jpg,.jpeg,.png,.webp,.gif"
+                          onChange={handleFileChange}
+                          className="hidden"
+                        />
+                      </label>
+                    </div>
                     <div className="aspect-[4/3] w-full rounded-xl overflow-hidden bg-stone-100 border border-stone-200">
-                      {currentPreviewImg ? (
+                      {filePreview || currentPreviewImg ? (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img
-                          src={normalizeAssetUrl(currentPreviewImg)}
+                          src={filePreview || normalizeAssetUrl(currentPreviewImg)}
                           alt="Cover preview"
                           className="w-full h-full object-cover"
                         />

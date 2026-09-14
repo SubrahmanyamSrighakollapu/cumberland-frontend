@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Reveal from "@/components/ui/Reveal";
-import { BOOK_DIRECT_URL } from "@/utils/siteLinks";
+import { BOOK_DIRECT_URL, openBookDirect } from "@/utils/siteLinks";
 
 export default function AvailabilityBar() {
   const [checkInDate, setCheckInDate] = useState("2025-06-20");
@@ -25,7 +25,7 @@ export default function AvailabilityBar() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Static frontend phase: No API request or fake confirmation popups.
+    openBookDirect("_blank");
   };
 
   return (
@@ -212,17 +212,15 @@ export default function AvailabilityBar() {
 
           {/* Action Button */}
           <div className="p-2 md:pl-4 pt-3 md:pt-2">
-            <a
-              href={BOOK_DIRECT_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group w-full h-[52px] bg-[#80563e] hover:bg-[#69452f] active:bg-[#583824] text-white text-sm font-semibold tracking-wider uppercase rounded-lg transition-colors flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#80563e]"
+            <button
+              type="submit"
+              className="group w-full h-[52px] bg-[#80563e] hover:bg-[#69452f] active:bg-[#583824] text-white text-sm font-semibold tracking-wider uppercase rounded-lg transition-colors flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#80563e] cursor-pointer"
             >
               <span>CHECK AVAILABILITY</span>
               <span className="inline-block transition-transform duration-200 group-hover:translate-x-1">
                 &rarr;
               </span>
-            </a>
+            </button>
           </div>
         </form>
       </Reveal>

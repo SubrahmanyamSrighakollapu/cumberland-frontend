@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 export interface TableColumn<T> {
   key: string;
@@ -232,23 +233,16 @@ export default function AdminModulePage<T extends { id: string | number; isPubli
               </p>
             </div>
           ) : config.rows.length === 0 ? (
-            <div className="p-16 text-center">
-              <div
-                className="w-16 h-16 rounded-2xl mx-auto flex items-center justify-center mb-4"
-                style={{ backgroundColor: `${accentColor}10`, color: accentColor }}
-              >
-                <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.75}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
-                </svg>
+            <div className="p-12 text-center flex flex-col items-center justify-center">
+              <div className="relative w-48 h-48 sm:w-56 sm:h-56 mb-3">
+                <Image
+                  src="/images/no-data-found.png"
+                  alt="No data found"
+                  fill
+                  className="object-contain"
+                  sizes="224px"
+                />
               </div>
-              <p className="font-cormorant text-xl font-semibold text-[#0F302A] mb-1">
-                {config.emptyState?.title || "Nothing here yet"}
-              </p>
-              <p className="text-sm text-[#50544E]/70 font-manrope max-w-sm mx-auto mb-5">
-                {config.emptyState?.description ||
-                  config.emptyMessage ||
-                  `Click "${config.addLabel}" to add your first item.`}
-              </p>
               {config.emptyState?.actionLabel && config.emptyState?.onAction && (
                 <button
                   type="button"

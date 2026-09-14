@@ -130,8 +130,8 @@ export default function ActivityPlanningPanel() {
             <div id="attractions-map" className="lg:col-span-6 scroll-mt-24">
               <ImageReveal className="aspect-[4/3] w-full rounded-xl overflow-hidden shadow-lg border border-[#17352d] bg-[#17352d]/60 group" delay={150}>
                 <Image
-                  src="/images/content-image-four.png"
-                  alt="Attractions route map illustration showing key local destinations"
+                  src="/images/cumberland-balcony-courtyard-view.jpg"
+                  alt="Elevated courtyard view from guest balconies at Cumberland Motor Inn"
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover cursor-pointer transition-transform duration-500 group-hover:scale-105"
@@ -252,8 +252,8 @@ export default function ActivityPlanningPanel() {
 
             <div className="relative aspect-[16/10] w-full rounded-xl overflow-hidden border border-[#17352d]">
               <Image
-                src="/images/content-image-four.png"
-                alt="Enlarged regional attractions map illustration"
+                src="/images/cumberland-balcony-courtyard-view.jpg"
+                alt="Enlarged elevated courtyard view"
                 fill
                 sizes="100vw"
                 className="object-cover"

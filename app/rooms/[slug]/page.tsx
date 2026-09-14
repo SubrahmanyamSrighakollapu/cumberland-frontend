@@ -1,7 +1,7 @@
 "use client";
 
 import { notFound, useParams } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { use, useEffect, useMemo, useState } from "react";
 import PublicHeader from "@/components/layout/PublicHeader";
 import PublicFooter from "@/components/layout/PublicFooter";
 import RoomHeading from "@/components/rooms/RoomHeading";
@@ -24,7 +24,8 @@ interface RoomPageProps {
 
 export default function RoomDetailPage({ params }: RoomPageProps) {
   const routeParams = useParams<{ slug: string }>();
-  const slugParam = (params as any)?.slug || routeParams?.slug;
+  const resolvedParams = params ? use(params) : null;
+  const slugParam = resolvedParams?.slug || routeParams?.slug;
   const slug = Array.isArray(slugParam) ? slugParam[0] : slugParam;
 
   const [apiRoom, setApiRoom] = useState<RoomDetail | null | undefined>(

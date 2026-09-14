@@ -116,7 +116,16 @@ export async function fetchHeroSlides(
     const res = await fetch(url, { headers, cache: "no-store" });
     if (!res.ok) return [];
     const json = (await res.json()) as any;
-    const items = Array.isArray(json) ? json : json?.items ?? [];
+    const payload = json?.data ?? json;
+    const items = Array.isArray(payload)
+      ? payload
+      : Array.isArray(payload?.items)
+      ? payload.items
+      : Array.isArray(json)
+      ? json
+      : Array.isArray(json?.items)
+      ? json.items
+      : [];
     return items.map((x: any) => apiToHeroSlide(x));
   } catch {
     return [];

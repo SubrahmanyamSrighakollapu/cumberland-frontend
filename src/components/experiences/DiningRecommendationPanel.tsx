@@ -129,8 +129,8 @@ export default function DiningRecommendationPanel() {
             <div id="local-dining-map" className="lg:col-span-6 scroll-mt-24">
               <ImageReveal className="aspect-[4/3] w-full rounded-xl overflow-hidden shadow-lg border border-[#17352d] bg-[#17352d]/60 group" delay={150}>
                 <Image
-                  src="/images/content-image-four.png"
-                  alt="Local dining map illustration showing recommended dining locations"
+                  src="/images/cumberland-outdoor-bbq-area.jpg"
+                  alt="Covered outdoor BBQ dining lounge under brick arches at Cumberland Motor Inn"
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover cursor-pointer transition-transform duration-500 group-hover:scale-105"
@@ -183,8 +183,8 @@ export default function DiningRecommendationPanel() {
 
             <div className="relative aspect-[16/10] w-full rounded-xl overflow-hidden border border-[#17352d]">
               <Image
-                src="/images/content-image-four.png"
-                alt="Enlarged local dining map illustration"
+                src="/images/cumberland-outdoor-bbq-area.jpg"
+                alt="Enlarged view of covered outdoor BBQ area"
                 fill
                 sizes="100vw"
                 className="object-cover"

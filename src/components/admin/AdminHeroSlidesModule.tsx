@@ -98,7 +98,16 @@ export default function AdminHeroSlidesModule() {
         "/hero-slides?sort=sort_order_asc&limit=200",
         { auth: true }
       );
-      const items = Array.isArray(data) ? data : data?.items ?? [];
+      const payload = data?.data ?? data;
+      const items = Array.isArray(payload)
+        ? payload
+        : Array.isArray(payload?.items)
+        ? payload.items
+        : Array.isArray(data)
+        ? data
+        : Array.isArray(data?.items)
+        ? data.items
+        : [];
       const mapped: HeroSlideRow[] = items.map((x: any) => ({
         id: String(x.id),
         slug: x.slug ?? "",

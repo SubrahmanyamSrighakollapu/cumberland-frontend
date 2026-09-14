@@ -107,15 +107,18 @@ export default function WhyChooseUsSection() {
               direction="up"
               staggerIndex={index}
               duration={650}
+              className="h-full"
             >
-              <div className="bg-white border border-[#d9d0c4] rounded-xl p-7 sm:p-8 text-center flex flex-col items-center justify-start hover:border-[#80563e]/50 transition-colors shadow-xs">
-                <div className="p-3 rounded-full bg-[#e9efe8] text-[#20382f] mb-5">
-                  {renderIcon(item.iconName)}
+              <div className="bg-white border border-[#d9d0c4] rounded-xl p-7 sm:p-8 text-center flex flex-col items-center justify-between hover:border-[#80563e]/50 transition-colors shadow-xs h-full">
+                <div className="flex flex-col items-center">
+                  <div className="p-3 rounded-full bg-[#e9efe8] text-[#20382f] mb-5">
+                    {renderIcon(item.iconName)}
+                  </div>
+                  <h3 className="font-serif text-2xl text-[#20382f] font-normal mb-2">
+                    {item.title}
+                  </h3>
                 </div>
-                <h3 className="font-serif text-2xl text-[#20382f] font-normal mb-2">
-                  {item.title}
-                </h3>
-                <p className="text-sm text-[#50544e] leading-relaxed font-sans">
+                <p className="text-sm text-[#50544e] leading-relaxed font-sans mt-2">
                   {item.description}
                 </p>
               </div>

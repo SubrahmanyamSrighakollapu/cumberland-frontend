@@ -145,7 +145,7 @@ export default function TermsAndConditionsPage() {
                   </h2>
                   <div className="space-y-2 text-sm sm:text-base leading-relaxed text-[#50544e]">
                     <p>
-                      <strong className="text-[#20382f]">Car Parking:</strong> Off-street parking is provided at no extra charge for registered guests.
+                      <strong className="text-[#20382f]">Car Parking:</strong> Parking within the motel is provided at no extra charge for registered guests.
                     </p>
                     <p>
                       <strong className="text-[#20382f]">Facilities:</strong> Guests enjoy access to our outdoor swimming pool, free Wi-Fi, and non-smoking rooms. Guests must follow facility safety guidelines at all times.

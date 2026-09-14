@@ -25,15 +25,14 @@ export default function AboutAmenitiesStrip() {
     void (async () => {
       const res = await fetchHomeAmenities();
       if (!mounted) return;
-      if (res.length > 0) setItems(res);
-      else setItems(fallbackHomeAmenities());
+      setItems(res ?? []);
     })();
     return () => {
       mounted = false;
     };
   }, []);
 
-  const list = items ?? fallbackHomeAmenities();
+  const list = items ?? [];
 
   const renderIcon = (icon: string) => {
     const key = ICON_KEYS[icon] || icon;

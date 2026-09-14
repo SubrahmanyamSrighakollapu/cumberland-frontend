@@ -35,8 +35,8 @@ export const contactHeroData = {
   headingLines: ["We’re here to help", "plan your stay."],
   description:
     "Have a question, special request or need local advice? Our friendly team is ready to help make your Cumberland Motor Inn experience memorable.",
-  image: "/images/content-image-two.png",
-  alt: "Cumberland Motor Inn entrance and reception at warm sunset",
+  image: "/images/cumberland-grounds-skyline-view.jpg",
+  alt: "Cumberland Motor Inn grounds and outdoor pool beneath blue sky",
 };
 
 export const contactInfoData = {
@@ -86,8 +86,8 @@ export const locationSectionData = {
   heading: "Easy to find. Close to everything.",
   description:
     "Cumberland Motor Inn is conveniently set in Cessnock, providing easy access to Hunter Valley wineries, dining, parks, state forests and local attractions.",
-  mapImage: "/images/content-image-four.png",
-  mapAlt: "Map showing Cumberland Motor Inn location at 57-61 Cumberland Street, Cessnock NSW",
+  mapImage: "/images/cumberland-reception-exit-driveway.jpg",
+  mapAlt: "Cumberland Motor Inn reception entrance and driveway at 57-61 Cumberland Street, Cessnock NSW",
   gettingHereCards: [
     {
       id: "driving",
@@ -123,8 +123,8 @@ export const faqSectionData = {
   heading: "Before you arrive.",
   description:
     "Find quick answers to our most common questions regarding check-in, parking, payment and directions.",
-  balconyImage: "/images/gallery-two.png",
-  balconyAlt: "Cumberland Motor Inn guest room view",
+  balconyImage: "/images/cumberland-pylon-sign-night.jpg",
+  balconyAlt: "Illuminated Cumberland Motor Inn pylon sign at night",
   assistanceCard: {
     title: "Have a question?",
     description:

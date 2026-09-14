@@ -21,7 +21,7 @@ export default function WineCountryPage() {
       <main className="flex-1">
         <WineCountryHero />
         <WineCountryIntro />
-        <WineryExplorer />
+        {/* <WineryExplorer /> */}
         <WineDayPlanner />
         <WineTravelPanel />
         <WineCountryCta />

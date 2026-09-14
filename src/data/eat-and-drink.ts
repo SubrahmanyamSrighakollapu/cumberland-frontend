@@ -80,12 +80,12 @@ export const eatDrinkHeroData = {
 
 export const featuredDiningData = {
   eyebrow: "FEATURED EXPERIENCE",
-  headingLines: ["A memorable meal,", "close to your room."],
-  heading: "A memorable meal,\nclose to your room.",
+  headingLines: ["On-site BBQ lounge", "and local dining."],
+  heading: "On-site BBQ lounge\nand local dining.",
   description:
-    "Enjoy contemporary regional cuisine in a relaxed setting, close to Cumberland Motor Inn. Fresh local produce, friendly service and a welcoming atmosphere make Cessnock and the Hunter Valley a food lover's destination.",
-  image: "/images/content-image-one.png",
-  imageAlt: "Chef plating a contemporary Hunter Valley culinary dish",
+    "Enjoy relaxing outdoor meals at our covered brick arch BBQ area, or explore top-rated Cessnock restaurants and Hunter Valley cellar door dining just minutes away.",
+  image: "/images/cumberland-outdoor-bbq-area.jpg",
+  imageAlt: "Covered outdoor BBQ lounge and dining area under brick arches at Cumberland Motor Inn",
   facts: [
     {
       id: "fact-1",
@@ -227,7 +227,7 @@ export const diningVenues: DiningVenue[] = [
   {
     id: "venue-5",
     name: "Cessnock Vintage Bistro",
-    image: "/images/content-image-three.png",
+    image: "/images/cumberland-building-facade-lawn.jpg",
     imageAlt: "Warm bistro dining atmosphere in Cessnock",
     description:
       "Cosy heritage bistro serving prime Angus steaks, country pies, and Hunter Valley craft beers.",
@@ -272,7 +272,7 @@ export const foodItinerarySteps: FoodItineraryStep[] = [
     time: "8:00 AM",
     title: "Morning Coffee in Cessnock",
     description: "Great coffee and fresh pastries in the town centre.",
-    image: "/images/gallery-five.png",
+    image: "/images/cumberland-balcony-courtyard-view.jpg",
     imageAlt: "Morning coffee cup and freshly baked pastry in Cessnock",
   },
   {
@@ -288,7 +288,7 @@ export const foodItinerarySteps: FoodItineraryStep[] = [
     time: "5:00 PM",
     title: "Golden Hour Tastings",
     description: "Unwind with local Hunter Valley wines and sunset country views.",
-    image: "/images/content-image-four.png",
+    image: "/images/cumberland-grounds-skyline-view.jpg",
     imageAlt: "Sunset wine tasting overlook in the Hunter Valley",
   },
   {
@@ -296,7 +296,7 @@ export const foodItinerarySteps: FoodItineraryStep[] = [
     time: "7:30 PM",
     title: "Dinner & Drinks",
     description: "A memorable meal in Cessnock or nearby wine country.",
-    image: "/images/content-image-three.png",
+    image: "/images/cumberland-pylon-sign-night.jpg",
     imageAlt: "Contemporary evening dinner setting with Hunter Valley wine",
   },
 ];

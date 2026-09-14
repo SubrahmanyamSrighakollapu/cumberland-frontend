@@ -167,7 +167,7 @@ export const wineryList: Winery[] = [
     hours: "10:00 AM–5:00 PM",
     description:
       "Expansive estate hosting major music concerts, craft brewery tastings and estate-grown wine experiences.",
-    image: "/images/content-image-three.png",
+    image: "/images/cumberland-grounds-skyline-view.jpg",
     imageAlt: "Hope Estate grounds and amphitheatre stage area",
   },
   {
@@ -203,7 +203,7 @@ export const wineryList: Winery[] = [
     hours: "10:00 AM–5:00 PM",
     description:
       "Boutique Lovedale cellar door set alongside a peaceful lagoon and Deck Cafe dining.",
-    image: "/images/content-image-two.png",
+    image: "/images/cumberland-pool-view-bright.jpg",
     imageAlt: "Gartelmann Wines lagoon outdoor seating",
   },
   {
@@ -258,7 +258,7 @@ export const itinerarySteps: ItineraryStep[] = [
     title: "Return and unwind.",
     description:
       "Head back to Cumberland and relax after a memorable day.",
-    image: "/images/content-image-four.png",
+    image: "/images/cumberland-balcony-courtyard-view.jpg",
     imageAlt: "Sunset view returning to Cumberland Motor Inn",
   },
 ];

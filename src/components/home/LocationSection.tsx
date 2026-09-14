@@ -13,8 +13,8 @@ export default function LocationSection() {
             <Reveal direction="up" duration={600}>
               <div className="relative aspect-[4/3] w-full rounded-xl overflow-hidden border border-[#d9d0c4] shadow-xs bg-[#e9efe8]">
                 <Image
-                  src="/images/content-image-four.png"
-                  alt="Map showing Cumberland Motor Inn location at 57-61 Cumberland Street, Cessnock NSW"
+                  src="/images/cumberland-pylon-sign-day.jpg"
+                  alt="Cumberland Motor Inn roadside entrance sign located at 57-61 Cumberland Street, Cessnock NSW"
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover object-center"

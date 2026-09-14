@@ -48,10 +48,7 @@ export const RelatedRooms: React.FC<RelatedRoomsProps> = ({
   }, []);
 
   const related = useMemo<RoomDetail[]>(() => {
-    const pool =
-      apiRooms && apiRooms.length > 0
-        ? apiRooms
-        : fallbackAllRooms();
+    const pool = apiRooms && apiRooms.length > 0 ? apiRooms : [];
     return getRelatedRoomsFromIds(
       relatedIds ?? [],
       pool,
@@ -59,8 +56,6 @@ export const RelatedRooms: React.FC<RelatedRoomsProps> = ({
       3
     );
   }, [apiRooms, relatedIds, currentSlug]);
-
-  if (!loading && related.length === 0) return null;
 
   return (
     <section className="bg-[#F7F4EE] py-16 md:py-20 border-t border-[#D9D0C4]/60">
@@ -76,15 +71,30 @@ export const RelatedRooms: React.FC<RelatedRoomsProps> = ({
           </div>
         </Reveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {loading && !apiRooms
-            ? Array.from({ length: 3 }).map((_, i) => (
-                <div
-                  key={i}
-                  className="aspect-[4/5] w-full rounded-xl bg-stone-100 animate-pulse"
-                />
-              ))
-            : related.map((room, idx) => (
+        {loading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div
+                key={i}
+                className="aspect-[4/5] w-full rounded-xl bg-stone-100 animate-pulse"
+              />
+            ))}
+          </div>
+        ) : related.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-10 text-center">
+            <div className="relative w-48 h-48 sm:w-56 sm:h-56">
+              <Image
+                src="/images/no-data-found.png"
+                alt="No data found"
+                fill
+                className="object-contain"
+                sizes="224px"
+              />
+            </div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            {related.map((room, idx) => (
                 <Reveal
                   key={room.id}
                   direction="up"
@@ -200,7 +210,8 @@ export const RelatedRooms: React.FC<RelatedRoomsProps> = ({
                   </div>
                 </Reveal>
               ))}
-        </div>
+          </div>
+        )}
       </div>
     </section>
   );

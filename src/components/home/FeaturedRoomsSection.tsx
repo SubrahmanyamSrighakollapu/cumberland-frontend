@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import RoomCard from "./RoomCard";
 import Reveal from "@/components/ui/Reveal";
@@ -56,15 +57,9 @@ export default function FeaturedRoomsSection() {
   }, []);
 
   const display: Room[] = useMemo(() => {
-    const rooms: RoomDetail[] = (() => {
-      if (apiRooms && apiRooms.length > 0) return apiRooms.slice(0, 3);
-      if (apiRooms && !apiRooms.length && !loading)
-        return fallbackFeaturedRooms();
-      if (!apiRooms) return fallbackFeaturedRooms();
-      return fallbackFeaturedRooms();
-    })();
-    return rooms.map(toHomeRoom);
-  }, [apiRooms, loading]);
+    if (apiRooms && apiRooms.length > 0) return apiRooms.slice(0, 3).map(toHomeRoom);
+    return [];
+  }, [apiRooms]);
 
   return (
     <section className="w-full bg-[#f7f4ee] py-16 sm:py-20 lg:py-24 border-b border-[#d9d0c4]/40 overflow-hidden">
@@ -94,26 +89,42 @@ export default function FeaturedRoomsSection() {
           </div>
         </Reveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {loading && !apiRooms
-            ? Array.from({ length: 3 }).map((_, i) => (
-                <div
-                  key={i}
-                  className="aspect-[4/5] w-full bg-stone-100 rounded-2xl animate-pulse"
-                />
-              ))
-            : display.map((room, index) => (
-                <Reveal
-                  key={room.id}
-                  direction="up"
-                  staggerIndex={index}
-                  duration={600}
-                  className="h-full"
-                >
-                  <RoomCard room={room} />
-                </Reveal>
-              ))}
-        </div>
+        {loading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div
+                key={i}
+                className="aspect-[4/5] w-full bg-stone-100 rounded-2xl animate-pulse"
+              />
+            ))}
+          </div>
+        ) : display.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-12 text-center">
+            <div className="relative w-48 h-48 sm:w-56 sm:h-56">
+              <Image
+                src="/images/no-data-found.png"
+                alt="No data found"
+                fill
+                className="object-contain"
+                sizes="224px"
+              />
+            </div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            {display.map((room, index) => (
+              <Reveal
+                key={room.id}
+                direction="up"
+                staggerIndex={index}
+                duration={600}
+                className="h-full"
+              >
+                <RoomCard room={room} />
+              </Reveal>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

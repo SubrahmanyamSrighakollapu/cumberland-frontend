@@ -139,8 +139,8 @@ export default function WineTravelPanel() {
             >
               <ImageReveal className="aspect-[4/3] w-full rounded-xl overflow-hidden shadow-lg border border-[#17352d] bg-[#17352d]/60" delay={150}>
                 <Image
-                  src="/images/content-image-four.png"
-                  alt="Wine Country route map illustration with scenic vineyard destinations"
+                  src="/images/cumberland-building-facade-lawn.jpg"
+                  alt="Cumberland Motor Inn building facade and manicured lawn grounds"
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover"

@@ -1,14 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Amenity } from "@/data/amenities";
 import AmenityCard from "./AmenityCard";
 import Reveal from "@/components/ui/Reveal";
-import {
-  fallbackHomeAmenities,
-  fetchHomeAmenities,
-} from "@/utils/amenityClient";
+import { fetchHomeAmenities } from "@/utils/amenityClient";
 
 export default function AmenitiesSection() {
   const [items, setItems] = useState<Amenity[] | null>(null);
@@ -18,15 +16,14 @@ export default function AmenitiesSection() {
     void (async () => {
       const res = await fetchHomeAmenities();
       if (!mounted) return;
-      if (res.length > 0) setItems(res);
-      else setItems(fallbackHomeAmenities());
+      setItems(res ?? []);
     })();
     return () => {
       mounted = false;
     };
   }, []);
 
-  const list = items ?? fallbackHomeAmenities();
+  const list = items ?? [];
 
   return (
     <section className="w-full bg-[#f7f4ee] py-16 sm:py-20 lg:py-24 border-b border-[#d9d0c4]/40 overflow-hidden">
@@ -43,19 +40,33 @@ export default function AmenitiesSection() {
           </div>
         </Reveal>
 
-        {/* Amenity Cards Grid with Stagger */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {list.map((amenity, index) => (
-            <Reveal
-              key={amenity.id}
-              direction="up"
-              staggerIndex={index}
-              duration={600}
-            >
-              <AmenityCard amenity={amenity} />
-            </Reveal>
-          ))}
-        </div>
+        {/* Amenity Cards Grid or Empty State */}
+        {items !== null && list.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-12 text-center">
+            <div className="relative w-48 h-48 sm:w-56 sm:h-56">
+              <Image
+                src="/images/no-data-found.png"
+                alt="No data found"
+                fill
+                className="object-contain"
+                sizes="224px"
+              />
+            </div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {list.map((amenity, index) => (
+              <Reveal
+                key={amenity.id}
+                direction="up"
+                staggerIndex={index}
+                duration={600}
+              >
+                <AmenityCard amenity={amenity} />
+              </Reveal>
+            ))}
+          </div>
+        )}
 
         {/* View All Amenities Button */}
         <Reveal direction="up" delay={200} duration={600}>
