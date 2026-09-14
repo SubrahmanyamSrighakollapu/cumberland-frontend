@@ -14,7 +14,6 @@ export const AdminLoginForm: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
 
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -98,15 +97,6 @@ export const AdminLoginForm: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const handleForgotPassword = () => {
-    setDialogState({
-      isOpen: true,
-      title: "Password Recovery",
-      message:
-        "Please contact your website administrator to request a password reset. Password self-service will be enabled in an upcoming release.",
-    });
   };
 
   const handleContactSupport = () => {
@@ -255,36 +245,6 @@ export const AdminLoginForm: React.FC = () => {
             )}
           </div>
 
-          <div className="flex items-center justify-between gap-2 pt-0.5">
-            <label className="inline-flex items-center gap-2 text-xs sm:text-sm text-[#50544E] font-manrope cursor-pointer select-none group">
-              <span className="relative inline-flex items-center">
-                <input
-                  type="checkbox"
-                  className="peer sr-only"
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
-                  disabled={isLoading}
-                />
-                <span className="w-4 h-4 rounded border border-[#D9D0C4] bg-white peer-checked:bg-[#80563E] peer-checked:border-[#80563E] transition-colors flex items-center justify-center">
-                  {rememberMe && (
-                    <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                    </svg>
-                  )}
-                </span>
-              </span>
-              <span className="group-hover:text-[#17352D] transition-colors">Remember me</span>
-            </label>
-            <button
-              type="button"
-              onClick={handleForgotPassword}
-              disabled={isLoading}
-              className="text-xs sm:text-sm text-[#80563E] hover:text-[#69452F] font-medium underline underline-offset-2 transition-colors font-manrope disabled:opacity-60"
-            >
-              Forgot password?
-            </button>
-          </div>
-
           <button
             type="submit"
             disabled={isLoading}
@@ -300,22 +260,6 @@ export const AdminLoginForm: React.FC = () => {
             )}
           </button>
         </form>
-
-        <div className="mt-5 rounded-xl bg-[#0F302A]/95 text-white p-4 border border-[#80563E]/30">
-          <div className="flex items-center gap-2 mb-2">
-            <svg className="w-4 h-4 text-[#52C92D]" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 2.18l6.9 3.45L12 11.08 5.1 7.63 12 4.18zM4 8.83l7 3.5v7.28l-7-3.5V8.83zm9 10.78v-7.28l7-3.5v7.28l-7 3.5z" />
-            </svg>
-            <span className="text-[11px] uppercase tracking-[0.18em] text-[#f7f4ee]/60 font-manrope font-bold">Setup Credentials</span>
-          </div>
-          <div className="space-y-1 text-xs font-manrope text-[#f7f4ee]/85 leading-relaxed">
-            <div><span className="text-[#f7f4ee]/50">Email:</span> <code className="text-[#52C92D] bg-black/20 px-1.5 py-0.5 rounded">admin@cumberlandmotorinn.com</code></div>
-            <div><span className="text-[#f7f4ee]/50">Password:</span> <code className="text-[#52C92D] bg-black/20 px-1.5 py-0.5 rounded">Admin@12345</code></div>
-            <p className="pt-1.5 text-[10px] text-[#f7f4ee]/40">
-              Run <code className="text-[#80563E]/90">npm run seed</code> first in the backend folder to create this user.
-            </p>
-          </div>
-        </div>
 
         <div className="flex items-center justify-center gap-1.5 text-xs text-[#50544E]/80 font-manrope mt-4">
           <svg className="w-3.5 h-3.5 text-[#17352D]" fill="none" stroke="currentColor" viewBox="0 0 24 24">

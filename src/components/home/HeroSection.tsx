@@ -16,7 +16,7 @@ import {
 import { BOOK_DIRECT_URL } from "@/utils/siteLinks";
 
 function useHeroSlides() {
-  const [data, setData] = useState<HeroSlideRow[] | null>(null);
+  const [data, setData] = useState<HeroSlideRow[]>(fallbackHeroSlides);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -25,10 +25,12 @@ function useHeroSlides() {
     fetchHeroSlides({ publishedOnly: true })
       .then((rows) => {
         if (!mounted) return;
-        setData(Array.isArray(rows) ? rows : []);
+        if (Array.isArray(rows) && rows.length > 0) {
+          setData(rows);
+        }
       })
       .catch(() => {
-        if (!mounted) setData([]);
+        if (mounted) setData(fallbackHeroSlides());
       })
       .finally(() => {
         if (mounted) setLoading(false);
@@ -39,14 +41,14 @@ function useHeroSlides() {
   }, []);
 
   const slides = useMemo<HeroSlideRow[]>(() => {
-    return data ?? [];
+    return data && data.length > 0 ? data : fallbackHeroSlides();
   }, [data]);
 
   return { slides, loading };
 }
 
 export default function HeroSection() {
-  const { slides } = useHeroSlides();
+  const { slides, loading } = useHeroSlides();
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
   const len = Math.max(slides?.length ?? 0, 0);
@@ -86,23 +88,17 @@ export default function HeroSection() {
         />
 
         {/* Background Image Carousel & Overlay */}
-        {carouselSlides.length > 0 ? (
-          <HeroCarousel
-            slides={carouselSlides}
-            onIndexChange={setActiveIndex}
-            autoplayMs={5500}
-          />
-        ) : (
-          <div className="absolute inset-0 bg-[#0f302a] flex flex-col items-center justify-center p-6 z-20">
-            <div className="relative w-48 h-48 sm:w-56 sm:h-56">
-              <Image
-                src="/images/no-data-found.png"
-                alt="No data found"
-                fill
-                className="object-contain"
-                sizes="224px"
-              />
-            </div>
+        <HeroCarousel
+          slides={carouselSlides}
+          onIndexChange={setActiveIndex}
+          autoplayMs={5500}
+        />
+
+        {/* Subtle Loading Pulse Spinner Indicator while fetching live slides */}
+        {loading && (
+          <div className="absolute top-6 right-6 z-40 flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-white text-xs font-medium animate-pulse">
+            <div className="w-2.5 h-2.5 rounded-full border-2 border-white border-t-transparent animate-spin" />
+            <span className="text-[11px] tracking-wider uppercase text-white/80">Updating...</span>
           </div>
         )}
 
