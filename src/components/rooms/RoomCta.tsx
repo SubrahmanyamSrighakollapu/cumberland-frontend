@@ -3,6 +3,7 @@
 import React from "react";
 import Reveal from "@/components/ui/Reveal";
 import { BOOK_DIRECT_URL } from "@/utils/siteLinks";
+import { trackBookingClick } from "@/utils/analytics";
 
 export const RoomCta: React.FC = () => {
   return (
@@ -22,6 +23,13 @@ export const RoomCta: React.FC = () => {
             href={BOOK_DIRECT_URL}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => {
+              try {
+                trackBookingClick("room_detail_cta");
+              } catch {
+                // ignore
+              }
+            }}
             className="inline-flex items-center justify-center gap-2 bg-white text-[#80563E] hover:bg-[#F7F4EE] px-8 py-3.5 rounded font-manrope text-sm font-semibold tracking-wider uppercase transition-colors whitespace-nowrap shadow-sm"
           >
             BOOK YOUR STAY

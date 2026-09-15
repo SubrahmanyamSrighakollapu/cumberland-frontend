@@ -2,6 +2,7 @@
 
 import { contactInfoData } from "@/data/contact";
 import Reveal from "@/components/ui/Reveal";
+import { trackContactClick } from "@/utils/analytics";
 
 export default function ContactDetails() {
   const renderIcon = (iconName: string) => {
@@ -115,6 +116,13 @@ export default function ContactDetails() {
                   {card.actionHref ? (
                     <a
                       href={card.actionHref}
+                      onClick={() => {
+                        try {
+                          trackContactClick(card.iconName === "phone" ? "phone" : "email");
+                        } catch {
+                          // ignore analytics errors
+                        }
+                      }}
                       className="text-sm text-[#50544e] font-sans hover:text-[#80563e] transition-colors"
                     >
                       {card.value}

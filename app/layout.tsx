@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
 import PoweredByBadge from "@/components/layout/PoweredByBadge";
+import { MotelLocalBusinessJsonLd } from "@/components/seo/JsonLd";
+import AnalyticsTracker from "@/components/seo/AnalyticsTracker";
+import { SITE_ORIGIN } from "@/utils/seo";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -18,9 +22,16 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "Cumberland Motor Inn Cessnock | Accommodation in Hunter Valley",
+  metadataBase: new URL(SITE_ORIGIN),
+  title: {
+    default: "Motel Accommodation in Cessnock | Cumberland Motor Inn NSW",
+    template: "%s | Cumberland Motor Inn",
+  },
   description:
-    "Comfortable accommodation in Cessnock, NSW. Perfectly placed for exploring Hunter Valley wineries, dining, events, attractions and surrounding experiences.",
+    "Motel Accommodation in Cessnock, Cumberland Motor Inn is located in the heart of Cessnock, the gateway to the Hunter Valley wine country.",
+  verification: {
+    google: "KHjABfArMhkNCRJvZL1c4dfo9RB6I1x6CJsy_ZlChmM",
+  },
   icons: {
     icon: [
       { url: "/favicon.ico", rel: "icon", type: "image/x-icon" },
@@ -51,11 +62,28 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="en-AU"
       className={`${cormorant.variable} ${manrope.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans bg-[var(--color-ivory)] text-[var(--color-body)]">
+        {/* GA4 Measurement */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-5MS8C0BV1J"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            if (!window.location.pathname.startsWith('/admin')) {
+              gtag('config', 'G-5MS8C0BV1J');
+            }
+          `}
+        </Script>
         <AuthProvider>
+          <AnalyticsTracker />
+          <MotelLocalBusinessJsonLd />
           {children}
           <PoweredByBadge />
         </AuthProvider>
@@ -63,4 +91,3 @@ export default function RootLayout({
     </html>
   );
 }
-

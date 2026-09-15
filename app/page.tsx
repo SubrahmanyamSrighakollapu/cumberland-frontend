@@ -9,6 +9,18 @@ import GalleryPreviewSection from "@/components/home/GalleryPreviewSection";
 import LocationSection from "@/components/home/LocationSection";
 import FinalCtaSection from "@/components/home/FinalCtaSection";
 import PublicFooter from "@/components/layout/PublicFooter";
+import { buildRouteMetadata } from "@/utils/seo";
+
+export const metadata = buildRouteMetadata({
+  title: "Motel Accommodation in Cessnock | Cumberland Motor Inn NSW",
+  description:
+    "Motel Accommodation in Cessnock, Cumberland Motor Inn is located in the heart of Cessnock, the gateway to the Hunter Valley wine country.",
+  canonical: "https://www.cumberlandmotorinn.com.au/",
+  socialImage: {
+    url: "/images/cumberland-main-exterior-day.jpg",
+    alt: "Cumberland Motor Inn property exterior in Cessnock",
+  },
+});
 
 export default function Home() {
   return (

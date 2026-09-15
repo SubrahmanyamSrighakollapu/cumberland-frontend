@@ -1,19 +1,27 @@
-import type { Metadata } from "next";
 import PublicHeader from "@/components/layout/PublicHeader";
 import PublicFooter from "@/components/layout/PublicFooter";
 import Reveal from "@/components/ui/Reveal";
 import { siteData } from "@/data/site";
 import { BOOK_DIRECT_URL } from "@/utils/siteLinks";
+import { buildRouteMetadata } from "@/utils/seo";
+import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 
-export const metadata: Metadata = {
+export const metadata = buildRouteMetadata({
   title: "Terms & Conditions | Cumberland Motor Inn",
   description:
-    "Review the booking terms, payment policies, reception hours, check-in/check-out times, child policy and stay guidelines for Cumberland Motor Inn in Cessnock, NSW.",
-};
+    "Read the terms and conditions for stays at Cumberland Motor Inn in Cessnock, including booking, payment, check-in and guest policy information.",
+  canonical: "https://www.cumberlandmotorinn.com.au/terms-and-conditions",
+});
 
 export default function TermsAndConditionsPage() {
   return (
     <div className="min-h-screen flex flex-col bg-[#f7f4ee] text-[#50544e]">
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", url: "/" },
+          { name: "Terms & Conditions", url: "/terms-and-conditions" },
+        ]}
+      />
       <PublicHeader />
 
       <main className="flex-1">

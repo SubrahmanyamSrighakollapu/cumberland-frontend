@@ -1,6 +1,60 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      {
+        source: "/location",
+        destination: "/contact",
+        permanent: true,
+      },
+      {
+        source: "/location/",
+        destination: "/contact",
+        permanent: true,
+      },
+      {
+        source: "/activities",
+        destination: "/experiences/things-to-do",
+        permanent: true,
+      },
+      {
+        source: "/activities/",
+        destination: "/experiences/things-to-do",
+        permanent: true,
+      },
+      {
+        source: "/meeting",
+        destination: "/contact",
+        permanent: true,
+      },
+      {
+        source: "/meeting/",
+        destination: "/contact",
+        permanent: true,
+      },
+      {
+        source: "/meeting-room",
+        destination: "/contact",
+        permanent: true,
+      },
+      {
+        source: "/meeting-room/",
+        destination: "/contact",
+        permanent: true,
+      },
+      {
+        source: "/group",
+        destination: "/contact",
+        permanent: true,
+      },
+      {
+        source: "/group/",
+        destination: "/contact",
+        permanent: true,
+      },
+    ];
+  },
   async rewrites() {
     const apiBase = process.env.NEXT_PUBLIC_API_BASE_URL ?? "";
     const backendOrigin = apiBase.replace(/\/api\/?$/, "");

@@ -34,7 +34,7 @@ export const contactHeroData = {
   eyebrow: "GET IN TOUCH",
   headingLines: ["We’re here to help", "plan your stay."],
   description:
-    "Have a question, special request or need local advice? Our friendly team is ready to help make your Cumberland Motor Inn experience memorable.",
+    "Have a question, special request, meeting room enquiry or need local advice? Our friendly team is ready to help make your Cumberland Motor Inn experience memorable.",
   image: "/images/cumberland-grounds-skyline-view.jpg",
   alt: "Cumberland Motor Inn grounds and outdoor pool beneath blue sky",
 };
@@ -43,7 +43,7 @@ export const contactInfoData = {
   eyebrow: "CONTACT DETAILS",
   heading: "Let’s start a conversation.",
   subtitle:
-    "Whether you’re planning a Hunter Valley getaway, need more information or have a special request, we’d love to hear from you.",
+    "Whether you’re planning a Hunter Valley getaway, inquiring about meeting room hire or group accommodation, we’d love to hear from you.",
   phone: siteData.contact.phone,
   fax: siteData.contact.fax,
   abn: siteData.contact.abn,
@@ -93,13 +93,13 @@ export const locationSectionData = {
       id: "driving",
       title: "Driving from Sydney",
       description:
-        "Head north from Sydney and follow the signs to Newcastle. Exit the Freeway at the Cessnock / Hunter Valley Vineyards sign (approx. 1 hour or 100kms on freeway), then follow the signs to Cessnock. The old route to Cessnock through Freemans Waterhole is 30km shorter than using the new Hunter Expressway.",
+        "Head north from Sydney and follow the signs to Newcastle. Exit the Freeway at the Cessnock / Hunter Valley Vineyards sign (approx. 1 hour or 100kms on freeway), then follow the signs to Cessnock. The route to Cessnock through Freemans Waterhole is 30km shorter than using the Hunter Expressway.",
       iconName: "car",
     },
     {
       id: "transit",
       title: "Car Parking",
-      description: "Off street parking, no charge for motel guests.",
+      description: "Off-street car parking is provided free of charge for motel guests.",
       iconName: "transit",
     },
     {
@@ -122,7 +122,7 @@ export const faqSectionData = {
   eyebrow: "FREQUENTLY ASKED QUESTIONS",
   heading: "Before you arrive.",
   description:
-    "Find quick answers to our most common questions regarding check-in, parking, payment and directions.",
+    "Find quick answers to common questions regarding check-in, parking, payment, meeting room hire and directions.",
   balconyImage: "/images/cumberland-pylon-sign-night.jpg",
   balconyAlt: "Illuminated Cumberland Motor Inn pylon sign at night",
   assistanceCard: {
@@ -142,7 +142,7 @@ export const faqSectionData = {
       id: "faq-2",
       question: "Is parking available on-site?",
       answer:
-        "Yes, off street parking is provided free of charge for all guests.",
+        "Yes, off-street parking is provided free of charge for all registered motel guests.",
     },
     {
       id: "faq-3",
@@ -152,12 +152,24 @@ export const faqSectionData = {
     },
     {
       id: "faq-4",
+      question: "Do you offer a meeting room for corporate events or conferences?",
+      answer:
+        "Yes, Cumberland Motor Inn offers an equipped meeting and function room that caters for up to 50 people, with accommodation available at the same venue. Contact our reception team at (02) 4990 6633 or relax@cumberlandmotorinn.com.au for rates and availability.",
+    },
+    {
+      id: "faq-5",
+      question: "Can I book group accommodation?",
+      answer:
+        "Yes, we welcome group accommodation inquiries for corporate trips, family gatherings, or events in Cessnock. Please phone reception directly for group room availability and options.",
+    },
+    {
+      id: "faq-6",
       question: "What is your cancellation policy?",
       answer:
         "NO REFUNDS AFTER BOOKINGS. All cancellations will incur a $20 administration fee. 24 hour cancellation period by 2pm. After that time no deposits will be refunded.",
     },
     {
-      id: "faq-5",
+      id: "faq-7",
       question: "Are there credit card surcharges?",
       answer:
         "There is a surcharge added for Amex and Diners Card payments.",

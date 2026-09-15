@@ -1,120 +1,80 @@
-"use client";
-
-import { notFound, useParams } from "next/navigation";
-import { use, useEffect, useMemo, useState } from "react";
-import PublicHeader from "@/components/layout/PublicHeader";
-import PublicFooter from "@/components/layout/PublicFooter";
-import RoomHeading from "@/components/rooms/RoomHeading";
-import RoomGallery from "@/components/rooms/RoomGallery";
-import RoomOverview from "@/components/rooms/RoomOverview";
-import RoomAmenities from "@/components/rooms/RoomAmenities";
-import RoomStayInformation from "@/components/rooms/RoomStayInformation";
-import { RelatedRooms } from "@/components/rooms/RelatedRooms";
-import { RoomCta } from "@/components/rooms/RoomCta";
-import { apiFetch } from "@/utils/apiClient";
-import {
-  RoomDetail,
-  apiRoomToDetail,
-  fallbackRoomBySlug,
-} from "@/utils/roomDataClient";
+import { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { buildRouteMetadata } from "@/utils/seo";
+import { getPublishedRoomBySlugServer } from "@/utils/publicDataLoader";
+import RoomDetailClient from "@/components/rooms/RoomDetailClient";
+import { BreadcrumbJsonLd, RoomAccommodationJsonLd } from "@/components/seo/JsonLd";
 
 interface RoomPageProps {
   params: Promise<{ slug: string }>;
 }
 
-export default function RoomDetailPage({ params }: RoomPageProps) {
-  const routeParams = useParams<{ slug: string }>();
-  const resolvedParams = params ? use(params) : null;
-  const slugParam = resolvedParams?.slug || routeParams?.slug;
-  const slug = Array.isArray(slugParam) ? slugParam[0] : slugParam;
+export async function generateMetadata({
+  params,
+}: RoomPageProps): Promise<Metadata> {
+  const resolvedParams = await params;
+  const slug = resolvedParams?.slug;
+  if (!slug) return {};
 
-  const [apiRoom, setApiRoom] = useState<RoomDetail | null | undefined>(
-    undefined
-  );
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (!slug) return;
-    let cancelled = false;
-    void (async () => {
-      try {
-        setLoading(true);
-        const res = await apiFetch(`/rooms/${encodeURIComponent(slug)}`);
-        const item = res?.data;
-        if (!cancelled) {
-          setApiRoom(item ? apiRoomToDetail(item) : null);
-        }
-      } catch {
-        if (!cancelled) setApiRoom(null);
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    })();
-    return () => {
-      cancelled = true;
+  const room = await getPublishedRoomBySlugServer(slug);
+  if (!room) {
+    return {
+      title: "Room Not Found | Cumberland Motor Inn",
+      description: "The requested accommodation room could not be found.",
+      robots: { index: false, follow: false },
     };
-  }, [slug]);
+  }
 
-  const display = useMemo<RoomDetail | null>(() => {
-    if (apiRoom) return apiRoom;
-    if (apiRoom === null && !loading) {
-      return fallbackRoomBySlug(slug) ?? null;
-    }
-    if (apiRoom === undefined && !loading) {
-      return fallbackRoomBySlug(slug) ?? null;
-    }
-    return null;
-  }, [apiRoom, loading, slug]);
+  const title =
+    room.seoTitle && room.seoTitle !== room.name
+      ? room.seoTitle.includes("Cumberland Motor Inn")
+        ? room.seoTitle
+        : `${room.seoTitle} | Cumberland Motor Inn`
+      : `${room.name} in Cessnock | Cumberland Motor Inn`;
 
-  useEffect(() => {
-    if (!loading && display) {
-      const title =
-        display.seoTitle || `${display.name} | Cumberland Motor Inn`;
-      document.title = title;
-      let meta = document.querySelector<HTMLMetaElement>(
-        'meta[name="description"]'
-      );
-      if (!meta) {
-        meta = document.createElement("meta");
-        meta.name = "description";
-        document.head.appendChild(meta);
-      }
-      meta.content =
-        display.seoDescription || display.shortDescription || "";
-    }
-  }, [loading, display]);
+  const bedInfo = room.bedConfiguration ? `, ${room.bedConfiguration}` : "";
+  const guestInfo = room.guestsLabel ? `, ${room.guestsLabel}` : "";
 
+  const description =
+    room.seoDescription && room.seoDescription.length > 20
+      ? room.seoDescription
+      : `Explore the ${room.name} at Cumberland Motor Inn in Cessnock${guestInfo}${bedInfo}. View photos, room features and availability for your Hunter Valley stay.`;
+
+  const socialImage =
+    room.gallery && room.gallery.length > 0
+      ? { url: room.gallery[0].src, alt: room.gallery[0].alt || room.name }
+      : {
+          url: "/images/cumberland-main-exterior-day.jpg",
+          alt: "Cumberland Motor Inn property exterior in Cessnock",
+        };
+
+  return buildRouteMetadata({
+    title,
+    description,
+    canonical: `https://www.cumberlandmotorinn.com.au/rooms/${slug}`,
+    socialImage,
+  });
+}
+
+export default async function RoomDetailPage({ params }: RoomPageProps) {
+  const resolvedParams = await params;
+  const slug = resolvedParams?.slug;
   if (!slug) notFound();
-  if (!loading && !display) notFound();
+
+  const room = await getPublishedRoomBySlugServer(slug);
+  if (!room) notFound();
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#F7F4EE] text-[#50544E]">
-      <PublicHeader />
-
-      <main className="flex-1">
-        {loading && !display ? (
-          <div className="py-24 text-center text-stone-500 text-sm">
-            Loading room…
-          </div>
-        ) : (
-          display && (
-          <>
-            <RoomHeading room={display} />
-            <RoomGallery room={display} />
-            <RoomOverview room={display} />
-            <RoomAmenities room={display} />
-            <RoomStayInformation room={display} />
-            <RelatedRooms
-              currentSlug={display.slug}
-              relatedIds={display.relatedRoomIds}
-            />
-            <RoomCta />
-          </>
-        )
-      )}
-      </main>
-
-      <PublicFooter />
-    </div>
+    <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", url: "/" },
+          { name: "Rooms", url: "/rooms" },
+          { name: room.name, url: `/rooms/${room.slug}` },
+        ]}
+      />
+      <RoomAccommodationJsonLd room={room} />
+      <RoomDetailClient room={room} />
+    </>
   );
 }

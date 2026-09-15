@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import PublicHeader from "@/components/layout/PublicHeader";
 import ContactHero from "@/components/contact/ContactHero";
 import ContactDetails from "@/components/contact/ContactDetails";
@@ -7,16 +6,29 @@ import ContactLocationSection from "@/components/contact/ContactLocationSection"
 import ContactFaqSection from "@/components/contact/ContactFaqSection";
 import ContactFinalCta from "@/components/contact/ContactFinalCta";
 import PublicFooter from "@/components/layout/PublicFooter";
+import { buildRouteMetadata } from "@/utils/seo";
+import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 
-export const metadata: Metadata = {
-  title: "Contact Us | Cumberland Motor Inn",
+export const metadata = buildRouteMetadata({
+  title: "Contact & Location | Cumberland Motor Inn Cessnock",
   description:
-    "Get in touch with Cumberland Motor Inn for room information, local recommendations and help planning your stay.",
-};
+    "Find Cumberland Motor Inn at 57–61 Cumberland Street, Cessnock NSW 2325. Call (02) 4990 6633 for accommodation enquiries and directions.",
+  canonical: "https://www.cumberlandmotorinn.com.au/contact",
+  socialImage: {
+    url: "/images/cumberland-reception-brick-archway.jpg",
+    alt: "Reception entrance and location at Cumberland Motor Inn in Cessnock",
+  },
+});
 
 export default function ContactPage() {
   return (
     <div className="min-h-screen flex flex-col bg-[var(--color-ivory)] text-[var(--color-body)]">
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", url: "/" },
+          { name: "Contact & Location", url: "/contact" },
+        ]}
+      />
       <PublicHeader />
       <main className="flex-1">
         <ContactHero />

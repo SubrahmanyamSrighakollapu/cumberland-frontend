@@ -1,18 +1,26 @@
-import type { Metadata } from "next";
 import PublicHeader from "@/components/layout/PublicHeader";
 import PublicFooter from "@/components/layout/PublicFooter";
 import Reveal from "@/components/ui/Reveal";
 import { siteData } from "@/data/site";
+import { buildRouteMetadata } from "@/utils/seo";
+import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 
-export const metadata: Metadata = {
+export const metadata = buildRouteMetadata({
   title: "Privacy Policy | Cumberland Motor Inn",
   description:
-    "Learn how Cumberland Motor Inn collects, handles, uses and protects your personal information when booking or visiting our Cessnock motel.",
-};
+    "Read Cumberland Motor Inn's privacy policy for information about how personal information is collected, used and handled through this website.",
+  canonical: "https://www.cumberlandmotorinn.com.au/privacy-policy",
+});
 
 export default function PrivacyPolicyPage() {
   return (
     <div className="min-h-screen flex flex-col bg-[#f7f4ee] text-[#50544e]">
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", url: "/" },
+          { name: "Privacy Policy", url: "/privacy-policy" },
+        ]}
+      />
       <PublicHeader />
 
       <main className="flex-1">

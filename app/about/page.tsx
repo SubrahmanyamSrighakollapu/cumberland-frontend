@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import PublicHeader from "@/components/layout/PublicHeader";
 import AboutHero from "@/components/about/AboutHero";
 import OurStorySection from "@/components/about/OurStorySection";
@@ -7,16 +6,29 @@ import CumberlandExperienceSection from "@/components/about/CumberlandExperience
 import AboutTestimonialSection from "@/components/about/AboutTestimonialSection";
 import AboutFinalCta from "@/components/about/AboutFinalCta";
 import PublicFooter from "@/components/layout/PublicFooter";
+import { buildRouteMetadata } from "@/utils/seo";
+import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 
-export const metadata: Metadata = {
-  title: "About Us | Cumberland Motor Inn Cessnock",
+export const metadata = buildRouteMetadata({
+  title: "About Cumberland Motor Inn | Motel in Cessnock",
   description:
-    "Welcome to Cumberland Motor Inn, your comfortable base in Cessnock for exploring Hunter Valley wineries, dining, attractions and local events.",
-};
+    "Get to know Cumberland Motor Inn in Cessnock, a comfortable base for exploring the Hunter Valley. Discover our accommodation, facilities and location.",
+  canonical: "https://www.cumberlandmotorinn.com.au/about",
+  socialImage: {
+    url: "/images/cumberland-main-exterior-day.jpg",
+    alt: "Cumberland Motor Inn grounds and motel reception in Cessnock",
+  },
+});
 
 export default function AboutPage() {
   return (
     <div className="min-h-screen flex flex-col bg-[var(--color-ivory)] text-[var(--color-body)]">
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", url: "/" },
+          { name: "About", url: "/about" },
+        ]}
+      />
       <PublicHeader />
       <main className="flex-1">
         <AboutHero />

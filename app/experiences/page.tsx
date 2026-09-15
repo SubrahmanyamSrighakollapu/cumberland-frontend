@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import PublicHeader from "@/components/layout/PublicHeader";
 import ExperiencesHero from "@/components/experiences/ExperiencesHero";
 import ExperiencePillars from "@/components/experiences/ExperiencePillars";
@@ -6,31 +5,35 @@ import WineCountryIntro from "@/components/experiences/WineCountryIntro";
 import LocationAdvantages from "@/components/experiences/LocationAdvantages";
 import ExperiencesGrandCta from "@/components/experiences/ExperiencesGrandCta";
 import PublicFooter from "@/components/layout/PublicFooter";
+import { buildRouteMetadata } from "@/utils/seo";
+import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 
-export const metadata: Metadata = {
-  title: "Experiences & Attractions | Cumberland Motor Inn",
+export const metadata = buildRouteMetadata({
+  title: "Cessnock & Hunter Valley Experiences | Cumberland Motor Inn",
   description:
-    "Discover Hunter Valley experiences near Cumberland Motor Inn in Cessnock, including wine country tours, local dining, golf, and regional attractions.",
-};
+    "Plan your stay with things to do around Cessnock and the Hunter Valley. Explore wineries, local dining and attractions from Cumberland Motor Inn.",
+  canonical: "https://www.cumberlandmotorinn.com.au/experiences",
+  socialImage: {
+    url: "/images/wine-country.png",
+    alt: "Hunter Valley wine country and Cessnock regional experiences",
+  },
+});
 
 export default function ExperiencesIndexPage() {
   return (
     <div className="min-h-screen flex flex-col bg-[#f7f4ee] text-[#50544e]">
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", url: "/" },
+          { name: "Experiences", url: "/experiences" },
+        ]}
+      />
       <PublicHeader />
       <main className="flex-1">
-        {/* Luxury Hero Banner */}
         <ExperiencesHero />
-
-        {/* 3 Pillar Experience Cards (Wine Country, Eat & Drink, Things to Do) */}
         <ExperiencePillars />
-
-        {/* Wine Country Detailed Section */}
         <WineCountryIntro />
-
-        {/* Location Advantages / Why Base Here */}
         <LocationAdvantages />
-
-        {/* Unified Grand Call-to-Action */}
         <ExperiencesGrandCta />
       </main>
       <PublicFooter />

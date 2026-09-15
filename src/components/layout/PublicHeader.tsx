@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BOOK_DIRECT_URL } from "@/utils/siteLinks";
+import { trackBookingClick } from "@/utils/analytics";
 
 export default function PublicHeader() {
   const pathname = usePathname();
@@ -270,6 +271,13 @@ export default function PublicHeader() {
             href={BOOK_DIRECT_URL}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => {
+              try {
+                trackBookingClick("header_desktop");
+              } catch {
+                // ignore
+              }
+            }}
             className="group inline-flex items-center justify-center gap-1.5 h-[46px] px-6 bg-[#80563e] hover:bg-[#69452f] active:bg-[#583824] text-white text-sm font-semibold tracking-wider rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#80563e]"
           >
             <span>BOOK YOUR STAY</span>

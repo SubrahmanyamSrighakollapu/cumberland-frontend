@@ -1,27 +1,38 @@
-import type { Metadata } from "next";
 import PublicHeader from "@/components/layout/PublicHeader";
 import EatDrinkHero from "@/components/experiences/EatDrinkHero";
 import FeaturedDiningExperience from "@/components/experiences/FeaturedDiningExperience";
-import DiningExplorer from "@/components/experiences/DiningExplorer";
 import LocalFlavoursItinerary from "@/components/experiences/LocalFlavoursItinerary";
 import DiningRecommendationPanel from "@/components/experiences/DiningRecommendationPanel";
 import EatDrinkCta from "@/components/experiences/EatDrinkCta";
 import PublicFooter from "@/components/layout/PublicFooter";
+import { buildRouteMetadata } from "@/utils/seo";
+import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 
-export const metadata: Metadata = {
-  title: "Eat & Drink | Cumberland Motor Inn",
+export const metadata = buildRouteMetadata({
+  title: "Places to Eat in Cessnock | Cumberland Motor Inn",
   description:
-    "Explore local cafés, vineyard bistros and relaxed pubs near Cumberland Motor Inn, with dining inspiration for every part of your stay.",
-};
+    "Find inspiration for eating out in Cessnock and the Hunter Valley. Explore local cafes, restaurants and dining options during your Cumberland Motor Inn stay.",
+  canonical: "https://www.cumberlandmotorinn.com.au/experiences/eat-and-drink",
+  socialImage: {
+    url: "/images/eat-drink.png",
+    alt: "Dining and cafes near Cumberland Motor Inn in Cessnock",
+  },
+});
 
 export default function EatAndDrinkPage() {
   return (
     <div className="min-h-screen flex flex-col bg-[#f7f4ee] text-[#50544e]">
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", url: "/" },
+          { name: "Experiences", url: "/experiences" },
+          { name: "Eat & Drink", url: "/experiences/eat-and-drink" },
+        ]}
+      />
       <PublicHeader />
       <main className="flex-1">
         <EatDrinkHero />
         <FeaturedDiningExperience />
-        {/* <DiningExplorer /> */}
         <LocalFlavoursItinerary />
         <DiningRecommendationPanel />
         <EatDrinkCta />

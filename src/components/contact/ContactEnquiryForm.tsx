@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import Link from "next/link";
 import Reveal from "@/components/ui/Reveal";
 import { apiFetch } from "@/utils/apiClient";
+import { trackFormSubmission } from "@/utils/analytics";
 
 interface FormErrors {
   fullName?: string;
@@ -116,6 +117,12 @@ export default function ContactEnquiryForm() {
 
       setFeedbackType("success");
       setFeedback(successMsg);
+
+      try {
+        trackFormSubmission("contact_enquiry_form");
+      } catch {
+        // ignore analytics error
+      }
 
       setFormData({
         fullName: "",
