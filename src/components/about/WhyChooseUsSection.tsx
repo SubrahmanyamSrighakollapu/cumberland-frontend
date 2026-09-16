@@ -90,11 +90,10 @@ export default function WhyChooseUsSection() {
               WHY GUESTS CHOOSE US
             </span>
             <h2 className="font-serif text-3xl sm:text-4xl lg:text-[42px] text-[#20382f] font-normal leading-tight mb-3">
-              The details that make a difference.
+              Why choose Cumberland Motor Inn for your Cessnock stay?
             </h2>
             <p className="text-base text-[#50544e] font-sans max-w-2xl">
-              Thoughtful touches, friendly service and everything you need for a
-              relaxed and enjoyable stay.
+              From versatile room choices and outdoor salt-water pool access to our prime location near Hunter Valley wineries, explore what makes our motel a great choice.
             </p>
           </div>
         </Reveal>

@@ -122,7 +122,7 @@ export const faqSectionData = {
   eyebrow: "FREQUENTLY ASKED QUESTIONS",
   heading: "Before you arrive.",
   description:
-    "Find quick answers to common questions regarding check-in, parking, payment, meeting room hire and directions.",
+    "Find quick answers to common questions regarding location, room options, facilities, parking, payment and policies.",
   balconyImage: "/images/cumberland-pylon-sign-night.jpg",
   balconyAlt: "Illuminated Cumberland Motor Inn pylon sign at night",
   assistanceCard: {
@@ -133,16 +133,52 @@ export const faqSectionData = {
   },
   items: [
     {
+      id: "faq-location",
+      question: "Where is Cumberland Motor Inn located?",
+      answer:
+        "Cumberland Motor Inn is located at 57–61 Cumberland Street, Cessnock NSW 2325. We are situated in central Cessnock, close to shops, dining, and Pokolbin cellar doors in the Hunter Valley.",
+    },
+    {
+      id: "faq-choosing",
+      question: "What should I consider when choosing a motel in Cessnock?",
+      answer:
+        "Key factors include free on-site parking, air-conditioned rooms, essential facilities like Wi-Fi and an outdoor pool, and a central location that connects easily to town amenities and regional attractions.",
+    },
+    {
+      id: "faq-rooms",
+      question: "Which room types accommodate my travelling group?",
+      answer:
+        "We offer four main room options: Deluxe Queen (sleeps 2), Deluxe Twin (1 Double & 1 Single bed, sleeps 3), Family Room (1 Double & 2 Single beds, sleeps 4), and Business Single (1 Double bed, solo travellers).",
+    },
+    {
+      id: "faq-parking",
+      question: "Is parking available on-site, and is it included?",
+      answer:
+        "Yes, off-street parking within the motel grounds is provided free of charge for all registered guests.",
+    },
+    {
+      id: "faq-facilities",
+      question: "Which facilities are included with my room?",
+      answer:
+        "All rooms include climate-control air conditioning, TV, microwave, mini refrigerator, tea and coffee making facilities, free Wi-Fi, and access to our outdoor salt-water pool and covered BBQ area.",
+    },
+    {
+      id: "faq-rates",
+      question: "How can I check current room rates and availability?",
+      answer:
+        "You can check real-time room availability and rates directly through our online booking engine or by phoning reception at (02) 4990 6633.",
+    },
+    {
+      id: "faq-base",
+      question: "Can I use Cumberland as a base for exploring the Hunter Valley?",
+      answer:
+        "Yes, Cumberland Motor Inn is a convenient base for exploring Hunter Valley wineries, Cessnock Golf Course, state forests, and regional attractions.",
+    },
+    {
       id: "faq-1",
       question: "What time is check-in and check-out?",
       answer:
         "Check-in is from 2:00 PM till 9:00 PM. Check-out is by 10:00 AM. Management reserves the right to apply a $20 per hour fee for early check-ins before 2pm, late check-ins after 9pm and late check-outs.",
-    },
-    {
-      id: "faq-2",
-      question: "Is parking available on-site?",
-      answer:
-        "Yes, off-street parking is provided free of charge for all registered motel guests.",
     },
     {
       id: "faq-3",

@@ -32,11 +32,14 @@ export default function AmenitiesSection() {
         <Reveal direction="up" duration={600}>
           <div className="text-center max-w-2xl mx-auto mb-12">
             <span className="text-xs font-semibold tracking-[0.2em] text-[#80563e] uppercase mb-2 block">
-              AMENITIES
+              MOTEL FACILITIES
             </span>
-            <h2 className="font-serif text-3xl sm:text-4xl lg:text-[42px] text-[#20382f] font-normal leading-tight">
-              Everything you need, thoughtfully included.
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-[42px] text-[#20382f] font-normal leading-tight mb-3">
+              Practical facilities included with your stay.
             </h2>
+            <p className="text-sm sm:text-base text-[#50544e] font-sans">
+              Enjoy free on-site parking, Wi-Fi, an outdoor salt-water pool, and a covered BBQ area designed for guest comfort and convenience.
+            </p>
           </div>
         </Reveal>
 

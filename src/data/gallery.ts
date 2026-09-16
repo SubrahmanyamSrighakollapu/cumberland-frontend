@@ -24,7 +24,7 @@ export const galleryHeroData = {
   eyebrow: "OUR GALLERY",
   headingLines: ["A closer look", "at your stay."],
   description:
-    "Real spaces, comfortable rooms, outdoor salt-water pool and beautiful surrounds await at Cumberland Motor Inn.",
+    "Browse authentic photographs of our Cessnock motel rooms, grounds, outdoor salt-water pool and surrounding Hunter Valley region before booking.",
   image: "/images/cumberland-main-exterior-day.jpg",
   alt: "Real view of Cumberland Motor Inn exterior and guest suites in Cessnock",
 };
@@ -33,7 +33,7 @@ export const galleryIntroData = {
   eyebrow: "PHOTO GALLERY",
   heading: "Explore Cumberland Motor Inn.",
   description:
-    "Browse our gallery and explore our comfortable Cessnock accommodation, outdoor salt-water pool, and Hunter Valley surroundings.",
+    "Explore real photographs of our comfortable Cessnock motel accommodation, outdoor salt-water pool, covered BBQ lounge, and Hunter Valley surroundings.",
 };
 
 export const galleryCategories: GalleryCategory[] = [

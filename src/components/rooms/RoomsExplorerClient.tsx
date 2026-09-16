@@ -58,13 +58,13 @@ export default function RoomsExplorerClient({
           <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <Reveal direction="up" delay={50}>
               <p className="text-[#e8c5af] text-md font-bold uppercase tracking-[0.2em] mb-3 font-manrope">
-                ACCOMMODATION
+                MOTEL ACCOMMODATION
               </p>
               <h1 className="text-4xl md:text-6xl font-cormorant font-normal mb-4">
-                Our Room Collection
+                Find a room for your Cessnock stay
               </h1>
               <p className="max-w-2xl mx-auto text-stone-300 text-base md:text-lg font-manrope font-light leading-relaxed">
-                Thoughtfully appointed spaces crafted for quiet comfort, relaxed style, and an enjoyable Hunter Valley stay.
+                Explore our selection of air-conditioned motel rooms in Cessnock. Compare room capacities, bed layouts, included facilities and rates to choose the ideal accommodation for your Hunter Valley visit.
               </p>
             </Reveal>
           </div>
