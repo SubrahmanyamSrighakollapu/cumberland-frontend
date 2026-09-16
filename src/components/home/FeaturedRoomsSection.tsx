@@ -70,9 +70,12 @@ export default function FeaturedRoomsSection() {
               <span className="text-xs font-semibold tracking-[0.2em] text-[#80563e] uppercase mb-2 block">
                 OUR ROOMS
               </span>
-              <h2 className="font-serif text-3xl sm:text-4xl lg:text-[42px] text-[#20382f] font-normal leading-tight">
-                Rooms designed for real rest.
+              <h2 className="font-serif text-3xl sm:text-4xl lg:text-[42px] text-[#20382f] font-normal leading-tight mb-2">
+                Comfortable rooms for every Cessnock stay.
               </h2>
+              <p className="text-sm sm:text-base text-[#50544e] font-sans max-w-xl">
+                Choose from well-appointed motel room options tailored for solo travellers, couples, or families visiting the Hunter Valley.
+              </p>
             </div>
 
             <div>

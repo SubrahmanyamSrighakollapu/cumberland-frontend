@@ -57,10 +57,15 @@ export default function GalleryPreviewSection() {
     <section className="w-full bg-[#f7f4ee] pb-16 sm:pb-20 lg:pb-24 pt-4 border-b border-[#d9d0c4]/40 overflow-hidden">
       <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal direction="up" duration={600}>
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-            <span className="text-xs font-semibold tracking-[0.2em] text-[#80563e] uppercase block">
-              OUR GALLERY
-            </span>
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+            <div>
+              <span className="text-xs font-semibold tracking-[0.2em] text-[#80563e] uppercase block mb-1">
+                OUR GALLERY
+              </span>
+              <h2 className="font-serif text-2xl sm:text-3xl text-[#20382f] font-normal leading-tight">
+                Preview our Cessnock motel rooms &amp; grounds.
+              </h2>
+            </div>
 
             <Link
               href="/gallery"

@@ -42,34 +42,34 @@ export interface TravelTime {
 export const homeHeroContent = {
   headingLines: ["Your comfortable base for", "exploring the Hunter Valley."],
   description:
-    "Comfortable accommodation in Cessnock, offering easy access to Hunter Valley wineries, dining, attractions and surrounding experiences.",
+    "Comfortable motel accommodation in Cessnock, offering easy access to Hunter Valley wineries, dining, attractions and surrounding experiences.",
 };
 
 export const welcomeData = {
-  eyebrow: "WELCOME",
-  headingLines: ["A comfortable stay in the", "heart of the Hunter Valley."],
+  eyebrow: "WELCOME TO CUMBERLAND",
+  headingLines: ["A comfortable base for", "your Cessnock stay."],
   paragraph1:
-    "Cumberland Motor Inn is a relaxed Cessnock stay where comfort, convenience and country charm come together.",
+    "Cumberland Motor Inn offers relaxed motel accommodation in Cessnock for couples, families, solo travellers and group visitors seeking comfort, convenience and value.",
   paragraph2:
-    "Set in the heart of Cessnock, we're perfectly placed for exploring Hunter Valley wineries, local dining, events and attractions, while giving you a comfortable place to unwind at the end of the day.",
+    "Set in central Cessnock near local dining, shops and transport, our motel features air-conditioned rooms, an outdoor salt-water pool, free on-site parking and a covered BBQ area — placing you minutes from Hunter Valley wineries and regional attractions.",
   learnMoreRoute: "/about",
   trustIndicators: [
     {
       id: "parking",
-      primary: "Free Parking",
-      secondary: "On-site parking",
+      primary: "Free On-Site Parking",
+      secondary: "Drive-up convenience",
       icon: "car",
     },
     {
       id: "location",
-      primary: "Cessnock",
-      secondary: "Hunter Valley",
+      primary: "Cessnock Location",
+      secondary: "Gateway to Hunter Valley",
       icon: "pin",
     },
     {
       id: "rooms",
-      primary: "29 Rooms",
-      secondary: "Comfortable stays",
+      primary: "28 Guest Rooms",
+      secondary: "Comfortable motel stays",
       icon: "home",
     },
   ],
@@ -118,7 +118,7 @@ export const experiencesList: Experience[] = [
     id: "wine-country",
     slug: "wine-country",
     title: "Wine Country",
-    description: "Cellar doors, vineyards and wine country experiences nearby.",
+    description: "Cellar doors, boutique vineyards and wine country experiences just a short drive from your room.",
     image: "/images/wine-country.png",
     route: "/experiences/wine-country",
   },
@@ -126,7 +126,7 @@ export const experiencesList: Experience[] = [
     id: "eat-and-drink",
     slug: "eat-and-drink",
     title: "Eat & Drink",
-    description: "Covered BBQ area, Cessnock cafes and regional dining.",
+    description: "Covered outdoor BBQ area, Cessnock cafés and regional Hunter Valley dining.",
     image: "/images/cumberland-outdoor-bbq-area.jpg",
     route: "/experiences/eat-and-drink",
   },
@@ -134,7 +134,7 @@ export const experiencesList: Experience[] = [
     id: "things-to-do",
     slug: "things-to-do",
     title: "Things to Do",
-    description: "From Cessnock Golf Course to state forests and CPAC.",
+    description: "From Cessnock Golf Course and CPAC to state forests and local attractions.",
     image: "/images/thinks-to-do.png",
     route: "/experiences/things-to-do",
   },

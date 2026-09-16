@@ -170,7 +170,7 @@ export const roomsDataset: Record<string, RoomDetail> = {
     name: "Deluxe Queen Room",
     eyebrow: "ACCOMMODATION",
     shortDescription:
-      "This air-conditioned room features a TV, microwave, refrigerator and tea and coffee making facilities.",
+      "Air-conditioned room featuring 1 Queen bed, TV, microwave, mini refrigerator, and tea and coffee making facilities.",
     price: 160,
     currency: "$",
     priceUnit: "/ night",
@@ -185,12 +185,12 @@ export const roomsDataset: Record<string, RoomDetail> = {
     seoDescription:
       "Stay in our comfortable Deluxe Queen Room featuring air conditioning, TV, microwave, refrigerator and tea/coffee facilities in Cessnock.",
     intro: {
-      eyebrow: "COMFORTABLE CESSNOCK STAY",
-      heading: "Relaxed queen comfort.",
+      eyebrow: "CESSNOCK MOTEL ACCOMMODATION",
+      heading: "Relaxed queen comfort for couples & solo travellers.",
       paragraph1:
-        "Bedding consists of 1 Queen bed. This air-conditioned room features a TV, microwave, refrigerator and tea and coffee making facilities.",
+        "Designed for up to 2 guests, the Deluxe Queen Room features 1 Queen bed, climate-control heating and cooling, TV, microwave, mini refrigerator, and tea and coffee making facilities.",
       paragraph2:
-        "Located in the heart of Cessnock, providing an ideal base for exploring Hunter Valley wineries and attractions.",
+        "Situated on the ground floor of our Cessnock motel with convenient off-street parking, offering a peaceful base for exploring Hunter Valley cellar doors and regional dining.",
       featureTiles: [
         { id: "ft-1", icon: "person", label: "2 Guests" },
         { id: "ft-2", icon: "bed", label: "1 Queen Bed" },
@@ -234,7 +234,7 @@ export const roomsDataset: Record<string, RoomDetail> = {
     name: "Deluxe Twin Room",
     eyebrow: "ACCOMMODATION",
     shortDescription:
-      "This air-conditioned room features a TV, microwave, refrigerator and tea and coffee making facilities.",
+      "Air-conditioned twin suite featuring 1 Double bed and 1 Single bed, TV, microwave, mini refrigerator, and tea/coffee facilities.",
     price: 175,
     currency: "$",
     priceUnit: "/ night",
@@ -248,12 +248,12 @@ export const roomsDataset: Record<string, RoomDetail> = {
     seoDescription:
       "Our Deluxe Twin Room features 1 single bed and 1 double bed, air conditioning, TV, microwave, fridge, and tea/coffee making facilities.",
     intro: {
-      eyebrow: "SHARED COMFORT",
-      heading: "Ideal for friends or small families.",
+      eyebrow: "SHARED MOTEL COMFORT",
+      heading: "Ideal twin accommodation for small groups & families.",
       paragraph1:
-        "Bedding consists of 1 single bed and 1 double bed. This air-conditioned room features a TV, microwave, refrigerator and tea and coffee making facilities.",
+        "Accommodating up to 3 guests, our Deluxe Twin Room features a double bed and single bed configuration, air conditioning, TV, microwave, mini fridge, and tea and coffee making facilities.",
       paragraph2:
-        "Enjoy comfortable beds and essential motel amenities close to Hunter Valley Wine Country.",
+        "A practical choice for friends travelling together or small families seeking comfortable motel lodging close to Cessnock town centre and wine country.",
       featureTiles: [
         { id: "ft-1", icon: "person", label: "3 Guests" },
         { id: "ft-2", icon: "bed", label: "1 Single & 1 Double" },
@@ -291,7 +291,7 @@ export const roomsDataset: Record<string, RoomDetail> = {
     name: "Family Room",
     eyebrow: "ACCOMMODATION",
     shortDescription:
-      "This large air-conditioned room features a TV, microwave, refrigerator and tea and coffee making facilities.",
+      "Spacious air-conditioned family suite featuring 1 Double bed and 2 Single beds, TV, microwave, mini refrigerator, and tea/coffee facilities.",
     price: 210,
     currency: "$",
     priceUnit: "/ night",
@@ -306,11 +306,11 @@ export const roomsDataset: Record<string, RoomDetail> = {
       "Spacious Family Room at Cumberland Motor Inn featuring 2 single beds and 1 double bed, air conditioning, TV, microwave, and fridge.",
     intro: {
       eyebrow: "SPACIOUS FAMILY ACCOMMODATION",
-      heading: "Plenty of room for the family.",
+      heading: "Generous family room layout with flexible bedding.",
       paragraph1:
-        "Bedding consists of 2 single beds and 1 double bed. This large air-conditioned room features a TV, microwave, refrigerator and tea and coffee making facilities.",
+        "Our Family Room sleeps up to 4 guests with 1 double bed and 2 single beds. Includes climate control air conditioning, TV, microwave, mini refrigerator, and tea and coffee making facilities.",
       paragraph2:
-        "Perfect for families exploring the Hunter Valley, visiting local events, or enjoying a weekend retreat.",
+        "Offers ample room for families or group visits seeking practical, value-focused accommodation in Cessnock within easy reach of regional attractions.",
       featureTiles: [
         { id: "ft-1", icon: "person", label: "4 Guests" },
         { id: "ft-2", icon: "bed", label: "2 Singles & 1 Double" },
@@ -348,7 +348,7 @@ export const roomsDataset: Record<string, RoomDetail> = {
     name: "Business Single Room",
     eyebrow: "ACCOMMODATION",
     shortDescription:
-      "This single room features a toaster, microwave and seating area.",
+      "Quiet single room featuring 1 Double bed, toaster, microwave, mini refrigerator, seating area, TV, and air conditioning.",
     price: 145,
     currency: "$",
     priceUnit: "/ night",
@@ -362,12 +362,12 @@ export const roomsDataset: Record<string, RoomDetail> = {
     seoDescription:
       "Comfortable Business Single Room featuring a double bed, toaster, microwave, and seating area for corporate or solo travelers in Cessnock.",
     intro: {
-      eyebrow: "SOLO & BUSINESS TRAVEL",
-      heading: "Practical comfort for work or solo stays.",
+      eyebrow: "SOLO & CORPORATE TRAVEL",
+      heading: "Practical comfort for work stays and solo visits.",
       paragraph1:
-        "Bedding consists of 1 double bed. This single room features a toaster, microwave and seating area.",
+        "Designed for corporate guests and solo travellers, this room features 1 double bed, a dedicated seating area, toaster, microwave, mini refrigerator, TV, and air conditioning.",
       paragraph2:
-        "Designed for business travelers and solo visitors seeking a convenient, quiet stay in Cessnock.",
+        "Provides a quiet, functional room in Cessnock with complimentary Wi-Fi and convenient on-site parking.",
       featureTiles: [
         { id: "ft-1", icon: "person", label: "1 Guest" },
         { id: "ft-2", icon: "bed", label: "1 Double Bed" },
