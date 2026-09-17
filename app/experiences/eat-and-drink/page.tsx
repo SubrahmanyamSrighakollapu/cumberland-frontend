@@ -12,6 +12,18 @@ export const metadata = buildRouteMetadata({
   title: "Places to Eat in Cessnock | Cumberland Motor Inn",
   description:
     "Find inspiration for eating out in Cessnock and the Hunter Valley. Explore local cafes, restaurants and dining options during your Cumberland Motor Inn stay.",
+  keywords: [
+    "places to eat in Cessnock",
+    "Cessnock dining",
+    "restaurants in Cessnock",
+    "cafés in Cessnock",
+    "Hunter Valley dining",
+    "food and drink near Cumberland Motor Inn",
+    "dining during a Cessnock stay",
+    "local food experiences in the Hunter Valley",
+    "Cessnock pub dining",
+    "cafes near Cessnock motel",
+  ],
   canonical: "https://www.cumberlandmotorinn.com.au/experiences/eat-and-drink",
   socialImage: {
     url: "/images/eat-drink.png",

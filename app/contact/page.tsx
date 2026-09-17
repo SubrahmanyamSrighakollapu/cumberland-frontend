@@ -13,6 +13,17 @@ export const metadata = buildRouteMetadata({
   title: "Contact & Location | Cumberland Motor Inn Cessnock",
   description:
     "Find Cumberland Motor Inn at 57–61 Cumberland Street, Cessnock NSW 2325. Call (02) 4990 6633 for accommodation enquiries and directions.",
+  keywords: [
+    "contact Cumberland Motor Inn",
+    "Cumberland Motor Inn phone number",
+    "Cumberland Motor Inn address",
+    "Cumberland Motor Inn email",
+    "Cumberland Motor Inn Cessnock location",
+    "directions to Cumberland Motor Inn",
+    "Cessnock motel enquiries",
+    "Cumberland Motor Inn booking enquiries",
+    "accommodation enquiries Cessnock",
+  ],
   canonical: "https://www.cumberlandmotorinn.com.au/contact",
   socialImage: {
     url: "/images/cumberland-reception-brick-archway.jpg",

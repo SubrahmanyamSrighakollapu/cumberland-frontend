@@ -9,6 +9,12 @@ export const metadata = buildRouteMetadata({
   title: "Privacy Policy | Cumberland Motor Inn",
   description:
     "Read Cumberland Motor Inn's privacy policy for information about how personal information is collected, used and handled through this website.",
+  keywords: [
+    "Cumberland Motor Inn privacy policy",
+    "Cumberland Motor Inn personal information",
+    "Cumberland Motor Inn website privacy",
+    "Cumberland Motor Inn website cookies",
+  ],
   canonical: "https://www.cumberlandmotorinn.com.au/privacy-policy",
 });
 

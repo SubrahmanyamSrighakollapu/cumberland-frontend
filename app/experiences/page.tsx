@@ -12,6 +12,17 @@ export const metadata = buildRouteMetadata({
   title: "Cessnock & Hunter Valley Experiences | Cumberland Motor Inn",
   description:
     "Plan your stay with things to do around Cessnock and the Hunter Valley. Explore wineries, local dining and attractions from Cumberland Motor Inn.",
+  keywords: [
+    "Cessnock experiences",
+    "Hunter Valley experiences",
+    "things to do near Cumberland Motor Inn",
+    "exploring Cessnock",
+    "Hunter Valley travel ideas",
+    "Cessnock attractions",
+    "Hunter Valley weekend activities",
+    "wineries and dining near Cessnock",
+    "planning a Hunter Valley stay",
+  ],
   canonical: "https://www.cumberlandmotorinn.com.au/experiences",
   socialImage: {
     url: "/images/wine-country.png",

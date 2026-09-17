@@ -12,6 +12,19 @@ export const metadata = buildRouteMetadata({
   title: "Explore Hunter Valley Wine Country | Cumberland Motor Inn",
   description:
     "Discover Hunter Valley wine country during your Cessnock stay. Explore cellar doors and plan winery visits from your base at Cumberland Motor Inn.",
+  keywords: [
+    "Hunter Valley wine country",
+    "Hunter Valley wineries",
+    "cellar doors near Cessnock",
+    "Hunter Valley cellar doors",
+    "wine tasting near Cessnock",
+    "Cessnock winery visits",
+    "accommodation for a Hunter Valley wine trip",
+    "motel accommodation near Hunter Valley wineries",
+    "planning a Hunter Valley winery visit",
+    "Pokolbin wineries near Cessnock",
+    "Lovedale cellar doors",
+  ],
   canonical: "https://www.cumberlandmotorinn.com.au/experiences/wine-country",
   socialImage: {
     url: "/images/wine-country.png",

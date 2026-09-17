@@ -12,6 +12,19 @@ export const metadata = buildRouteMetadata({
   title: "Things to Do in Cessnock | Cumberland Motor Inn",
   description:
     "Explore things to do in Cessnock and the Hunter Valley, from local attractions to outdoor activities, while staying at Cumberland Motor Inn.",
+  keywords: [
+    "things to do in Cessnock",
+    "Cessnock attractions",
+    "Hunter Valley activities",
+    "places to visit near Cessnock",
+    "family activities in the Hunter Valley",
+    "outdoor activities near Cessnock",
+    "Cessnock sightseeing",
+    "Hunter Valley day trips",
+    "activities near Cumberland Motor Inn",
+    "Hunter Valley Gardens Cessnock",
+    "Werakata National Park Cessnock",
+  ],
   canonical: "https://www.cumberlandmotorinn.com.au/experiences/things-to-do",
   socialImage: {
     url: "/images/thinks-to-do.png",

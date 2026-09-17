@@ -10,6 +10,14 @@ export const metadata = buildRouteMetadata({
   title: "Terms & Conditions | Cumberland Motor Inn",
   description:
     "Read the terms and conditions for stays at Cumberland Motor Inn in Cessnock, including booking, payment, check-in and guest policy information.",
+  keywords: [
+    "Cumberland Motor Inn terms and conditions",
+    "Cumberland Motor Inn booking terms",
+    "Cumberland Motor Inn payment policy",
+    "Cumberland Motor Inn check-in policy",
+    "Cumberland Motor Inn cancellation policy",
+    "Cumberland Motor Inn child policy",
+  ],
   canonical: "https://www.cumberlandmotorinn.com.au/terms-and-conditions",
 });
 

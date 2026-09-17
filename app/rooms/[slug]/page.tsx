@@ -1,12 +1,24 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { buildRouteMetadata } from "@/utils/seo";
-import { getPublishedRoomBySlugServer } from "@/utils/publicDataLoader";
+import { buildRouteMetadata, generateRoomKeywords } from "@/utils/seo";
+import { getPublishedRoomBySlugServer, BackendUnavailableError } from "@/utils/publicDataLoader";
+import { fallbackRoomBySlug, RoomDetail } from "@/utils/roomDataClient";
 import RoomDetailClient from "@/components/rooms/RoomDetailClient";
 import { BreadcrumbJsonLd, RoomAccommodationJsonLd } from "@/components/seo/JsonLd";
 
 interface RoomPageProps {
   params: Promise<{ slug: string }>;
+}
+
+async function getRoomForSlug(slug: string): Promise<RoomDetail | null> {
+  try {
+    return await getPublishedRoomBySlugServer(slug);
+  } catch (err: unknown) {
+    if (err instanceof BackendUnavailableError) {
+      return fallbackRoomBySlug(slug) || null;
+    }
+    throw err;
+  }
 }
 
 export async function generateMetadata({
@@ -16,7 +28,7 @@ export async function generateMetadata({
   const slug = resolvedParams?.slug;
   if (!slug) return {};
 
-  const room = await getPublishedRoomBySlugServer(slug);
+  const room = await getRoomForSlug(slug);
   if (!room) {
     return {
       title: "Room Not Found | Cumberland Motor Inn",
@@ -48,9 +60,12 @@ export async function generateMetadata({
           alt: "Cumberland Motor Inn property exterior in Cessnock",
         };
 
+  const keywords = generateRoomKeywords(room);
+
   return buildRouteMetadata({
     title,
     description,
+    keywords,
     canonical: `https://www.cumberlandmotorinn.com.au/rooms/${slug}`,
     socialImage,
   });
@@ -61,7 +76,7 @@ export default async function RoomDetailPage({ params }: RoomPageProps) {
   const slug = resolvedParams?.slug;
   if (!slug) notFound();
 
-  const room = await getPublishedRoomBySlugServer(slug);
+  const room = await getRoomForSlug(slug);
   if (!room) notFound();
 
   return (
