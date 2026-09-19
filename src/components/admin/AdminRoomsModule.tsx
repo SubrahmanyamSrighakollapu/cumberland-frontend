@@ -29,6 +29,11 @@ interface RoomRow {
   updatedAt: string;
 }
 
+export interface RoomGalleryItem {
+  src: string;
+  alt: string;
+}
+
 interface RoomFormData {
   id?: string;
   name: string;
@@ -53,7 +58,7 @@ interface RoomFormData {
   introParagraph2: string;
   highlightsText: string;
   primaryImage: string;
-  galleryText: string;
+  gallery: RoomGalleryItem[];
   relatedSlugsText: string;
   is_featured: boolean;
   sort_order: number | string;
@@ -83,7 +88,7 @@ const EMPTY_FORM: RoomFormData = {
   introParagraph2: "",
   highlightsText: "",
   primaryImage: "",
-  galleryText: "",
+  gallery: [],
   relatedSlugsText: "",
   is_featured: false,
   sort_order: 0,
@@ -192,6 +197,83 @@ export default function AdminRoomsModule() {
     },
     []
   );
+
+  const galleryFileInputRef = useRef<HTMLInputElement | null>(null);
+  const [galleryUploading, setGalleryUploading] = useState<boolean>(false);
+
+  const handleGalleryUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+
+    const validFiles: File[] = [];
+    for (let i = 0; i < files.length; i++) {
+      const f = files[i];
+      if (f.size > 5 * 1024 * 1024) {
+        showToast("error", `File "${f.name}" exceeds 5 MB limit.`);
+        return;
+      }
+      validFiles.push(f);
+    }
+
+    try {
+      setGalleryUploading(true);
+      const fd = new FormData();
+      validFiles.forEach((file) => fd.append("images", file));
+
+      const res = await apiFetch("/rooms/upload-gallery", {
+        method: "POST",
+        auth: true,
+        body: fd,
+      });
+
+      const items: RoomGalleryItem[] = res?.data?.items || [];
+      if (items.length > 0) {
+        setEditing((prev) => ({
+          ...prev,
+          gallery: [...prev.gallery, ...items],
+        }));
+        showToast("success", `${items.length} photo(s) added to gallery`);
+      } else {
+        showToast("error", "No images were uploaded");
+      }
+    } catch (err: any) {
+      showToast("error", err?.message || "Failed to upload gallery images");
+    } finally {
+      setGalleryUploading(false);
+      if (galleryFileInputRef.current) {
+        galleryFileInputRef.current.value = "";
+      }
+    }
+  };
+
+  const handleGalleryAltChange = (index: number, newAlt: string) => {
+    setEditing((prev) => {
+      const updated = [...prev.gallery];
+      if (updated[index]) {
+        updated[index] = { ...updated[index], alt: newAlt };
+      }
+      return { ...prev, gallery: updated };
+    });
+  };
+
+  const handleMoveGalleryItem = (index: number, direction: -1 | 1) => {
+    setEditing((prev) => {
+      const targetIndex = index + direction;
+      if (targetIndex < 0 || targetIndex >= prev.gallery.length) return prev;
+      const updated = [...prev.gallery];
+      const temp = updated[index];
+      updated[index] = updated[targetIndex];
+      updated[targetIndex] = temp;
+      return { ...prev, gallery: updated };
+    });
+  };
+
+  const handleRemoveGalleryItem = (index: number) => {
+    setEditing((prev) => ({
+      ...prev,
+      gallery: prev.gallery.filter((_, i) => i !== index),
+    }));
+  };
 
   const load = useCallback(async () => {
     try {
@@ -317,7 +399,14 @@ export default function AdminRoomsModule() {
               ? item.highlights.join("\n")
               : "",
           primaryImage: strVal(item.primaryImage || item.primary_image),
-          galleryText: makeGalleryText(item.gallery || []),
+          gallery: Array.isArray(item.gallery)
+            ? item.gallery
+                .map((g: any, i: number) => ({
+                  src: typeof g === "string" ? g : (g?.src || g?.image || ""),
+                  alt: typeof g === "string" ? "" : (g?.alt || `Room photo ${i + 1}`),
+                }))
+                .filter((g: RoomGalleryItem) => Boolean(g.src))
+            : [],
           relatedSlugsText:
             Array.isArray(item.relatedRoomIds) && item.relatedRoomIds.length
               ? item.relatedRoomIds.join(", ")
@@ -374,7 +463,7 @@ export default function AdminRoomsModule() {
       try {
         setSubmitting(true);
         const highlights = splitLines(editing.highlightsText);
-        const gallery = parseGalleryText(editing.galleryText);
+        const gallery = editing.gallery;
         const relatedSlugs = splitLines(editing.relatedSlugsText);
         const payload = {
           name: editing.name.trim(),
@@ -653,9 +742,8 @@ export default function AdminRoomsModule() {
   };
 
   const currentPreviewImg = editing.primaryImage.trim();
-  const galleryPreviewImgs = parseGalleryText(editing.galleryText).slice(0, 6);
   const highlightCount = splitLines(editing.highlightsText).length;
-  const galleryCount = parseGalleryText(editing.galleryText).length;
+  const galleryCount = editing.gallery.length;
   const relatedCount = splitLines(editing.relatedSlugsText).length;
 
   return (
@@ -1044,32 +1132,175 @@ export default function AdminRoomsModule() {
                       <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-stone-800">
                         Photo gallery
                       </h3>
-                      <span className="text-xs text-stone-500">{galleryCount} images</span>
+                      <span className="text-xs text-stone-500">{editing.gallery.length} images</span>
                     </div>
-                    <label className="block">
-                      <span className="text-sm text-stone-500 mb-1.5 block">
-                        One image per line. Optional alt text separated by <code className="text-[11px] bg-stone-100 px-1 rounded">|</code>.
-                      </span>
-                      <textarea
-                        rows={5}
-                        value={editing.galleryText}
-                        onChange={(e) =>
-                          setEditing({ ...editing, galleryText: e.target.value })
-                        }
-                        placeholder={"/images/room-one.png|Spacious king interior\n/images/room-two.png|Private balcony view"}
-                        className="w-full px-3.5 py-2.5 rounded-lg border border-stone-300 focus:border-[#17352D] focus:ring-1 focus:ring-[#17352D] outline-none text-sm resize-none font-mono text-[13px]"
-                      />
-                    </label>
-                    {galleryPreviewImgs.length > 0 && (
-                      <div className="grid grid-cols-3 gap-1.5">
-                        {galleryPreviewImgs.map((g, i) => (
-                          <div key={i} className="aspect-square rounded-md overflow-hidden border border-stone-200 bg-stone-100">
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img
-                              src={normalizeAssetUrl(g.src)}
-                              alt={g.alt}
-                              className="w-full h-full object-cover"
-                            />
+
+                    {/* Hidden file input for uploading from file manager */}
+                    <input
+                      ref={galleryFileInputRef}
+                      type="file"
+                      multiple
+                      accept="image/jpeg,image/png,image/webp,image/gif,.jpg,.jpeg,.png,.webp,.gif"
+                      onChange={handleGalleryUpload}
+                      className="hidden"
+                    />
+
+                    {/* Upload from file manager trigger button */}
+                    <div>
+                      <button
+                        type="button"
+                        onClick={() => galleryFileInputRef.current?.click()}
+                        disabled={galleryUploading}
+                        className="w-full py-3.5 px-4 rounded-xl border-2 border-dashed border-[#80563E]/40 hover:border-[#80563E] bg-[#80563E]/5 hover:bg-[#80563E]/10 text-[#0F302A] font-medium text-sm transition-all flex flex-col sm:flex-row items-center justify-center gap-2.5 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed group shadow-xs"
+                      >
+                        {galleryUploading ? (
+                          <>
+                            <svg
+                              className="animate-spin w-5 h-5 text-[#80563E]"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                            >
+                              <circle
+                                className="opacity-25"
+                                cx="12"
+                                cy="12"
+                                r="10"
+                                stroke="currentColor"
+                                strokeWidth="4"
+                              />
+                              <path
+                                className="opacity-75"
+                                fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                              />
+                            </svg>
+                            <span className="font-semibold text-stone-700">Uploading gallery images...</span>
+                          </>
+                        ) : (
+                          <>
+                            <div className="w-8 h-8 rounded-full bg-[#80563E]/10 group-hover:bg-[#80563E]/20 flex items-center justify-center transition-colors">
+                              <svg
+                                className="w-4 h-4 text-[#80563E]"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                strokeWidth={2}
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M12 16.5V9m0 0l-3 3m3-3l3 3M20.25 18.75V7.5A2.25 2.25 0 0018 5.25h-3.879a2.25 2.25 0 01-1.591-.659l-.954-.954A2.25 2.25 0 009.937 3H6A2.25 2.25 0 003.75 5.25v13.5A2.25 2.25 0 006 21h12a2.25 2.25 0 002.25-2.25z"
+                                />
+                              </svg>
+                            </div>
+                            <div className="text-center sm:text-left">
+                              <span className="font-semibold text-stone-800 block text-xs sm:text-sm">
+                                Choose Gallery Images from File Manager
+                              </span>
+                              <span className="text-[11px] text-stone-500 font-normal block">
+                                Select one or multiple images (JPG, PNG, WebP, GIF ≤ 5 MB)
+                              </span>
+                            </div>
+                          </>
+                        )}
+                      </button>
+                    </div>
+
+                    {/* Uploaded gallery images list */}
+                    {editing.gallery.length === 0 ? (
+                      <div className="p-6 rounded-xl border border-dashed border-stone-200 bg-stone-50 text-center">
+                        <svg
+                          className="w-8 h-8 mx-auto text-stone-300 mb-2"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={1.5}
+                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14M4 6h16a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2z"
+                          />
+                        </svg>
+                        <p className="text-xs text-stone-500 font-medium">
+                          No additional gallery photos uploaded yet
+                        </p>
+                        <p className="text-[11px] text-stone-400 mt-0.5">
+                          Upload photos above to display them in the room&apos;s photo gallery and detail view.
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="space-y-2.5 max-h-[380px] overflow-y-auto pr-1">
+                        {editing.gallery.map((img, idx) => (
+                          <div
+                            key={idx}
+                            className="flex items-center gap-3 p-2.5 rounded-xl border border-stone-200 bg-stone-50/70 hover:bg-stone-50 transition-colors group"
+                          >
+                            <div className="w-16 h-12 rounded-lg overflow-hidden shrink-0 bg-stone-200 border border-stone-300 relative">
+                              {/* eslint-disable-next-line @next/next/no-img-element */}
+                              <img
+                                src={normalizeAssetUrl(img.src)}
+                                alt={img.alt || `Room photo ${idx + 1}`}
+                                className="w-full h-full object-cover"
+                              />
+                              <span className="absolute bottom-0.5 left-0.5 bg-black/70 text-white text-[9px] px-1 rounded font-mono">
+                                #{idx + 1}
+                              </span>
+                            </div>
+
+                            <div className="flex-1 min-w-0">
+                              <input
+                                type="text"
+                                value={img.alt}
+                                onChange={(e) => handleGalleryAltChange(idx, e.target.value)}
+                                placeholder="Alt description / caption (optional)"
+                                className="w-full px-2.5 py-1 text-xs rounded-md border border-stone-300 focus:border-[#17352D] focus:ring-1 focus:ring-[#17352D] bg-white outline-none"
+                              />
+                              <p className="text-[10px] text-stone-400 font-mono truncate mt-0.5" title={img.src}>
+                                {img.src}
+                              </p>
+                            </div>
+
+                            <div className="flex items-center gap-1 shrink-0">
+                              <button
+                                type="button"
+                                disabled={idx === 0}
+                                onClick={() => handleMoveGalleryItem(idx, -1)}
+                                title="Move up"
+                                className="p-1.5 rounded-lg hover:bg-stone-200 text-stone-500 disabled:opacity-25 disabled:hover:bg-transparent cursor-pointer"
+                              >
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+                                </svg>
+                              </button>
+                              <button
+                                type="button"
+                                disabled={idx === editing.gallery.length - 1}
+                                onClick={() => handleMoveGalleryItem(idx, 1)}
+                                title="Move down"
+                                className="p-1.5 rounded-lg hover:bg-stone-200 text-stone-500 disabled:opacity-25 disabled:hover:bg-transparent cursor-pointer"
+                              >
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                </svg>
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => handleRemoveGalleryItem(idx)}
+                                title="Remove photo"
+                                className="p-1.5 rounded-lg hover:bg-rose-100 text-rose-500 transition-colors cursor-pointer"
+                              >
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                  />
+                                </svg>
+                              </button>
+                            </div>
                           </div>
                         ))}
                       </div>

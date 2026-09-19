@@ -63,10 +63,10 @@ export default function WelcomeSection() {
 
             {/* Trust Indicators Row */}
             <Reveal direction="up" delay={420} duration={650}>
-              <div className="pt-6 border-t border-[#d9d0c4] grid grid-cols-1 sm:grid-cols-3 gap-3 text-left items-center">
+              <div className="pt-6 border-t border-[#d9d0c4] grid grid-cols-1 sm:grid-cols-3 gap-4 text-left items-start">
                 {/* Free Parking */}
-                <div className="flex items-center gap-3 sm:border-r border-[#d9d0c4] sm:pr-3">
-                  <div className="w-9 h-9 rounded-full bg-[#e9efe8] text-[#20382f] flex items-center justify-center shrink-0">
+                <div className="flex items-start gap-3 sm:border-r border-[#d9d0c4] sm:pr-3">
+                  <div className="w-9 h-9 rounded-full bg-[#e9efe8] text-[#20382f] flex items-center justify-center shrink-0 mt-0.5">
                     <svg
                       className="w-4 h-4 text-[#20382f]"
                       fill="none"
@@ -82,19 +82,19 @@ export default function WelcomeSection() {
                       />
                     </svg>
                   </div>
-                  <div className="min-w-0">
-                    <div className="text-sm sm:text-base font-bold text-[#20382f] leading-snug whitespace-nowrap">
+                  <div className="min-w-0 flex-1">
+                    <div className="text-xs sm:text-[13px] font-bold text-[#20382f] leading-snug break-words">
                       {welcomeData.trustIndicators[0].primary}
                     </div>
-                    <div className="text-xs text-[#50544e] leading-snug whitespace-nowrap">
+                    <div className="text-[11px] sm:text-xs text-[#50544e] leading-snug break-words mt-0.5">
                       {welcomeData.trustIndicators[0].secondary}
                     </div>
                   </div>
                 </div>
 
                 {/* Cessnock Location */}
-                <div className="flex items-center gap-3 sm:border-r border-[#d9d0c4] sm:pr-3">
-                  <div className="w-9 h-9 rounded-full bg-[#e9efe8] text-[#20382f] flex items-center justify-center shrink-0">
+                <div className="flex items-start gap-3 sm:border-r border-[#d9d0c4] sm:pr-3">
+                  <div className="w-9 h-9 rounded-full bg-[#e9efe8] text-[#20382f] flex items-center justify-center shrink-0 mt-0.5">
                     <svg
                       className="w-4 h-4 text-[#20382f]"
                       fill="none"
@@ -115,19 +115,19 @@ export default function WelcomeSection() {
                       />
                     </svg>
                   </div>
-                  <div className="min-w-0">
-                    <div className="text-sm sm:text-base font-bold text-[#20382f] leading-snug whitespace-nowrap">
+                  <div className="min-w-0 flex-1">
+                    <div className="text-xs sm:text-[13px] font-bold text-[#20382f] leading-snug break-words">
                       {welcomeData.trustIndicators[1].primary}
                     </div>
-                    <div className="text-xs text-[#50544e] leading-snug whitespace-nowrap">
+                    <div className="text-[11px] sm:text-xs text-[#50544e] leading-snug break-words mt-0.5">
                       {welcomeData.trustIndicators[1].secondary}
                     </div>
                   </div>
                 </div>
 
                 {/* 28 Rooms */}
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-[#e9efe8] text-[#20382f] flex items-center justify-center shrink-0">
+                <div className="flex items-start gap-3">
+                  <div className="w-9 h-9 rounded-full bg-[#e9efe8] text-[#20382f] flex items-center justify-center shrink-0 mt-0.5">
                     <svg
                       className="w-4 h-4 text-[#20382f]"
                       fill="none"
@@ -143,11 +143,11 @@ export default function WelcomeSection() {
                       />
                     </svg>
                   </div>
-                  <div className="min-w-0">
-                    <div className="text-sm sm:text-base font-bold text-[#20382f] leading-snug whitespace-nowrap">
+                  <div className="min-w-0 flex-1">
+                    <div className="text-xs sm:text-[13px] font-bold text-[#20382f] leading-snug break-words">
                       {welcomeData.trustIndicators[2].primary}
                     </div>
-                    <div className="text-xs text-[#50544e] leading-snug whitespace-nowrap">
+                    <div className="text-[11px] sm:text-xs text-[#50544e] leading-snug break-words mt-0.5">
                       {welcomeData.trustIndicators[2].secondary}
                     </div>
                   </div>

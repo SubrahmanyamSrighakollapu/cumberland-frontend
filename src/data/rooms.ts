@@ -50,6 +50,7 @@ export interface RoomDetail {
     paragraph2: string;
     featureTiles: RoomFeatureTile[];
   };
+  primaryImage?: string;
   gallery: RoomGalleryImage[];
   amenities: RoomAmenityItem[];
   highlights: string[];

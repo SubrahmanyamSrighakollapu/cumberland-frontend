@@ -1,3 +1,19 @@
+export interface MoodCard {
+  id: string;
+  timeBadge: string;
+  title: string;
+  description: string;
+  image: string;
+  imageAlt: string;
+}
+
+export interface MoodCategory {
+  id: string;
+  key: "wine" | "golf" | "family" | "events" | "nature" | "eat-drink";
+  label: string;
+  cards: MoodCard[];
+}
+
 export interface ActivityCategory {
   id: string;
   title: string;
@@ -36,7 +52,7 @@ export interface Activity {
 
 export interface ActivityItineraryStep {
   id: string;
-  stage: string;
+  stage?: string;
   time: string;
   title: string;
   description: string;
@@ -45,8 +61,9 @@ export interface ActivityItineraryStep {
 }
 
 export interface ActivityItineraryVariant {
-  key: "relaxed" | "adventure";
+  key: "wine" | "golf" | "family";
   label: string;
+  subtitle?: string;
   introText: string;
   steps: ActivityItineraryStep[];
 }
@@ -71,52 +88,209 @@ export const thingsToDoHeroData = {
     "From Cessnock Golf Course and state forests to the Performing Arts Centre and Hunter Valley Gardens, discover local experiences right on your doorstep.",
   primaryCta: {
     label: "EXPLORE ACTIVITIES →",
-    href: "#activities",
+    href: "#browse-by-mood",
   },
   secondaryCta: {
-    label: "PLAN YOUR STAY",
+    label: "PLAN YOUR DAY",
     href: "#day-planner",
   },
   heroImage: "/images/cumberland-grounds-skyline-view.jpg",
   heroImageAlt: "Scenic Hunter Valley countryside and Cumberland grounds skyline view",
 };
 
-export const activityCategories: ActivityCategory[] = [
+export const browseByMoodData = {
+  eyebrow: "Browse by mood",
+  heading: "However you like to spend a day.",
+  description:
+    "Ten places we send guests to, every one inside half an hour. Wine days run through Saddlers Creek and the Pokolbin cellar doors; golf weekends through Hunter Valley Golf Club, The Vintage and Cypress Lakes. With kids it’s the Wildlife Park and Hunter Valley Gardens. Concert nights are at Roche Estate, quiet mornings in the Watagans, and dinner is a five-minute walk into Cessnock town centre. Still deciding which town to base yourself in? We’ve mapped every nearby town and how far it really is.",
+};
+
+export const moodCategories: MoodCategory[] = [
   {
-    id: "cat-courtyard",
-    title: "Courtyard & Relaxation",
-    icon: "leaf",
-    description: "Relaxed balcony views, inner courtyard accommodation, and peaceful country surroundings.",
-    filterKey: "Nature",
-    image: "/images/cumberland-balcony-courtyard-view.jpg",
-    imageAlt: "Cumberland Motor Inn balcony overlooking inner courtyard",
+    id: "mood-wine",
+    key: "wine",
+    label: "Wine",
+    cards: [
+      {
+        id: "wine-1",
+        timeBadge: "10 min drive",
+        title: "Saddlers Creek Wines",
+        description: "Boutique cellar door, small-batch reds — a lovely first stop.",
+        image: "/images/ttd-wine-image-one.jpg",
+        imageAlt: "Saddlers Creek Wines boutique cellar door",
+      },
+      {
+        id: "wine-2",
+        timeBadge: "10 min drive",
+        title: "Pokolbin Cellar Doors",
+        description: "The famous strip — dozens of cellar doors open daily.",
+        image: "/images/ttd-wine-image-two.jpg",
+        imageAlt: "Pokolbin Cellar Doors famous wine country strip",
+      },
+      {
+        id: "wine-3",
+        timeBadge: "13 min drive",
+        title: "Roche Estate",
+        description: "A Day on the Green concerts under the vines.",
+        image: "/images/ttd-wine-image-three.webp",
+        imageAlt: "Roche Estate concerts and dining under the vines",
+      },
+    ],
   },
   {
-    id: "cat-gardens",
-    title: "Landscaped Gardens",
-    icon: "leaf",
-    description: "Manicured lawn grounds, wishing well feature, and shaded outdoor garden seating.",
-    filterKey: "Nature",
-    image: "/images/cumberland-courtyard-wishing-well.jpg",
-    imageAlt: "Landscaped garden flowerbed and wishing well at Cumberland Motor Inn",
+    id: "mood-golf",
+    key: "golf",
+    label: "Golf",
+    cards: [
+      {
+        id: "golf-1",
+        timeBadge: "15 min drive",
+        title: "Hunter Valley Golf Club",
+        description: "A scenic 18-hole championship course on Wine Country Drive.",
+        image: "/images/ttd-golf-image-one.jpg",
+        imageAlt: "Hunter Valley Golf Club championship course fairway",
+      },
+      {
+        id: "golf-2",
+        timeBadge: "20 min drive",
+        title: "The Vintage Golf Club",
+        description: "The Hunter's only Greg Norman–designed public-access course.",
+        image: "/images/ttd-golf-image-two.jpg",
+        imageAlt: "The Vintage Golf Club Greg Norman designed golf course",
+      },
+      {
+        id: "golf-3",
+        timeBadge: "15 min drive",
+        title: "Cypress Lakes Golf",
+        description: "Championship resort course in the heart of wine country.",
+        image: "/images/ttd-golf-image-three.jpg",
+        imageAlt: "Cypress Lakes Golf championship resort course",
+      },
+    ],
   },
   {
-    id: "cat-pool",
-    title: "Outdoor Swimming Pool",
-    icon: "waves",
-    description: "Crystal clear saltwater pool and sun lounge deck to cool off after exploring.",
-    filterKey: "Family",
-    image: "/images/cumberland-reception-pool-view.jpg",
-    imageAlt: "Outdoor saltwater swimming pool with clear water at Cumberland Motor Inn",
+    id: "mood-family",
+    key: "family",
+    label: "Family",
+    cards: [
+      {
+        id: "family-1",
+        timeBadge: "9 min drive",
+        title: "Hunter Valley Wildlife Park",
+        description: "Hand-feed kangaroos before lunch — kids' favourite.",
+        image: "/images/ttd-family-image-one.jpg",
+        imageAlt: "Native animals and kangaroos at Hunter Valley Wildlife Park",
+      },
+      {
+        id: "family-2",
+        timeBadge: "15 min drive",
+        title: "Hunter Valley Gardens",
+        description: "Sixty acres of display gardens — and the Christmas Lights Spectacular.",
+        image: "/images/ttd-family-image-two.jpg",
+        imageAlt: "Hunter Valley Gardens display gardens and rides",
+      },
+      {
+        id: "family-3",
+        timeBadge: "5 min walk",
+        title: "Cessnock Town Centre",
+        description: "Dinner, pubs and BIG W — all walkable from your room.",
+        image: "/images/ttd-family-image-three.jpg",
+        imageAlt: "Cessnock Town Centre dining, shopping and amenities",
+      },
+    ],
   },
   {
-    id: "cat-bbq",
-    title: "Covered BBQ Lounge",
-    icon: "family",
-    description: "Outdoor dining and self-catering BBQ pavilion set under classic brick arches.",
-    filterKey: "Culture",
-    image: "/images/cumberland-outdoor-bbq-area.jpg",
-    imageAlt: "Covered outdoor brick arch BBQ lounge and dining area",
+    id: "mood-events",
+    key: "events",
+    label: "Events",
+    cards: [
+      {
+        id: "events-1",
+        timeBadge: "13 min drive",
+        title: "Roche Estate",
+        description: "A Day on the Green concerts under the vines.",
+        image: "/images/ttd-events-image-one.webp",
+        imageAlt: "Live music and events at Roche Estate",
+      },
+      {
+        id: "events-2",
+        timeBadge: "15 min drive",
+        title: "Hunter Valley Gardens",
+        description: "Sixty acres of display gardens — and the Christmas Lights Spectacular.",
+        image: "/images/ttd-events-image-two.jpg",
+        imageAlt: "Seasonal festival and light events at Hunter Valley Gardens",
+      },
+      {
+        id: "events-3",
+        timeBadge: "10 min drive",
+        title: "Pokolbin Cellar Doors",
+        description: "The famous strip — dozens of cellar doors open daily.",
+        image: "/images/ttd-events-image-three.jpg",
+        imageAlt: "Weekend events and cellar door tastings in Pokolbin",
+      },
+    ],
+  },
+  {
+    id: "mood-nature",
+    key: "nature",
+    label: "Nature",
+    cards: [
+      {
+        id: "nature-1",
+        timeBadge: "25 min drive",
+        title: "Watagans National Park",
+        description: "Rainforest lookouts and quiet picnic clearings.",
+        image: "/images/ttd-nature-image-one.jpg",
+        imageAlt: "Scenic rainforest lookout in Watagans National Park",
+      },
+      {
+        id: "nature-2",
+        timeBadge: "15 min drive",
+        title: "Hunter Valley Gardens",
+        description: "Sixty acres of display gardens — and the Christmas Lights Spectacular.",
+        image: "/images/ttd-nature-image-two.jpg",
+        imageAlt: "Manicured botanic landscapes at Hunter Valley Gardens",
+      },
+      {
+        id: "nature-3",
+        timeBadge: "10 min drive",
+        title: "Saddlers Creek Wines",
+        description: "Boutique cellar door, small-batch reds — a lovely first stop.",
+        image: "/images/ttd-nature-image-three.jpg",
+        imageAlt: "Peaceful vineyard views at Saddlers Creek Wines",
+      },
+    ],
+  },
+  {
+    id: "mood-eat-drink",
+    key: "eat-drink",
+    label: "Eat & Drink",
+    cards: [
+      {
+        id: "eat-1",
+        timeBadge: "5 min walk",
+        title: "Cessnock Town Centre",
+        description: "Dinner, pubs and BIG W — all walkable from your room.",
+        image: "/images/ttd-eatanddrink-image-one.jpg",
+        imageAlt: "Local cafes, restaurants and pubs in Cessnock Town Centre",
+      },
+      {
+        id: "eat-2",
+        timeBadge: "10 min drive",
+        title: "Pokolbin Cellar Doors",
+        description: "The famous strip — dozens of cellar doors open daily.",
+        image: "/images/ttd-eatanddrink-image-two.jpg",
+        imageAlt: "Gourmet dining and wine tastings along Pokolbin strip",
+      },
+      {
+        id: "eat-3",
+        timeBadge: "10 min drive",
+        title: "Saddlers Creek Wines",
+        description: "Boutique cellar door, small-batch reds — a lovely first stop.",
+        image: "/images/ttd-eatanddrink-image-three.jpg",
+        imageAlt: "Picnic grounds and artisan wines at Saddlers Creek",
+      },
+    ],
   },
 ];
 
@@ -124,256 +298,217 @@ export const activityBenefits: ActivityBenefit[] = [
   {
     id: "ben-1",
     icon: "car",
-    label: "Minutes from motel",
+    label: "Inside 30 Minutes Drive",
   },
   {
     id: "ben-2",
     icon: "people",
-    label: "All ages welcome",
+    label: "Ideal for Couples & Families",
   },
   {
     id: "ben-3",
     icon: "tag",
-    label: "Free & ticketed options",
+    label: "Direct Town Centre Access",
   },
   {
     id: "ben-4",
     icon: "leaf",
-    label: "Year-round experiences",
+    label: "Year-Round Hunter Valley Magic",
   },
 ];
 
-export const directoryFilterPills = [
-  "All",
-  "Golf",
-  "Nature",
-  "Family",
-  "Culture",
-];
-
-export const activityList: Activity[] = [
+export const wineDayItinerary: ActivityItineraryStep[] = [
   {
-    id: "act-1",
-    name: "Cessnock Golf Course",
-    image: "/images/cumberland-building-facade-lawn.jpg",
-    imageAlt: "Manicured green fairways at Cessnock Golf Course",
+    id: "wine-step-1",
+    time: "8:00am",
+    title: "Coffee by the pool",
     description:
-      "Enjoy a round of golf on picturesque greens just minutes from Cumberland Motor Inn.",
-    location: "Cessnock",
-    driveMinutes: 5,
-    distanceMeters: 2000,
-    duration: "2–4 hours",
-    audience: "Golfers of all levels",
-    priceLevel: 2,
-    priceDisplay: "$$",
-    seasonality: "Year-round",
-    categories: ["Golf"],
-    bookingRequired: false,
-    featured: true,
+      "Brew a coffee in your room, or grab breakfast in town, before the cellar doors open — no rush.",
+    image: "/images/ttd-wineday-image-one.webp",
+    imageAlt: "Morning coffee by the swimming pool at Cumberland Motor Inn",
   },
   {
-    id: "act-2",
-    name: "Cessnock Performing Arts Centre (CPAC)",
-    image: "/images/gallery-seven.png",
-    imageAlt: "Cessnock Performing Arts Centre facade",
+    id: "wine-step-2",
+    time: "9:30am",
+    title: "Saddlers Creek Wines",
     description:
-      "Conveniently located just a short walk away, featuring live theater, musical concerts, comedy shows and cultural events.",
-    location: "Cessnock Town Centre",
-    driveMinutes: 2,
-    distanceMeters: 400,
-    duration: "1.5–3 hours",
-    audience: "All ages",
-    priceLevel: 2,
-    priceDisplay: "$$",
-    seasonality: "Year-round",
-    categories: ["Culture"],
-    bookingRequired: true,
-    featured: true,
+      "10 min away. Start small-batch and local before the crowds arrive.",
+    image: "/images/ttd-wineday-image-two.jpg",
+    imageAlt: "Tasting room at Saddlers Creek Wines",
   },
   {
-    id: "act-3",
-    name: "Werakata National Park & State Forests",
-    image: "/images/gallery-nine.png",
-    imageAlt: "Native gum trees and bushwalk trails in Werakata National Park",
+    id: "wine-step-3",
+    time: "11:00am",
+    title: "Pokolbin strip",
     description:
-      "Explore peaceful eucalypt forests, scenic bushwalking trails, birdwatching, and spring wildflower displays.",
-    location: "Cessnock / Hunter Valley",
-    driveMinutes: 6,
-    distanceMeters: 3000,
-    duration: "1–3 hours",
-    audience: "All ages",
-    priceLevel: 0,
-    priceDisplay: "Free",
-    seasonality: "Year-round",
-    categories: ["Nature"],
-    bookingRequired: false,
+      "10 min. Three or four cellar doors along the famous stretch.",
+    image: "/images/ttd-wineday-image-three.jpg",
+    imageAlt: "Pokolbin cellar doors and vineyards",
   },
   {
-    id: "act-4",
-    name: "Hunter Valley Gardens",
-    image: "/images/gallery-four.png",
-    imageAlt: "Lush display gardens and manicured lawns at Hunter Valley Gardens",
+    id: "wine-step-4",
+    time: "1:00pm",
+    title: "Long lunch among the vines",
     description:
-      "Spanning 14 hectares with 10 international themed gardens, shopping village, and seasonal light displays.",
-    location: "Pokolbin",
-    driveMinutes: 12,
-    distanceMeters: 9000,
-    duration: "2–4 hours",
-    audience: "All ages & families",
-    priceLevel: 2,
-    priceDisplay: "$$",
-    seasonality: "Year-round",
-    categories: ["Family", "Nature"],
-    bookingRequired: false,
-    featured: true,
+      "Book ahead — we’ll make the call for you.",
+    image: "/images/ttd-wineday-image-four.jpg",
+    imageAlt: "Winery restaurant long lunch overlooking vineyard",
   },
   {
-    id: "act-5",
-    name: "Hunter Valley Wildlife Park",
-    image: "/images/gallery-three.png",
-    imageAlt: "Koala and native animals at Hunter Valley Wildlife Park",
+    id: "wine-step-5",
+    time: "4:00pm",
+    title: "Back for a swim",
     description:
-      "Interactive native animal sanctuary offering close encounters with koalas, kangaroos, meerkats and lemurs.",
-    location: "Nulkaba",
-    driveMinutes: 8,
-    distanceMeters: 5000,
-    duration: "2–3 hours",
-    audience: "Families & kids",
-    priceLevel: 2,
-    priceDisplay: "$$",
-    seasonality: "Year-round",
-    categories: ["Family"],
-    bookingRequired: false,
+      "Drop the car, we’ll keep your finds chilled at reception.",
+    image: "/images/ttd-wineday-image-five.jpg",
+    imageAlt: "Afternoon refreshing swim in the saltwater pool",
   },
   {
-    id: "act-6",
-    name: "Hot Air Ballooning over Hunter Valley",
-    image: "/images/cumberland-grounds-skyline-view.jpg",
-    imageAlt: "Colorful hot air balloon floating over sunrise Hunter Valley vineyards",
+    id: "wine-step-6",
+    time: "7:00pm",
+    title: "Dinner in town",
     description:
-      "Breathtaking sunrise flights high above rolling Hunter Valley vineyards followed by a champagne breakfast.",
-    location: "Pokolbin / Cessnock",
-    driveMinutes: 10,
-    distanceMeters: 7000,
-    duration: "3–4 hours",
-    audience: "Adults & couples",
-    priceLevel: 3,
-    priceDisplay: "$$$",
-    seasonality: "Year-round",
-    categories: ["Family", "Nature"],
-    bookingRequired: true,
-  },
-  {
-    id: "act-7",
-    name: "Watagans National Park Lookouts",
-    image: "/images/gallery-two.png",
-    imageAlt: "Sweeping rainforest and valley vista from Watagans lookout",
-    description:
-      "Elevated mountain lookouts, shaded rainforest walking trails, and spectacular views over the valley.",
-    location: "Watagans Region",
-    driveMinutes: 20,
-    distanceMeters: 18000,
-    duration: "2–4 hours",
-    audience: "Bushwalkers & nature lovers",
-    priceLevel: 0,
-    priceDisplay: "Free",
-    seasonality: "Year-round",
-    categories: ["Nature"],
-    bookingRequired: false,
+      "5-min walk. Then a nightcap on the verandah.",
+    image: "/images/ttd-wineday-image-six.webp",
+    imageAlt: "Evening dinner in Cessnock town centre",
   },
 ];
 
-export const relaxedDayItinerary: ActivityItineraryStep[] = [
+export const golfWeekendItinerary: ActivityItineraryStep[] = [
   {
-    id: "rel-1",
-    stage: "MORNING",
-    time: "8:30 AM",
-    title: "Nature Walk",
-    description: "Easy forest walk in Werakata National Park.",
-    image: "/images/gallery-nine.png",
-    imageAlt: "Morning forest trail walk in Werakata National Park",
+    id: "golf-step-1",
+    time: "7:00am",
+    title: "First tee at Hunter Valley Golf Club",
+    description:
+      "About 15 min — out on the fairway before the day warms up.",
+    image: "/images/ttd-golfday-image-one.jpg",
+    imageAlt: "Early morning first tee on championship golf course",
   },
   {
-    id: "rel-2",
-    stage: "LATE MORNING",
-    time: "10:30 AM",
-    title: "Coffee in Cessnock",
-    description: "Great coffee and local bakery treats in town.",
-    image: "/images/gallery-five.png",
-    imageAlt: "Morning coffee cup at Cessnock café",
+    id: "golf-step-2",
+    time: "11:30am",
+    title: "Back for brunch",
+    description:
+      "Quick swim, brunch in town, feet up.",
+    image: "/images/ttd-golfday-image-two.webp",
+    imageAlt: "Midday brunch and relaxing poolside",
   },
   {
-    id: "rel-3",
-    stage: "AFTERNOON",
-    time: "1:30 PM",
+    id: "golf-step-3",
+    time: "1:30pm",
+    title: "The Vintage",
+    description:
+      "Roughly 20 min — the Hunter’s Greg Norman–designed championship course.",
+    image: "/images/ttd-golfday-image-three.jpg",
+    imageAlt: "The Vintage Greg Norman championship golf fairway",
+  },
+  {
+    id: "golf-step-4",
+    time: "5:00pm",
+    title: "Cellar door wind-down",
+    description:
+      "Saddlers Creek, 10 min — earn the tasting.",
+    image: "/images/ttd-golfday-image-four.jpg",
+    imageAlt: "Winery tasting wind-down after a round of golf",
+  },
+  {
+    id: "golf-step-5",
+    time: "7:30pm",
+    title: "Steak in town",
+    description:
+      "5-min walk. Compare scorecards over a red.",
+    image: "/images/ttd-golfday-image-five.jpg",
+    imageAlt: "Hearty steak dinner in Cessnock town centre",
+  },
+  {
+    id: "golf-step-6",
+    time: "Next day",
+    title: "Cypress Lakes",
+    description:
+      "About 15 min. Resort championship course to finish the weekend.",
+    image: "/images/ttd-golfday-image-six.jpg",
+    imageAlt: "Cypress Lakes resort golf course",
+  },
+];
+
+export const familyEscapeItinerary: ActivityItineraryStep[] = [
+  {
+    id: "family-step-1",
+    time: "8:30am",
+    title: "Pancakes, then the pool",
+    description:
+      "Burn off the early-morning energy before the day starts.",
+    image: "/images/ttd-familyday-image-one.webp",
+    imageAlt: "Morning breakfast and swimming pool fun",
+  },
+  {
+    id: "family-step-2",
+    time: "10:00am",
+    title: "Hunter Valley Wildlife Park",
+    description:
+      "9 min. Hand-feed the kangaroos — the day’s big hit.",
+    image: "/images/ttd-familyday-image-two.jpg",
+    imageAlt: "Hand-feeding kangaroos at Hunter Valley Wildlife Park",
+  },
+  {
+    id: "family-step-3",
+    time: "12:30pm",
+    title: "Lunch in town",
+    description:
+      "5-min walk, plus a BIG W run for anything forgotten.",
+    image: "/images/ttd-familyday-image-three.jpg",
+    imageAlt: "Casual family lunch in Cessnock town centre",
+  },
+  {
+    id: "family-step-4",
+    time: "2:00pm",
     title: "Hunter Valley Gardens",
-    description: "Stroll through 14 hectares of stunning display gardens.",
-    image: "/images/gallery-four.png",
-    imageAlt: "Afternoon at Hunter Valley Gardens",
+    description:
+      "15 min. Sixty acres to run wild in.",
+    image: "/images/ttd-familyday-image-four.jpg",
+    imageAlt: "Exploring sixty acres of Hunter Valley Gardens",
   },
   {
-    id: "rel-4",
-    stage: "SUNSET",
-    time: "5:30 PM",
-    title: "Poolside Relax",
-    description: "Unwind at Cumberland Motor Inn's outdoor salt-water pool.",
-    image: "/images/cumberland-pool-view-bright.jpg",
-    imageAlt: "Sunset at Cumberland Motor Inn swimming pool",
-  },
-];
-
-export const adventureDayItinerary: ActivityItineraryStep[] = [
-  {
-    id: "adv-1",
-    stage: "MORNING",
-    time: "6:00 AM",
-    title: "Sunrise Balloon Flight",
-    description: "Float high above rolling Hunter Valley vineyards.",
-    image: "/images/thinks-to-do.png",
-    imageAlt: "Sunrise hot air balloon flight over vineyards",
+    id: "family-step-5",
+    time: "5:00pm",
+    title: "Poolside afternoon",
+    description:
+      "Back to base. Extra towels already in the room.",
+    image: "/images/ttd-familyday-image-five.jpg",
+    imageAlt: "Relaxing poolside in the afternoon",
   },
   {
-    id: "adv-2",
-    stage: "MIDDAY",
-    time: "10:30 AM",
-    title: "Cessnock Golf Course",
-    description: "Play a round of golf on picturesque green fairways.",
-    image: "/images/thinks-to-do.png",
-    imageAlt: "Midday golf on Cessnock Golf Course",
-  },
-  {
-    id: "adv-3",
-    stage: "AFTERNOON",
-    time: "2:00 PM",
-    title: "Wildlife Encounters",
-    description: "Meet native koalas and kangaroos at Hunter Valley Wildlife Park.",
-    image: "/images/gallery-three.png",
-    imageAlt: "Afternoon wildlife park visit",
-  },
-  {
-    id: "adv-4",
-    stage: "EVENING",
-    time: "7:00 PM",
-    title: "CPAC Show",
-    description: "Enjoy a live show at Cessnock Performing Arts Centre.",
-    image: "/images/gallery-seven.png",
-    imageAlt: "Evening show at Cessnock Performing Arts Centre",
+    id: "family-step-6",
+    time: "7:00pm",
+    title: "Movie night, four real beds",
+    description:
+      "TV on, kids asleep by eight.",
+    image: "/images/ttd-familyday-image-six.webp",
+    imageAlt: "Comfortable family suite beds and evening movie night",
   },
 ];
 
 export const itineraryVariants: ActivityItineraryVariant[] = [
   {
-    key: "relaxed",
-    label: "Relaxed Day",
+    key: "wine",
+    label: "The Wine Day",
     introText:
-      "Two great ways to experience our region. Here’s a relaxed day to get you started.",
-    steps: relaxedDayItinerary,
+      "Start small-batch and local, enjoy a leisurely vineyard lunch, cool off in the pool, and stroll to dinner.",
+    steps: wineDayItinerary,
   },
   {
-    key: "adventure",
-    label: "Adventure Day",
-    introText: "A little more action, with time to discover something new.",
-    steps: adventureDayItinerary,
+    key: "golf",
+    label: "The Golf Weekend",
+    introText:
+      "Tee off early on the region’s premier championship fairways, recharge with local wine, and conquer Cypress Lakes.",
+    steps: golfWeekendItinerary,
+  },
+  {
+    key: "family",
+    label: "The Family Escape",
+    introText:
+      "Wildlife encounters, acres of garden wonderland, pool time, and spacious rooms designed for a stress-free family getaway.",
+    steps: familyEscapeItinerary,
   },
 ];
 
@@ -411,3 +546,107 @@ export const thingsToDoCtaData = {
     href: "/#availability",
   },
 };
+
+export const directoryFilterPills = [
+  "All",
+  "Golf",
+  "Nature",
+  "Family",
+  "Culture",
+];
+
+export const activityList: Activity[] = [
+  {
+    id: "act-1",
+    name: "Cessnock Golf Course",
+    image: "/images/ttd-golf-image-one.jpg",
+    imageAlt: "Manicured green fairways at Cessnock Golf Course",
+    description:
+      "Enjoy a round of golf on picturesque greens just minutes from Cumberland Motor Inn.",
+    location: "Cessnock",
+    driveMinutes: 5,
+    distanceMeters: 2000,
+    duration: "2–4 hours",
+    audience: "Golfers of all levels",
+    priceLevel: 2,
+    priceDisplay: "$$",
+    seasonality: "Year-round",
+    categories: ["Golf"],
+    bookingRequired: false,
+    featured: true,
+  },
+  {
+    id: "act-2",
+    name: "Cessnock Performing Arts Centre (CPAC)",
+    image: "/images/gallery-seven.png",
+    imageAlt: "Cessnock Performing Arts Centre facade",
+    description:
+      "Conveniently located just a short walk away, featuring live theater, musical concerts, comedy shows and cultural events.",
+    location: "Cessnock Town Centre",
+    driveMinutes: 2,
+    distanceMeters: 400,
+    duration: "1.5–3 hours",
+    audience: "All ages",
+    priceLevel: 2,
+    priceDisplay: "$$",
+    seasonality: "Year-round",
+    categories: ["Culture"],
+    bookingRequired: true,
+    featured: true,
+  },
+  {
+    id: "act-3",
+    name: "Watagans National Park Lookouts",
+    image: "/images/ttd-nature-image-one.jpg",
+    imageAlt: "Sweeping rainforest and valley vista from Watagans lookout",
+    description:
+      "Elevated mountain lookouts, shaded rainforest walking trails, and spectacular views over the valley.",
+    location: "Watagans Region",
+    driveMinutes: 20,
+    distanceMeters: 18000,
+    duration: "2–4 hours",
+    audience: "Bushwalkers & nature lovers",
+    priceLevel: 0,
+    priceDisplay: "Free",
+    seasonality: "Year-round",
+    categories: ["Nature"],
+    bookingRequired: false,
+  },
+  {
+    id: "act-4",
+    name: "Hunter Valley Gardens",
+    image: "/images/ttd-family-image-two.jpg",
+    imageAlt: "Lush display gardens and manicured lawns at Hunter Valley Gardens",
+    description:
+      "Spanning 14 hectares with 10 international themed gardens, shopping village, and seasonal light displays.",
+    location: "Pokolbin",
+    driveMinutes: 12,
+    distanceMeters: 9000,
+    duration: "2–4 hours",
+    audience: "All ages & families",
+    priceLevel: 2,
+    priceDisplay: "$$",
+    seasonality: "Year-round",
+    categories: ["Family", "Nature"],
+    bookingRequired: false,
+    featured: true,
+  },
+  {
+    id: "act-5",
+    name: "Hunter Valley Wildlife Park",
+    image: "/images/ttd-family-image-one.jpg",
+    imageAlt: "Koala and native animals at Hunter Valley Wildlife Park",
+    description:
+      "Interactive native animal sanctuary offering close encounters with koalas, kangaroos, meerkats and lemurs.",
+    location: "Nulkaba",
+    driveMinutes: 8,
+    distanceMeters: 5000,
+    duration: "2–3 hours",
+    audience: "Families & kids",
+    priceLevel: 2,
+    priceDisplay: "$$",
+    seasonality: "Year-round",
+    categories: ["Family"],
+    bookingRequired: false,
+  },
+];

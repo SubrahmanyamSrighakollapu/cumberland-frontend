@@ -4,6 +4,7 @@ import Script from "next/script";
 import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
 import PoweredByBadge from "@/components/layout/PoweredByBadge";
+import BackToTop from "@/components/layout/BackToTop";
 import { MotelLocalBusinessJsonLd } from "@/components/seo/JsonLd";
 import AnalyticsTracker from "@/components/seo/AnalyticsTracker";
 import { SITE_ORIGIN } from "@/utils/seo";
@@ -85,6 +86,7 @@ export default function RootLayout({
           <AnalyticsTracker />
           <MotelLocalBusinessJsonLd />
           {children}
+          <BackToTop />
           <PoweredByBadge />
         </AuthProvider>
       </body>

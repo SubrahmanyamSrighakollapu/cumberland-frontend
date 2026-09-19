@@ -20,10 +20,6 @@ export default function PublicFooter() {
     }
   };
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   return (
     <footer className="relative w-full bg-gradient-to-b from-[#0b241f] via-[#0f302a] to-[#071915] text-[#f7f4ee] border-t border-[#80563e]/30 overflow-hidden font-sans">
       {/* Background Ambient Glows */}
@@ -85,7 +81,7 @@ export default function PublicFooter() {
         <Reveal direction="up" duration={600}>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 pb-12 border-b border-white/10">
             {/* Column 1: Brand Info & Socials */}
-            <div className="lg:col-span-4 flex flex-col justify-between space-y-6">
+            <div className="lg:col-span-3 flex flex-col justify-between space-y-6">
               <div>
                 <Link
                   href="/"
@@ -222,20 +218,34 @@ export default function PublicFooter() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/terms-and-conditions" className="hover:text-white transition-colors duration-200 hover:translate-x-1 inline-block">
-                    Terms &amp; Conditions
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/privacy-policy" className="hover:text-white transition-colors duration-200 hover:translate-x-1 inline-block">
-                    Privacy Policy
+                  <Link href="/about#amenities" className="hover:text-white transition-colors duration-200 hover:translate-x-1 inline-block">
+                    Motel Amenities
                   </Link>
                 </li>
               </ul>
             </div>
 
-            {/* Column 4: Newsletter & Quick Booking Card */}
-            <div className="lg:col-span-4">
+            {/* Column 4: Legal & Policies */}
+            <div className="lg:col-span-2">
+              <span className="text-xs font-bold tracking-[0.18em] uppercase text-[#e8c5af] mb-5 block">
+                LEGAL &amp; POLICIES
+              </span>
+              <ul className="space-y-3 text-sm text-[#f7f4ee]/85">
+                <li>
+                  <Link href="/privacy-policy" className="hover:text-white transition-colors duration-200 hover:translate-x-1 inline-block">
+                    Privacy Policy
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/terms-and-conditions" className="hover:text-white transition-colors duration-200 hover:translate-x-1 inline-block">
+                    Terms &amp; Conditions
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* Column 5: Newsletter & Quick Booking Card */}
+            <div className="lg:col-span-3">
               <div className="p-6 rounded-2xl bg-white/5 border border-white/10 shadow-xl space-y-4">
                 <span className="text-xs font-bold tracking-[0.18em] uppercase text-[#e8c5af] block">
                   NEWSLETTER &amp; OFFERS
@@ -296,30 +306,9 @@ export default function PublicFooter() {
             </div>
           </div>
 
-          {/* Footer Bottom Legal & Back to Top Row */}
-          <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#f7f4ee]/60">
-            <div className="flex items-center gap-2">
-              <span>&copy; 2026 {siteData.name}. All rights reserved.</span>
-            </div>
-
-            <div className="flex items-center gap-6">
-              <Link href="/privacy-policy" className="hover:text-white transition-colors duration-200">
-                Privacy Policy
-              </Link>
-              <span>|</span>
-              <Link href="/terms-and-conditions" className="hover:text-white transition-colors duration-200">
-                Terms &amp; Conditions
-              </Link>
-              <span>|</span>
-              <button
-                onClick={scrollToTop}
-                className="hover:text-white transition-colors duration-200 flex items-center gap-1 cursor-pointer"
-                title="Scroll to top"
-              >
-                <span>Back to top</span>
-                <span className="text-sm font-bold">&uarr;</span>
-              </button>
-            </div>
+          {/* Footer Bottom Copyright */}
+          <div className="pt-8 text-center text-xs text-[#f7f4ee]/60">
+            <p>&copy; 2026 {siteData.name}. All rights reserved.</p>
           </div>
         </Reveal>
       </div>

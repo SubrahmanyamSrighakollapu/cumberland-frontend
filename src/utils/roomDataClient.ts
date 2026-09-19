@@ -11,40 +11,49 @@ import { normalizeAssetUrl } from "./mediaUrl";
 export type { RoomDetail } from "@/data/rooms";
 
 function normalizeGallerySrcs<T extends { src?: string; alt?: string }>(
-  gallery: T[] | undefined,
-  fallbackFirstSrc: string | undefined
+  gallery: T[] | undefined
 ): NonNullable<RoomDetail["gallery"]> {
   if (!gallery || !gallery.length) {
-    return fallbackFirstSrc
-      ? [
-          {
-            id: "gal-fallback-1",
-            src: normalizeAssetUrl(fallbackFirstSrc),
-            alt: "Room preview",
-            caption: "",
-          },
-        ]
-      : [];
+    return [];
   }
-  return gallery.map((g, i) => {
-    const rawSrc = g.src || "";
-    const rawAlt = g.alt || `Room gallery image ${i + 1}`;
-    const caption = (g as any).caption || "";
-    return {
-      id: `gal-${i}-${String(rawSrc).replace(/[^a-z0-9]/gi, "").slice(0, 12)}`,
-      src: normalizeAssetUrl(rawSrc),
-      alt: rawAlt,
-      caption,
-    };
-  });
+  return gallery
+    .filter((g) => Boolean(g && (g.src || (g as any).image)))
+    .map((g, i) => {
+      const rawSrc = g.src || (g as any).image || "";
+      const rawAlt = g.alt || `Room gallery image ${i + 1}`;
+      const caption = (g as any).caption || g.alt || "";
+      return {
+        id: `gal-${i}-${String(rawSrc).replace(/[^a-z0-9]/gi, "").slice(0, 12)}`,
+        src: normalizeAssetUrl(rawSrc),
+        alt: rawAlt,
+        caption,
+      };
+    });
 }
 
 function transformApiItemToRoomDetail(item: any): RoomDetail {
-  const primaryImage = item.primaryImage ?? item.primary_image ?? null;
+  const rawPrimary = item.primaryImage ?? item.primary_image ?? null;
+  const primaryImage = rawPrimary ? normalizeAssetUrl(rawPrimary) : undefined;
   const galleryFromApi: any[] = Array.isArray(item.gallery)
     ? item.gallery
     : [];
-  const gallery = normalizeGallerySrcs(galleryFromApi, primaryImage || undefined);
+  let gallery = normalizeGallerySrcs(galleryFromApi);
+  if (primaryImage) {
+    const hasCoverInGallery = gallery.some(
+      (g) => g.src === primaryImage || (rawPrimary && g.src === rawPrimary)
+    );
+    if (!hasCoverInGallery) {
+      gallery = [
+        {
+          id: `gal-cover-${item.id || "0"}`,
+          src: primaryImage,
+          alt: item.name || "Room Cover Image",
+          caption: item.name || "Room Cover Image",
+        },
+        ...gallery,
+      ];
+    }
+  }
   const introFeatureTiles = (() => {
     if (item.intro?.featureTiles && Array.isArray(item.intro.featureTiles) && item.intro.featureTiles.length) {
       return item.intro.featureTiles;
@@ -113,6 +122,7 @@ function transformApiItemToRoomDetail(item: any): RoomDetail {
       paragraph2: item.intro?.paragraph2 ?? item.intro_paragraph2 ?? "",
       featureTiles: introFeatureTiles,
     },
+    primaryImage,
     gallery,
     amenities: defaultAmenities,
     highlights,
@@ -130,6 +140,7 @@ export function fallbackRoomBySlug(slug: string): RoomDetail | undefined {
   if (!staticRoom) return undefined;
   return {
     ...staticRoom,
+    primaryImage: staticRoom.gallery[0]?.src ? normalizeAssetUrl(staticRoom.gallery[0].src) : undefined,
     gallery: staticRoom.gallery.map((g) => ({
       ...g,
       src: normalizeAssetUrl(g.src),
@@ -140,6 +151,7 @@ export function fallbackRoomBySlug(slug: string): RoomDetail | undefined {
 export function fallbackAllRooms(): RoomDetail[] {
   return getAllRooms().map((r) => ({
     ...r,
+    primaryImage: r.gallery[0]?.src ? normalizeAssetUrl(r.gallery[0].src) : undefined,
     gallery: r.gallery.map((g) => ({ ...g, src: normalizeAssetUrl(g.src) })),
   }));
 }

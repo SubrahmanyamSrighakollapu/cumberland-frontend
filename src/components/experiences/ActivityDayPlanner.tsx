@@ -7,8 +7,8 @@ import Reveal from "@/components/ui/Reveal";
 
 export default function ActivityDayPlanner() {
   const [selectedVariantKey, setSelectedVariantKey] = useState<
-    "relaxed" | "adventure"
-  >("relaxed");
+    "wine" | "golf" | "family"
+  >("wine");
 
   const currentVariant =
     itineraryVariants.find((v) => v.key === selectedVariantKey) ||
@@ -22,31 +22,32 @@ export default function ActivityDayPlanner() {
       <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header & Segmented Switcher */}
         <Reveal direction="up" delay={50}>
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 sm:mb-12">
-            <div className="max-w-xl">
-              <span className="text-[11px] font-semibold tracking-[0.2em] uppercase text-[#80563e] mb-2 block">
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10 sm:mb-12">
+            <div className="max-w-2xl">
+              <span className="text-[11px] font-semibold tracking-[0.2em] uppercase text-[#80563e] mb-2.5 block">
                 PLAN YOUR DAY
               </span>
-              <h2 className="font-serif text-3xl sm:text-4xl lg:text-[44px] leading-[1.1] font-semibold text-[#0f302a] mb-3">
-                Choose your kind of adventure.
+              <h2 className="font-serif text-3xl sm:text-4xl lg:text-[44px] leading-[1.15] font-semibold text-[#0f302a] mb-3">
+                {currentVariant.label}
               </h2>
               <p className="text-sm sm:text-base text-[#50544e] font-sans leading-relaxed">
                 {currentVariant.introText}
               </p>
             </div>
 
-            {/* Segmented Control Switch */}
-            <div className="inline-flex items-center p-1 bg-white border border-[#d9d0c4] rounded-xl shrink-0 self-start md:self-auto shadow-sm">
+            {/* Switcher Buttons */}
+            <div className="inline-flex flex-wrap items-center gap-1.5 p-1.5 bg-white border border-[#d9d0c4] rounded-2xl shadow-xs shrink-0 self-start lg:self-auto">
               {itineraryVariants.map((variant) => {
                 const isSelected = selectedVariantKey === variant.key;
                 return (
                   <button
                     key={variant.key}
+                    type="button"
                     onClick={() => setSelectedVariantKey(variant.key)}
-                    className={`px-5 py-2.5 text-xs sm:text-sm font-semibold rounded-lg transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#17352d] ${
+                    className={`px-4 sm:px-5 py-2.5 text-xs sm:text-sm font-semibold rounded-xl transition-all duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#17352d] ${
                       isSelected
                         ? "bg-[#17352d] text-white shadow-sm"
-                        : "text-[#0f302a] hover:bg-[#e9efe8]"
+                        : "text-[#20382f] hover:bg-[#e9efe8] hover:text-[#0f302a]"
                     }`}
                   >
                     {variant.label}
@@ -57,126 +58,73 @@ export default function ActivityDayPlanner() {
           </div>
         </Reveal>
 
-        {/* 4-Step Horizontal Itinerary Row */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10 lg:gap-12 relative">
-          {currentVariant.steps.map((step, idx) => {
-            const isLast = idx === currentVariant.steps.length - 1;
-            const isRowEndMd = idx % 2 === 1;
+        {/* 6-Step Itinerary Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          {currentVariant.steps.map((step, idx) => (
+            <Reveal
+              key={`${currentVariant.key}-${step.id}`}
+              direction="up"
+              delay={80 + idx * 60}
+              className="flex flex-col h-full"
+            >
+              {/* Card Container */}
+              <div className="bg-white border border-[#d9d0c4] rounded-2xl overflow-hidden shadow-sm flex flex-col h-full hover:shadow-md transition-all duration-300 group">
+                {/* Thumbnail Image with Time Badge */}
+                <div className="relative w-full aspect-[16/10] bg-[#e9efe8] overflow-hidden shrink-0">
+                  <Image
+                    src={step.image}
+                    alt={step.imageAlt || step.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
 
-            return (
-              <Reveal
-                key={step.id}
-                direction="up"
-                delay={100 + idx * 90}
-                className="relative flex flex-col h-full"
-              >
-                {/* Card Container */}
-                <div className="bg-white border border-[#d9d0c4] rounded-xl overflow-hidden shadow-sm flex flex-col h-full hover:shadow-md transition-shadow">
-                  {/* Thumbnail Image */}
-                  <div className="relative w-full aspect-[16/10] bg-[#e9efe8] overflow-hidden shrink-0">
-                    <Image
-                      src={step.image}
-                      alt={step.imageAlt}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                      className="object-cover"
-                    />
+                  {/* Top-Left Time Badge */}
+                  <div className="absolute top-3.5 left-3.5 z-10">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#0f302a]/85 backdrop-blur-md text-white border border-white/20 text-xs font-semibold font-sans shadow-md">
+                      <svg
+                        className="w-3.5 h-3.5 text-[#e8c5af]"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                        aria-hidden="true"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
+                      <span>{step.time}</span>
+                    </span>
                   </div>
 
-                  {/* Card Body */}
-                  <div className="p-5 flex-1 flex flex-col">
-                    {/* Stage & Time Row */}
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-[11px] font-semibold tracking-wider text-[#80563e] uppercase">
-                        {step.stage}
-                      </span>
-                      <span className="font-serif text-sm font-semibold text-[#0f302a]">
-                        {step.time}
-                      </span>
-                    </div>
+                  {/* Step Number Badge */}
+                  <div className="absolute top-3.5 right-3.5 z-10">
+                    <span className="w-7 h-7 rounded-full bg-white/90 backdrop-blur-sm text-[#0f302a] text-xs font-bold font-mono flex items-center justify-center shadow-md">
+                      {idx + 1}
+                    </span>
+                  </div>
+                </div>
 
+                {/* Card Body */}
+                <div className="p-6 flex-1 flex flex-col justify-between">
+                  <div>
                     {/* Title */}
-                    <h3 className="font-serif text-lg font-semibold text-[#0f302a] mb-2 leading-snug">
+                    <h3 className="font-serif text-lg font-bold text-[#0f302a] mb-2 leading-snug group-hover:text-[#80563e] transition-colors">
                       {step.title}
                     </h3>
 
                     {/* Supporting Description */}
-                    <p className="text-xs sm:text-sm text-[#50544e] font-sans leading-relaxed">
+                    <p className="text-sm text-[#50544e] font-sans leading-relaxed">
                       {step.description}
                     </p>
                   </div>
                 </div>
-
-                {/* Horizontal Connector Arrow (Desktop lg: centered in 48px gap) */}
-                {!isLast && (
-                  <div
-                    className="hidden lg:flex absolute left-[calc(100%+24px)] top-1/2 -translate-x-1/2 -translate-y-1/2 z-30 w-7 h-7 rounded-full bg-white border border-[#d9d0c4] items-center justify-center text-[#80563e] shadow-md pointer-events-none"
-                    aria-hidden="true"
-                  >
-                    <svg
-                      className="w-3.5 h-3.5 text-[#80563e]"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2.5}
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </div>
-                )}
-
-                {/* Horizontal Connector Arrow (Tablet md: centered in 40px gap) */}
-                {!isLast && !isRowEndMd && (
-                  <div
-                    className="hidden md:flex lg:hidden absolute left-[calc(100%+20px)] top-1/2 -translate-x-1/2 -translate-y-1/2 z-30 w-7 h-7 rounded-full bg-white border border-[#d9d0c4] items-center justify-center text-[#80563e] shadow-md pointer-events-none"
-                    aria-hidden="true"
-                  >
-                    <svg
-                      className="w-3.5 h-3.5 text-[#80563e]"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2.5}
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </div>
-                )}
-
-                {/* Vertical Down Connector Arrow (Mobile sm stacked & Tablet md between rows) */}
-                {!isLast && (
-                  <div
-                    className={`z-30 w-7 h-7 rounded-full bg-white border border-[#d9d0c4] items-center justify-center text-[#80563e] shadow-md pointer-events-none mx-auto my-[-14px] ${
-                      isRowEndMd ? "flex md:flex lg:hidden" : "flex md:hidden"
-                    }`}
-                    aria-hidden="true"
-                  >
-                    <svg
-                      className="w-3.5 h-3.5 text-[#80563e]"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2.5}
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M19 9l-7 7-7-7"
-                      />
-                    </svg>
-                  </div>
-                )}
-              </Reveal>
-            );
-          })}
+              </div>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>

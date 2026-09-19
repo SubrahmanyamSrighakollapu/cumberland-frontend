@@ -106,10 +106,11 @@ export const RelatedRooms: React.FC<RelatedRoomsProps> = ({
                       <ImageReveal className="relative aspect-[4/3] w-full overflow-hidden bg-stone-100 shrink-0">
                         <Image
                           src={
+                            room.primaryImage ||
                             room.gallery[0]?.src ||
                             normalizeAssetUrl("/images/hero_background.jpg")
                           }
-                          alt={room.gallery[0]?.alt || room.name}
+                          alt={room.name}
                           fill
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                           className="object-cover transition-transform duration-500 hover:scale-105"

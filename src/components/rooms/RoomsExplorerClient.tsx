@@ -97,10 +97,10 @@ export default function RoomsExplorerClient({
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {display.map((room, idx) => {
                   const firstImg =
+                    room.primaryImage ||
                     room.gallery[0]?.src ||
                     normalizeAssetUrl("/images/hero_background.jpg");
-                  const firstImgAlt =
-                    room.gallery[0]?.alt || room.name;
+                  const firstImgAlt = room.name;
                   return (
                     <Reveal
                       key={room.id}
